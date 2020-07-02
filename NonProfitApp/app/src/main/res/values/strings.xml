@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">NonProfitApp</string>
+    <string name="welcome_message">Welcome!</string>
+    <string name="cust_sign_in">Customer Sign In</string>
+    <string name="vol_sign_in">Volunteer Sign In</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
