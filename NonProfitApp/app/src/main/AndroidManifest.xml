@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".Window_Display">
+            android:name=".Window_Display"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENTACTIVITY"
