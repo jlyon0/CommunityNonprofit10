@@ -9,16 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".Foodbank_Selection_Page"
             android:parentActivityName =".MainActivity">
             <meta-data
                 android:name = "android.support.PARENTACTIVITY"
                 android:value = "com.example.nonprofitapp.MainActivity"/>
+        </activity>
+
+
+        <activity
+            android:name=".Window_Display"
+            android:parentActivityName=".Foodbank_Selection_Page">
+            <meta-data
+                android:name="android.support.PARENTACTIVITY"
+                android:value ="com.example.nonprofitapp.Foodbank_Selection_Page" />
+
 
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
