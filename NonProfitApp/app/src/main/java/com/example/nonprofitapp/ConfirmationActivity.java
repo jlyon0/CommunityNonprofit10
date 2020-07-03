@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class ConfirmationActivity extends AppCompatActivity {
 
@@ -35,10 +35,14 @@ public class ConfirmationActivity extends AppCompatActivity {
         TextView foodBank = findViewById(R.id.foodBank);
         TextView bagType = findViewById(R.id.bagType);
         TextView pickup = findViewById(R.id.pickupTime);
-        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
 
         // TODO set the text for the food bank
         bagType.setText(bag);
+
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
+        String date = format.format(calendar.getTime());
+        pickup.setText(date);
 
 
 
