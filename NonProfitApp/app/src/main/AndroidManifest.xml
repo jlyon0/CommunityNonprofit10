@@ -9,6 +9,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PickupDateSelectionActivity"
+            android:parentActivityName=".GroceryBagSelectionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GroceryBagSelectionActivity" />
+        </activity>
+        <activity android:name=".ConfirmationActivity"
+            android:parentActivityName=".PickupTimeSelectionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PickupTimeSelectionActivity" />
+        </activity>
+        <activity android:name=".PickupTimeSelectionActivity"
+            android:parentActivityName=".PickupDateSelectionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PickupDateSelectionActivity" />
+        </activity>
+        <activity android:name=".GroceryBagSelectionActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
