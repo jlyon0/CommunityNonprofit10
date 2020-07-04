@@ -60,5 +60,6 @@ public class ConfirmationActivity extends AppCompatActivity {
     public void confirmOrder(View view) {
         // TODO do something when confirm order button is clicked
         Intent launchWindow = new Intent(this, Window_Display.class);
+        startActivity(launchWindow);
     }
 }
