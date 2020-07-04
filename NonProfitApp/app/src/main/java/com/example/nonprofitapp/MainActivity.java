@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String DAY = "com.example.nonprofitapp.DAY";
     public static final String HOUR = "com.example.nonprofitapp.HOUR";
     public static final String MINUTE = "com.example.nonprofitapp.MINUTE";
+    public static final String FOOD_BANK_BUTTON = "com.example.nonprofitapp.FOOD_BANK_BUTTON"; // For food bank selection
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

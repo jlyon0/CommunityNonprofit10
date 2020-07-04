@@ -37,10 +37,10 @@
                 android:value=".PickupDateSelectionActivity" />
         </activity>
         <activity android:name=".GroceryBagSelectionActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".Foodbank_Selection_Page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Foodbank_Selection_Page" />
         </activity>
 
 
@@ -54,10 +54,10 @@
 
         <activity
             android:name=".Window_Display"
-            android:parentActivityName=".Foodbank_Selection_Page">
+            android:parentActivityName=".ConfirmationActivity">
             <meta-data
                 android:name="android.support.PARENTACTIVITY"
-                android:value ="com.example.nonprofitapp.Foodbank_Selection_Page" />
+                android:value ="com.example.nonprofitapp.ConfirmationActivity" />
 
 
 

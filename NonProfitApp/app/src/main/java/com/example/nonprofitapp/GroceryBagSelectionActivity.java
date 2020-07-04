@@ -10,11 +10,15 @@ import android.widget.RadioGroup;
 public class GroceryBagSelectionActivity extends AppCompatActivity {
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";
     private String bag = "custom"; // default to custom bag
+    private final int DEFAULT_FOOD_BANK = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery_bag_selection);
+
+        Intent receivedLauncher = getIntent();
+        int foodBankID = receivedLauncher.getIntExtra(MainActivity.FOOD_BANK_BUTTON, DEFAULT_FOOD_BANK);
 
         RadioGroup rg = findViewById(R.id.radioGroup);
 

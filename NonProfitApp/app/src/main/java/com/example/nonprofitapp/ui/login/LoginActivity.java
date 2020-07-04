@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nonprofitapp.Foodbank_Selection_Page;
 import com.example.nonprofitapp.MainActivity;
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.ui.login.LoginViewModel;
@@ -140,6 +141,9 @@ public class LoginActivity extends AppCompatActivity {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+
+        Intent launchFoodbankSel = new Intent(this, Foodbank_Selection_Page.class);
+        startActivity(launchFoodbankSel);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
