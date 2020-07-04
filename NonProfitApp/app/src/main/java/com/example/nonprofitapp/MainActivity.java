@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String LOGIN_TYPE = "LOGIN_TYPE"; // Sent with intent as a label
     public static final String VOLUNTEER = "VOLUNTEER";
     public static final String CUSTOMER = "CUSTOMER";
-
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";
     public static final String YEAR = "com.example.nonprofitapp.YEAR";
     public static final String MONTH = "com.example.nonprofitapp.MONTH";

@@ -31,12 +31,13 @@ public class ConfirmationActivity extends AppCompatActivity {
         int day = intent.getIntExtra(MainActivity.DAY, 1);
         int hour = intent.getIntExtra(MainActivity.HOUR, 0);
         int minute = intent.getIntExtra(MainActivity.MINUTE, 0);
+        int foodBankId = intent.getIntExtra(MainActivity.FOOD_BANK_BUTTON, 0);
 
         TextView foodBank = findViewById(R.id.foodBank);
         TextView bagType = findViewById(R.id.bagType);
         TextView pickup = findViewById(R.id.pickupTime);
 
-        // TODO set the text for the food bank
+        foodBank.setText("Food Bank " + foodBankId);
         bagType.setText(bag);
 
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");

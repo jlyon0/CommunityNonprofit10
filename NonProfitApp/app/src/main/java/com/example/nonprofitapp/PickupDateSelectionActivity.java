@@ -23,6 +23,7 @@ public class PickupDateSelectionActivity extends AppCompatActivity {
         //TODO send food bank selection
         Intent i = getIntent();
         intent.putExtra(MainActivity.SELECTED_BAG, i.getStringExtra(MainActivity.SELECTED_BAG));
+        intent.putExtra(MainActivity.FOOD_BANK_BUTTON, i.getStringExtra(MainActivity.FOOD_BANK_BUTTON));
         intent.putExtra(MainActivity.YEAR, datePicker.getYear());
         intent.putExtra(MainActivity.MONTH, datePicker.getMonth());
         intent.putExtra(MainActivity.DAY, datePicker.getDayOfMonth());

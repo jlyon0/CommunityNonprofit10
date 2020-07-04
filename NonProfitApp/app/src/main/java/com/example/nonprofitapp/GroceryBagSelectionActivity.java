@@ -56,7 +56,7 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
     public void toSelectPickupTime(View view) {
         Intent intent = new Intent(this, PickupDateSelectionActivity.class);
         intent.putExtra(SELECTED_BAG, bag);
-        // TODO maybe send food bank selection too?
+        intent.putExtra(MainActivity.FOOD_BANK_BUTTON, getIntent().getStringExtra(MainActivity.FOOD_BANK_BUTTON));
         startActivity(intent);
     }
 }

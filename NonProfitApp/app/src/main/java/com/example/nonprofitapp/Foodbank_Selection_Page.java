@@ -22,9 +22,8 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
         launchNext(view.getId());
     }
 
-    public void launchNext(final int buttonID) {
+    public void launchNext(int buttonID) {
         Intent launchIntent = new Intent(this, GroceryBagSelectionActivity.class); //Package selection page);
-
         launchIntent.putExtra(MainActivity.FOOD_BANK_BUTTON, buttonID);
         startActivity(launchIntent);
     }
