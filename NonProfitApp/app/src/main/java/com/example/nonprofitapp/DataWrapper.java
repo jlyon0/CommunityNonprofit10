@@ -76,9 +76,7 @@ public class DataWrapper implements Serializable {
         this.month = month;
     }
 
-    public int getDay() {
-        return day;
-    }
+    public int getDay() { return day; }
 
     public void setDay(int day) {
         this.day = day;
