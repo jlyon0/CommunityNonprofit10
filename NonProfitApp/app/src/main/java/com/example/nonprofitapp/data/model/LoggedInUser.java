@@ -8,9 +8,12 @@ public class LoggedInUser {
     private String userId;
     private String displayName;
 
-    public LoggedInUser(String userId, String displayName) {
+    private boolean volunteer;
+
+    public LoggedInUser(String userId, String displayName, boolean volunteer) {
         this.userId = userId;
         this.displayName = displayName;
+        this.volunteer = volunteer;
     }
 
     public String getUserId() {
@@ -19,5 +22,9 @@ public class LoggedInUser {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public boolean isVolunteer() {
+        return volunteer;
     }
 }

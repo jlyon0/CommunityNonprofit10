@@ -26,12 +26,17 @@ import android.widget.Toast;
 import com.example.nonprofitapp.Foodbank_Selection_Page;
 import com.example.nonprofitapp.MainActivity;
 import com.example.nonprofitapp.R;
-import com.example.nonprofitapp.ui.login.LoginViewModel;
-import com.example.nonprofitapp.ui.login.LoginViewModelFactory;
+import com.example.nonprofitapp.VolunteerActivity;
 
+/*
+ * This flow is a mess. If you want to expose some user data, add it to
+ * LoggedInUserView and LoggedInUser, and everything else should throw
+ * errors until you've got it right, I think. (7/5 sodonova)
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private boolean isVolunteer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,17 +47,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // Receive the launching intent and find out if it is logging in a customer or volunteer
         Intent receivedIntent = getIntent();
-        String loginType = receivedIntent.getStringExtra(MainActivity.LOGIN_TYPE);
+        isVolunteer = receivedIntent.getBooleanExtra(MainActivity.VOLUNTEER_LOGIN, false);
 
         // Display the login type in the header/title bar
-        switch (loginType) {
-            case MainActivity.VOLUNTEER:
-                getSupportActionBar().setTitle(R.string.vol_sign_in);
-                // this R.string syntax means that a string resource is being retrieved from /values
-                break;
-            case MainActivity.CUSTOMER:
-                getSupportActionBar().setTitle(R.string.cust_sign_in);
-                break;
+        if (isVolunteer) {
+            getSupportActionBar().setTitle(R.string.vol_sign_in);
+        } else {
+            getSupportActionBar().setTitle(R.string.cust_sign_in);
         }
 
         final EditText usernameEditText = findViewById(R.id.username);
@@ -121,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(), isVolunteer);
                 }
                 return false;
             }
@@ -132,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                        passwordEditText.getText().toString(), isVolunteer);
             }
         });
     }
@@ -143,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
         Intent launchFoodbankSel = new Intent(this, Foodbank_Selection_Page.class);
+        launchFoodbankSel.putExtra(MainActivity.VOLUNTEER_LOGIN, model.isVolunteer());
         startActivity(launchFoodbankSel);
     }
 

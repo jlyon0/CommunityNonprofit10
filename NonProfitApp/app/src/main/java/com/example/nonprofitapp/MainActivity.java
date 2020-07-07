@@ -25,7 +25,7 @@ import android.content.Intent;
  */
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String LOGIN_TYPE = "LOGIN_TYPE"; // Sent with intent as a label
+    public static final String VOLUNTEER_LOGIN = "com.example.nonprofitapp.VOLUNTEER_LOGIN"; // Sent with intent as a label
     public static final String VOLUNTEER = "VOLUNTEER";
     public static final String CUSTOMER = "CUSTOMER";
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";
@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void customerClick() {
         Intent launch = new Intent(this, LoginActivity.class);
-        launch.putExtra(LOGIN_TYPE, CUSTOMER);
+        launch.putExtra(VOLUNTEER_LOGIN, false);
         startActivity(launch);
     }
 
     public void volunteerClick() {
         Intent launch = new Intent(this, LoginActivity.class);
-        launch.putExtra(LOGIN_TYPE, VOLUNTEER);
+        launch.putExtra(VOLUNTEER_LOGIN, true);
         startActivity(launch);
     }
 
