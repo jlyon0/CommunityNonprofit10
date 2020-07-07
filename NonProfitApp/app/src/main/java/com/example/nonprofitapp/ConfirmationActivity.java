@@ -40,16 +40,22 @@ public class ConfirmationActivity extends AppCompatActivity {
         foodBank.setText("Food Bank " + foodBankId);
         bagType.setText(bag);
 
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
-        String date = format.format(calendar.getTime());
-        pickup.setText(date);
+        String dateTime = String.format("Arriving at %d:%02d on %d/%d/%d",
+                hour,
+                minute,
+                month,
+                day,
+                year);
+        pickup.setText(dateTime);
 
+//        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+//        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
+//        String date = format.format(calendar.getTime());
+//        pickup.setText(date);
 
-
-        android.text.format.DateFormat df = new android.text.format.DateFormat();
-        df.format("yyyy-MM-dd hh:mm:ss a", new java.util.Date(year, month, day, hour, minute));
-        pickup.setText(df.toString());
+//        android.text.format.DateFormat df = new android.text.format.DateFormat();
+//        df.format("yyyy-MM-dd hh:mm:ss a", new java.util.Date(year, month, day, hour, minute));
+//        pickup.setText(df.toString());
 
         // Capture the layout's TextView and set the string as its text
         //TextView textView = findViewById(R.id.textView);
