@@ -31,7 +31,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         int day = intent.getIntExtra(MainActivity.DAY, 1);
         int hour = intent.getIntExtra(MainActivity.HOUR, 0);
         int minute = intent.getIntExtra(MainActivity.MINUTE, 0);
-        int foodBankId = intent.getIntExtra(MainActivity.FOOD_BANK_BUTTON, 0);
+        String foodBankId = intent.getStringExtra(MainActivity.FOOD_BANK_BUTTON);
 
         TextView foodBank = findViewById(R.id.foodBank);
         TextView bagType = findViewById(R.id.bagType);
@@ -60,5 +60,6 @@ public class ConfirmationActivity extends AppCompatActivity {
     public void confirmOrder(View view) {
         // TODO do something when confirm order button is clicked
         Intent launchWindow = new Intent(this, Window_Display.class);
+        startActivity(launchWindow);
     }
 }
