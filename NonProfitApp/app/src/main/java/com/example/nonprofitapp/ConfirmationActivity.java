@@ -40,6 +40,10 @@ public class ConfirmationActivity extends AppCompatActivity {
         foodBank.setText("Food Bank " + foodBankId);
         bagType.setText(bag);
 
+//        if (hour > 12) {
+//            hour -= 12;
+//        }
+
         String dateTime = String.format("Arriving at %d:%02d on %d/%d/%d",
                 hour,
                 minute,

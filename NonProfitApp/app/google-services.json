@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "465565059189",
+    "firebase_url": "https://nonprofitapp-5977d.firebaseio.com",
+    "project_id": "nonprofitapp-5977d",
+    "storage_bucket": "nonprofitapp-5977d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465565059189:android:5121f44496782ae361903c",
+        "android_client_info": {
+          "package_name": "com.example.nonprofitapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465565059189-5650n4urmq4dtmoqbt0dq5kbjsdhq8rf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nonprofitapp",
+            "certificate_hash": "6f5699fbb815080a7db37d0cfe6e03680e17ad6f"
+          }
+        },
+        {
+          "client_id": "465565059189-8t0jjm69ahioia7qjmgur5edo0tbehkc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG_m8HglQsAgkvbqZkKSIGHg7wSDVD-Jg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465565059189-8t0jjm69ahioia7qjmgur5edo0tbehkc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
