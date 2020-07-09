@@ -69,6 +69,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     /** Called after user logs in as a customer and selects food bank, bag, and pickup time */
     public void confirmOrder(View view) {
         // TODO do something when confirm order button is clicked
+
         Intent launchWindow = new Intent(this, Window_Display.class);
         startActivity(launchWindow);
     }

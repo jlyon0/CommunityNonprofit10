@@ -48,11 +48,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int SIGN_IN_CUSTOMER = 333;
 
     TextView welcome;
+    Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        model = ((MyApplication) getApplication()).getModel();
+
         Button customerSignIn = (Button) findViewById(R.id.customer_sign_in);
         customerSignIn.setOnClickListener(this);
         TextView volunteerSignIn = (TextView) findViewById(R.id.volunteer_sign_in);
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         welcome = findViewById(R.id.welcome_text);
     }
 
-    /*
+    /**
      * Handles both the customer sign in and volunteer sign in buttons.
      */
     @Override
@@ -101,19 +104,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (model.user == null) {
+                    model.setUser();
+                }
+
                 switch (requestCode) {
                     case SIGN_IN_CUSTOMER:
+                        model.setVolunteer(false);
                         Intent launchFoodbankCust = new Intent(this, Foodbank_Selection_Page.class);
                         launchFoodbankCust.putExtra(MainActivity.VOLUNTEER_LOGIN, false);
                         startActivity(launchFoodbankCust);
                         break;
                     case SIGN_IN_VOLUNTEER:
+                        model.setVolunteer(true);
                         Intent launchFoodbankVol = new Intent(this, Foodbank_Selection_Page.class);
                         launchFoodbankVol.putExtra(MainActivity.VOLUNTEER_LOGIN, true);
                         startActivity(launchFoodbankVol);
                         break;
-
                 }
             } else {
                 welcome.setText(R.string.login_failed);
