@@ -11,17 +11,16 @@ import com.example.nonprofitapp.MyApplication;
 import com.example.nonprofitapp.R;
 
 public class Foodbank_Selection_Page extends AppCompatActivity implements View.OnClickListener{
-    Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodbank__selection__page);
-        model = ((MyApplication) getApplication()).getModel();
     }
 
     @Override
     public void onClick(View view) {
+        //TODO: send this to viewmodel
         if (model.isVolunteer()) {
             // if it was launched as part of a volunteer login, send to volunteer page with foodbank
             Intent launchIntent = new Intent(this, VolunteerActivity.class); //Package selection page);

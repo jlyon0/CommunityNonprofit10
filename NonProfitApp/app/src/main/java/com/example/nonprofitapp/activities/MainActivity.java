@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int SIGN_IN_CUSTOMER = 333;
 
     TextView welcome;
-    Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
