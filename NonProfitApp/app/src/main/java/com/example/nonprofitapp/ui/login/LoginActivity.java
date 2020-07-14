@@ -23,10 +23,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nonprofitapp.Foodbank_Selection_Page;
-import com.example.nonprofitapp.MainActivity;
+import com.example.nonprofitapp.activities.Foodbank_Selection_Page;
+import com.example.nonprofitapp.activities.MainActivity;
 import com.example.nonprofitapp.R;
-import com.example.nonprofitapp.VolunteerActivity;
 
 /*
  * This flow is a mess. If you want to expose some user data, add it to

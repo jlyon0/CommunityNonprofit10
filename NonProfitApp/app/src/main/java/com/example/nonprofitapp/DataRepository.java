@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DataRepository {
     private static DataRepository sInstance;
+    private DataWrapper dataWrapper;
 
     private FirebaseFirestore firestore;
     private FirebaseAuth firebaseAuth;
@@ -30,6 +31,10 @@ public class DataRepository {
 
     public LiveData<FirebaseUser> getUser() {
         return null;
+    }
+
+    public void createOrder() {
+        //TODO: takes data from dataWrapper and inputs to firebase
     }
 
 }

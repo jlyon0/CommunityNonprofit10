@@ -15,7 +15,7 @@ public class Model {
     String foodBank;
     DataWrapper data;
     boolean isVolunteer;
-    FirebaseUser user;
+    public FirebaseUser user;
 
     public Model() {
         data = new DataWrapper();
