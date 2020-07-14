@@ -1,35 +1,25 @@
 package com.example.nonprofitapp.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.nonprofitapp.DataWrapper;
-import com.example.nonprofitapp.Model;
-import com.example.nonprofitapp.MyApplication;
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.ui.login.LoginActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 
 /*
@@ -59,33 +49,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Button customerSignIn = (Button) findViewById(R.id.customer_sign_in);
         customerSignIn.setOnClickListener(this);
         TextView volunteerSignIn = (TextView) findViewById(R.id.volunteer_sign_in);
         volunteerSignIn.setOnClickListener(this);
 
         welcome = findViewById(R.id.welcome_text);
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //db.collection("/foodbanks/Gleaners/orders").document(FirebaseAuth.getInstance().getUid()).set(new DataWrapper());
-        //db.collection("/foodbanks/Gleaners/orders").document(FirebaseAuth.getInstance().getUid()).get().addOnCompleteListener(
-
-          //      );
-
-        db.collection("/foodbanks/Gleaners/orders").document("aUA4SDE1bWUL3jZJrsAFFguJMHn1").get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                          @Override
-                                          public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                              DataWrapper dataWrapper = documentSnapshot.toObject(DataWrapper.class);
-                                              System.out.println(dataWrapper.getDay());
-                                          }
-                                      }
-                );
-
     }
 
-    /**
+    /*
      * Handles both the customer sign in and volunteer sign in buttons.
      */
     @Override
@@ -125,23 +97,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                if (model.user == null) {
-                    model.setUser();
-                }
-
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 switch (requestCode) {
                     case SIGN_IN_CUSTOMER:
-                        model.setVolunteer(false);
                         Intent launchFoodbankCust = new Intent(this, Foodbank_Selection_Page.class);
                         launchFoodbankCust.putExtra(MainActivity.VOLUNTEER_LOGIN, false);
                         startActivity(launchFoodbankCust);
                         break;
                     case SIGN_IN_VOLUNTEER:
-                        model.setVolunteer(true);
                         Intent launchFoodbankVol = new Intent(this, Foodbank_Selection_Page.class);
                         launchFoodbankVol.putExtra(MainActivity.VOLUNTEER_LOGIN, true);
                         startActivity(launchFoodbankVol);
                         break;
+
                 }
             } else {
                 welcome.setText(R.string.login_failed);

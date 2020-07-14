@@ -2,8 +2,6 @@ package com.example.nonprofitapp.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Build;
@@ -12,17 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.nonprofitapp.R;
-import com.example.nonprofitapp.viewmodels.ViewModelExample;
 
 public class ConfirmationActivity extends AppCompatActivity {
-    ViewModelExample viewModelExample;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
-        viewModelExample = ViewModelProviders.of(this).get(ViewModelExample.class);
-
         // TODO display all info here
 
         // Get the Intent that started this activity and extract the info
@@ -71,7 +66,6 @@ public class ConfirmationActivity extends AppCompatActivity {
     /** Called after user logs in as a customer and selects food bank, bag, and pickup time */
     public void confirmOrder(View view) {
         // TODO do something when confirm order button is clicked
-        viewModelExample.createOrder();
         Intent launchWindow = new Intent(this, Window_Display.class);
         startActivity(launchWindow);
     }

@@ -12,8 +12,12 @@ public class DataRepository {
 
     private FirebaseFirestore firestore;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
 
-    public DataRepository() {
+    /**
+     * Should be accessed through getInstance().
+     */
+    private DataRepository() {
         dataWrapper = new DataWrapper();
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -31,10 +35,10 @@ public class DataRepository {
     }
 
     public LiveData<FirebaseUser> getUser() {
-
+        return user;
     }
 
-    public void createOrder() {
+    public void setDocument() {
         //TODO: takes data from dataWrapper and input to firebase
     }
 
