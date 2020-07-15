@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="116dp"
         android:onClick="toOrderConfirmation"
-        android:text="Continue to Order Confirmation"
+        android:text="Select This Pickup Time"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
