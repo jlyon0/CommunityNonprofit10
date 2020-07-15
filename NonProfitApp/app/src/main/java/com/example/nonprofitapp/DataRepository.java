@@ -98,10 +98,6 @@ public class DataRepository {
         firebaseAuth.getCurrentUser().sendEmailVerification();
     }
 
-    public void setDocument() {
-        //TODO: takes data from dataWrapper and input to firebase
-    }
-
     public FirebaseFirestore getDb() {
         return db;
     }
