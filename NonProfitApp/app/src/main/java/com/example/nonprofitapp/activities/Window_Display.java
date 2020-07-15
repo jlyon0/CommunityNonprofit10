@@ -1,10 +1,12 @@
-package com.example.nonprofitapp;
+package com.example.nonprofitapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.nonprofitapp.R;
 
 public class Window_Display extends AppCompatActivity {
 

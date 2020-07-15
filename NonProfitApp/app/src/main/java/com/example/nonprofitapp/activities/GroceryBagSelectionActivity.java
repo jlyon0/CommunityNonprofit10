@@ -1,4 +1,4 @@
-package com.example.nonprofitapp;
+package com.example.nonprofitapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
+
+import com.example.nonprofitapp.R;
 
 public class GroceryBagSelectionActivity extends AppCompatActivity {
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";

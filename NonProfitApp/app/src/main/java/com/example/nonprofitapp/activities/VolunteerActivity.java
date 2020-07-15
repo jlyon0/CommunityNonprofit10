@@ -1,4 +1,4 @@
-package com.example.nonprofitapp;
+package com.example.nonprofitapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+
+import com.example.nonprofitapp.DataWrapper;
+import com.example.nonprofitapp.MyRecyclerViewAdapter;
+import com.example.nonprofitapp.R;
 
 import java.util.ArrayList;
 import java.util.Random;

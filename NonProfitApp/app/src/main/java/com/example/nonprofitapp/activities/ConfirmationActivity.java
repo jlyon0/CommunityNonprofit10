@@ -1,18 +1,15 @@
-package com.example.nonprofitapp;
+package com.example.nonprofitapp.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.util.Calendar;
-import android.icu.util.GregorianCalendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.example.nonprofitapp.R;
 
 public class ConfirmationActivity extends AppCompatActivity {
 

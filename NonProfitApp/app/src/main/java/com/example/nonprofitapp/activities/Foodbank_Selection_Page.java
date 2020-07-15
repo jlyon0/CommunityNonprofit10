@@ -1,4 +1,4 @@
-package com.example.nonprofitapp;
+package com.example.nonprofitapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.HashMap;
+import com.example.nonprofitapp.R;
 
 public class Foodbank_Selection_Page extends AppCompatActivity implements View.OnClickListener{
     Intent received;
