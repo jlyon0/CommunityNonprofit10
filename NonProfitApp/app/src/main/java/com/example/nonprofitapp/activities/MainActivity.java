@@ -1,17 +1,22 @@
 package com.example.nonprofitapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.ui.login.LoginActivity;
+import com.example.nonprofitapp.viewmodels.MainViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,18 +49,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int SIGN_IN_VOLUNTEER = 55555;
     public static final int SIGN_IN_CUSTOMER = 333;
 
+    MainViewModel viewModel;
+    DataRepository dataRepository;
     TextView welcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         Button customerSignIn = (Button) findViewById(R.id.customer_sign_in);
         customerSignIn.setOnClickListener(this);
         TextView volunteerSignIn = (TextView) findViewById(R.id.volunteer_sign_in);
         volunteerSignIn.setOnClickListener(this);
 
+
         welcome = findViewById(R.id.welcome_text);
+        if (viewModel.isLoggedIn()) {
+            Intent launchFoodBankSel = new Intent(MainActivity.this, Foodbank_Selection_Page.class);
+            startActivity(launchFoodBankSel);
+        }
     }
 
     /*
@@ -65,63 +78,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.customer_sign_in:
-                //customerClick();
-                firebaseLogin(SIGN_IN_CUSTOMER);
+                viewModel.setVolunteer(false);
+                firebaseLogin();
                 break;
             case R.id.volunteer_sign_in:
-                //volunteerClick();
-                firebaseLogin(SIGN_IN_VOLUNTEER);
+                viewModel.setVolunteer(true);
+                firebaseLogin();
                 break;
         }
     }
 
-    public void firebaseLogin(int SIGN_IN_TYPE) {
+    public void firebaseLogin() {
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 //new AuthUI.IdpConfig.AnonymousBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
         // Create and launch sign-in intent
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build(),
-                SIGN_IN_TYPE);
+        Intent launchFoodBankSel = new Intent(this, Foodbank_Selection_Page.class);
+        Intent[] launchTwo = new Intent[2];
+        launchTwo[0] = launchFoodBankSel;
+        launchTwo[1] = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+        startActivities(launchTwo);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if ((requestCode == SIGN_IN_CUSTOMER) || (requestCode == SIGN_IN_VOLUNTEER)) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                switch (requestCode) {
-                    case SIGN_IN_CUSTOMER:
-                        Intent launchFoodbankCust = new Intent(this, Foodbank_Selection_Page.class);
-                        launchFoodbankCust.putExtra(MainActivity.VOLUNTEER_LOGIN, false);
-                        startActivity(launchFoodbankCust);
-                        break;
-                    case SIGN_IN_VOLUNTEER:
-                        Intent launchFoodbankVol = new Intent(this, Foodbank_Selection_Page.class);
-                        launchFoodbankVol.putExtra(MainActivity.VOLUNTEER_LOGIN, true);
-                        startActivity(launchFoodbankVol);
-                        break;
-
-                }
-            } else {
-                welcome.setText(R.string.login_failed);
-                welcome.setTextColor(Color.RED);
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-            }
-        }
-    }
 
     public void customerClick() {
         Intent launch = new Intent(this, LoginActivity.class);

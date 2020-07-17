@@ -50,6 +50,7 @@ public class ConfirmationViewModel extends AndroidViewModel {
                 22,
                 12,
                 Color.RED);*/
+        dataWrapper.setUid(dataRepository.getUser().getUid());
     }
 
     public String getConfirmationString() {

@@ -32,6 +32,8 @@ public class DataRepository {
     private CollectionReference foodBankOrders;
     private DocumentReference foodBank;
 
+    boolean isVolunteer;
+
     private static final String TAG = DataRepository.class.getName();
 
     /**
@@ -66,15 +68,30 @@ public class DataRepository {
         return dataWrapper;
     }
 
+    /**
+     * Call when you need to reset user.
+     */
     public void initUser() {
         if (user != null) {
             user.reload();
         }
         user = firebaseAuth.getCurrentUser();
     }
+
+    /**
+     * Normal getter
+     * @return
+     */
     public FirebaseUser getUser() {
         return user;
     }
+
+
+    public boolean isLoggedIn() {
+        initUser();
+        return (getUser() != null);
+    }
+
     public void setFoodBank(String foodBankName) {
         foodBank = db.collection("/foodbanks/").document(foodBankName);
         foodBankOrders = foodBank.collection("orders");
@@ -109,5 +126,17 @@ public class DataRepository {
 
     public DocumentReference getFoodBank() {
         return foodBank;
+    }
+
+    public void setDataWrapper(DataWrapper dataWrapper) {
+        this.dataWrapper = dataWrapper;
+    }
+
+    public boolean isVolunteer() {
+        return isVolunteer;
+    }
+
+    public void setVolunteer(boolean volunteer) {
+        isVolunteer = volunteer;
     }
 }

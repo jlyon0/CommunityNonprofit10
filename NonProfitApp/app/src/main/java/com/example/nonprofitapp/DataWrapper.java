@@ -17,6 +17,7 @@ public class DataWrapper implements Serializable {
     private int minute;
     private int color;
     private boolean isCompleted;
+    private String uid;
 
     /**
      * Uses buttonId to remain compatible with firebase data, but it isn't used.
@@ -124,6 +125,10 @@ public class DataWrapper implements Serializable {
         this.color = color;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
@@ -134,5 +139,13 @@ public class DataWrapper implements Serializable {
 
     public void setBankButtonID(String bankButtonID) {
         this.bankButtonID = bankButtonID;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
