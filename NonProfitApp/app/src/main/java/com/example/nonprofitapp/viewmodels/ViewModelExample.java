@@ -1,5 +1,9 @@
 package com.example.nonprofitapp.viewmodels;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -27,7 +31,7 @@ public class ViewModelExample extends ViewModel {
         }
         dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
         // set the live data
-        liveUser = dataRepository.getUser();
+        //liveUser = dataRepository.getUser();
     }
 
     public void createOrder() {

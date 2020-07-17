@@ -1,27 +1,39 @@
 package com.example.nonprofitapp;
 
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 
 import java.io.Serializable;
 
 public class DataWrapper implements Serializable {
     private String displayName;
     private String foodBank;
-    private String bankButtonID;
     private String bag;
     private int year;
     private int month;
     private int day;
     private int hour;
     private int minute;
-
     private int color;
+    private boolean isCompleted;
 
-    public DataWrapper(String displayName, String foodBank, String bankButtonID, String bag,
+    /**
+     * Uses buttonId to remain compatible with firebase data, but it isn't used.
+     * @param displayName
+     * @param foodBank
+     * @param buttonId
+     * @param bag
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minute
+     * @param color
+     */
+    public DataWrapper(String displayName, String foodBank, String buttonId, String bag,
                        int year, int month, int day, int hour, int minute, int color) {
         this.displayName = displayName;
         this.foodBank = foodBank;
-        this.bankButtonID = bankButtonID;
         this.bag = bag;
         this.year = year;
         this.month = month;
@@ -29,6 +41,7 @@ public class DataWrapper implements Serializable {
         this.hour = hour;
         this.minute = minute;
         this.color = color;
+        isCompleted = false;
     }
 
     /**
@@ -54,14 +67,6 @@ public class DataWrapper implements Serializable {
 
     public void setFoodBank(String foodBank) {
         this.foodBank = foodBank;
-    }
-
-    public String getBankButtonID() {
-        return bankButtonID;
-    }
-
-    public void setBankButtonID(String bankButtonID) {
-        this.bankButtonID = bankButtonID;
     }
 
     public String getBag() {
@@ -118,4 +123,11 @@ public class DataWrapper implements Serializable {
         this.color = color;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
 }

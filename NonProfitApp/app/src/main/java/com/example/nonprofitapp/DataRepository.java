@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,24 +76,16 @@ public class DataRepository {
         foodBank = db.collection("/foodbanks/").document(foodBankName);
         foodBankOrders = foodBank.collection("orders");
     }
-    public ArrayList<DataWrapper> getOrders() {
-        final MutableLiveData<ArrayList<DataWrapper>> mOrders = new MutableLiveData<>();
-        mOrders.setValue(new ArrayList<DataWrapper>());
-        ArrayList<DataWrapper> orders = new ArrayList<>();
-        foodBankOrders.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.i(TAG, "Successful!");
-                    for (DocumentSnapshot document : task.getResult().getDocuments()) {
-                        ArrayList<DataWrapper> orders = mOrders.getValue();
-                        orders.add(document.toObject(DataWrapper.class));
 
-                    }
-                }
-            }
-        });
-        return null;
+
+    /**
+     * Messing with getting orders and returning a normal object. This is going to eat time on the
+     * main thread, so it is not ideal. Uses class wide object orders.
+     */
+    //private Task<QuerySnapshot> orders = new ArrayList<>();
+    synchronized public Task<QuerySnapshot> getOrdersNonLive() {
+        Log.i(TAG, "Launched task");
+        return foodBankOrders.get();
     }
 
     public void validateEmail() {

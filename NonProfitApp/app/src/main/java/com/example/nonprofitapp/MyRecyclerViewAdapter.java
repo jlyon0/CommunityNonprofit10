@@ -1,6 +1,7 @@
 package com.example.nonprofitapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
-    private ArrayList<DataWrapper> orders = new ArrayList<>();
+    private ArrayList<DataWrapper> orders;
+    private Context context;
+
 
     /*
      * Data comes in here.
@@ -21,8 +24,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
      * If you want to send intents from this class, add context to this constructor and pass this
      * in when it's called, see here: https://github.com/mitchtabian/Recyclerview
      */
-    public MyRecyclerViewAdapter(ArrayList<DataWrapper> fetchedOrders) {
-        orders.addAll(fetchedOrders);
+    public MyRecyclerViewAdapter(Context context, ArrayList<DataWrapper> fetchedOrders) {
+        this.context = context;
+        orders = fetchedOrders;
     }
 
     /*
@@ -58,6 +62,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         holder.orderDetails.setText(ordersum);
         holder.colorPanel.setBackgroundColor(order.getColor());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

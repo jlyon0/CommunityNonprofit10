@@ -1,26 +1,56 @@
 package com.example.nonprofitapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class GroceryBagSelectionActivity extends AppCompatActivity {
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";
     private String bag = "custom"; // default to custom bag
     private final int DEFAULT_FOOD_BANK = -1;
+    private static final String TAG = GroceryBagSelectionActivity.class.getName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery_bag_selection);
-
+        FirebaseAuth.getInstance().getCurrentUser().reload();
+        Log.i(TAG, "" + FirebaseAuth.getInstance().getCurrentUser().isEmailVerified());
         Intent receivedLauncher = getIntent();
-        int foodBankID = receivedLauncher.getIntExtra(MainActivity.FOOD_BANK_BUTTON, DEFAULT_FOOD_BANK);
+
+       // int foodBankID = receivedLauncher.getIntExtra(MainActivity.FOOD_BANK_BUTTON, DEFAULT_FOOD_BANK);
+
+        // check that an admin can delete files:
+        DataRepository dataRepository = DataRepository.getInstance();
+        dataRepository.setFoodBank("Gleaners");
+        dataRepository.getFoodBankOrders().document("5GfoQUt7HMbjCQHXwGnp").delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i(TAG, "Successfully Deleted, with user: " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Log.i(TAG, "Failed, with user: " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                    }
+                });
 
         RadioGroup rg = findViewById(R.id.radioGroup);
 

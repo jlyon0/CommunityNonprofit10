@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+<!--
+    <color name="colorPrimary">#B3220A</color>
+    <color name="colorPrimaryDark">#700603</color>
+    <color name="colorAccent">#89B7BD</color>
+    <color name="colorPrimaryLight">#F4DCBF</color>
+-->
+    <!-- from slow rush -->
+    <!--<color name="colorPrimary">#B3220A</color>
+    <color name="colorPrimaryDark">#700603</color>
+    <color name="colorAccent">#6BA4AC</color>
+    <color name="colorPrimaryLight">#F4DCBF</color> -->
+    <!-- from DAMN -->
+    <!-- <color name="colorPrimary">#6C3A49</color>
+    <color name="colorPrimaryDark">#1E1E28</color>
+    <color name="colorAccent">#F10909</color>
+    <color name="colorPrimaryLight">#D6D7E5</color>-->
+    <!-- currents -->
     <color name="colorPrimary">#917BA3</color>
     <color name="colorPrimaryDark">#796083</color>
     <color name="colorAccent">#ff453d</color>
     <color name="colorPrimaryLight">#D2B7CC</color>
-    <!--    <color name="colorPrimary">#008577</color>
+    <!-- original  <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color> -->
 </resources>

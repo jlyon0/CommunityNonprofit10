@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void firebaseLogin(int SIGN_IN_TYPE) {
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.AnonymousBuilder().build());
+                //new AuthUI.IdpConfig.AnonymousBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build());
         // Create and launch sign-in intent
         startActivityForResult(
                 AuthUI.getInstance()
