@@ -27,7 +27,7 @@ public class ViewModelExample extends ViewModel {
         }
         dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
         // set the live data
-        liveUser = dataRepository.getUser();
+        //liveUser = dataRepository.getUser();
     }
 
     public void createOrder() {
