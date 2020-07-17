@@ -67,6 +67,9 @@ public class DataRepository {
     }
 
     public void initUser() {
+        if (user != null) {
+            user.reload();
+        }
         user = firebaseAuth.getCurrentUser();
     }
     public FirebaseUser getUser() {
