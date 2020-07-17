@@ -8,95 +8,12 @@
     tools:context=".Foodbank_Selection_Page">
 
     <Button
-        android:id="@+id/Midwest_Food_Bank"
+        android:id="@+id/continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="48dp"
-        android:onClick="onClick"
-        android:text="Midwest Food Bank"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/Gleaners_Food_Bank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:onClick="onClick"
-
-        android:text="Gleaners Food Bank"
-        app:layout_constraintStart_toStartOf="@+id/Midwest_Food_Bank"
-        app:layout_constraintTop_toBottomOf="@+id/Midwest_Food_Bank" />
-
-    <Button
-        android:id="@+id/Crooked_Creek_Food_Pantry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:onClick="onClick"
-
-        android:text="Crooked Creek Food Pantry"
-        app:layout_constraintStart_toStartOf="@+id/Billies_Food_Pantry"
-        app:layout_constraintTop_toBottomOf="@+id/Billies_Food_Pantry" />
-
-    <Button
-        android:id="@+id/Billies_Food_Pantry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:onClick="onClick"
-
-        android:text="Billie's Food Pantry"
-        app:layout_constraintStart_toStartOf="@+id/Gleaners_Food_Bank"
-        app:layout_constraintTop_toBottomOf="@+id/Gleaners_Food_Bank" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="153dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="50dp"
-
-        android:text="6450 S Belmont Ave, Indianapolis, IN 46217"
-        app:layout_constraintBottom_toBottomOf="@+id/Midwest_Food_Bank"
-        app:layout_constraintStart_toEndOf="@+id/Midwest_Food_Bank"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="158dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:text="3737 Waldemere Ave, Indianapolis, IN 46241"
-        app:layout_constraintBottom_toBottomOf="@+id/Gleaners_Food_Bank"
-        app:layout_constraintStart_toEndOf="@+id/Gleaners_Food_Bank"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="165dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="50dp"
-        android:text="1754 W Morris St, Indianapolis, IN 46221"
-        app:layout_constraintBottom_toBottomOf="@+id/Billies_Food_Pantry"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="110dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginTop="50dp"
-        android:text="6940 N Michigan Rd, Indianapolis, IN 46268"
-        app:layout_constraintBottom_toBottomOf="@+id/Crooked_Creek_Food_Pantry"
-        app:layout_constraintStart_toEndOf="@+id/Crooked_Creek_Food_Pantry"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
+        android:layout_marginBottom="48dp"
+        android:text="Select Food Bank"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

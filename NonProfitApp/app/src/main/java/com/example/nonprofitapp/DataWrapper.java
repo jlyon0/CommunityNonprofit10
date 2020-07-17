@@ -1,5 +1,5 @@
 package com.example.nonprofitapp;
-
+import android.graphics.Color;
 import java.io.Serializable;
 
 public class DataWrapper implements Serializable {
@@ -26,6 +26,15 @@ public class DataWrapper implements Serializable {
         this.hour = hour;
         this.minute = minute;
         this.color = color;
+    }
+
+    /**
+     * To instantiate a DataWrapper at the beginning of our app, we need to be able to create
+     * an empty object.
+     */
+    public DataWrapper() {
+        this("","","","",-1,-1,-1,
+                -1,-1, Color.TRANSPARENT);
     }
 
     public String getDisplayName() {

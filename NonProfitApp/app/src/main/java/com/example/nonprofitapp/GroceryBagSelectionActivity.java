@@ -18,7 +18,7 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grocery_bag_selection);
 
         Intent receivedLauncher = getIntent();
-        int foodBankID = receivedLauncher.getIntExtra(MainActivity.FOOD_BANK_BUTTON, DEFAULT_FOOD_BANK);
+        String foodBankID = receivedLauncher.getStringExtra(MainActivity.FOOD_BANK_BUTTON);
 
         RadioGroup rg = findViewById(R.id.radioGroup);
 
