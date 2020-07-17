@@ -34,23 +34,6 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
 
        // int foodBankID = receivedLauncher.getIntExtra(MainActivity.FOOD_BANK_BUTTON, DEFAULT_FOOD_BANK);
 
-        // check that an admin can delete files:
-        DataRepository dataRepository = DataRepository.getInstance();
-        dataRepository.setFoodBank("Gleaners");
-        dataRepository.getFoodBankOrders().document("5GfoQUt7HMbjCQHXwGnp").delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.i(TAG, "Successfully Deleted, with user: " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                        Log.i(TAG, "Failed, with user: " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                    }
-                });
 
         RadioGroup rg = findViewById(R.id.radioGroup);
 
