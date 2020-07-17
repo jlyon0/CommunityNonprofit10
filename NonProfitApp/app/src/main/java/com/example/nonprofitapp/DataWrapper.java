@@ -2,13 +2,13 @@
 package com.example.nonprofitapp;
 
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 
 import java.io.Serializable;
 
 public class DataWrapper implements Serializable {
     private String displayName;
     private String foodBank;
+    private String bankButtonID;
     private String bag;
     private int year;
     private int month;
@@ -126,5 +126,13 @@ public class DataWrapper implements Serializable {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public String getBankButtonID() {
+        return bankButtonID;
+    }
+
+    public void setBankButtonID(String bankButtonID) {
+        this.bankButtonID = bankButtonID;
     }
 }

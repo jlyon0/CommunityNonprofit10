@@ -1,13 +1,12 @@
 package com.example.nonprofitapp.viewmodels;
 
 import android.app.Application;
+import android.provider.ContactsContract;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.DataWrapper;
@@ -21,18 +20,21 @@ import com.google.firebase.auth.FirebaseUser;
  * will be used. We shouldn't interact with the constructor.
  */
 
-public class ViewModelExample extends AndroidViewModel {
+public class PickupDateViewModel extends AndroidViewModel {
     private DataRepository dataRepository;
     private DataWrapper dataWrapper;
-    // some live data e.g.
-    private LiveData<FirebaseUser> liveUser;
 
-    public ViewModelExample(@NonNull Application application) {
+    public PickupDateViewModel(@NonNull Application application) {
         super(application);
         if (dataRepository != null) {
             return;
         }
         dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
         dataWrapper = dataRepository.getDataWrapper();
+    }
+    public void setDate(DatePicker datePicker) {
+        dataWrapper.setDay(datePicker.getDayOfMonth());
+        dataWrapper.setMonth(datePicker.getMonth());
+        dataWrapper.setYear(datePicker.getYear());
     }
 }

@@ -22,6 +22,7 @@ import com.example.nonprofitapp.MyRecyclerViewAdapter;
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.viewmodels.VolunteerViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -61,7 +62,7 @@ public class VolunteerActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.list);
 
         // where most of the magic happens
-        recyclerViewAdapter = new MyRecyclerViewAdapter(this, viewModel.getOrders());
+        recyclerViewAdapter = new MyRecyclerViewAdapter(this, viewModel.getLiveOrders().getValue());
         recyclerView.setAdapter(recyclerViewAdapter);
 
         // linear layout manager as opposed to grid
@@ -71,15 +72,16 @@ public class VolunteerActivity extends AppCompatActivity {
 
 
         // update data if it changes
-//        viewModel.fetchOrdersLive().observe(this, new Observer<ArrayList<DataWrapper>>() {
-//            @Override
-//            public void onChanged(ArrayList<DataWrapper> dataWrappers) {
-//                Log.i(TAG, "orders changed.");
-//                // orders.clear();
-//                // orders.addAll(dataWrappers);
-//                recyclerViewAdapter.notifyDataSetChanged();
-//            }
-//        });
+        viewModel.getLiveOrders().observe(this, new Observer<ArrayList<DataWrapper>>() {
+            @Override
+            public void onChanged(ArrayList<DataWrapper> dataWrappers) {
+                // this will work if we move to realtime updates too.
+                Log.i(TAG, "orders changed.");
+                recyclerViewAdapter.notifyDataSetChanged();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
         pullToRefresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimaryLight),
                 getResources().getColor(R.color.colorPrimary),
@@ -89,8 +91,6 @@ public class VolunteerActivity extends AppCompatActivity {
             public void onRefresh() {
                 Log.i(TAG, "refresh pull happened, fetching Orders");
                 fetchOrders();
-                //viewModel.fetchOrdersLive();
-
             }
         });
 
@@ -100,23 +100,15 @@ public class VolunteerActivity extends AppCompatActivity {
     }
 
     /**
-     * Fetch orders without the use of LiveData.
+     * Fetch orders. Mostly exists to make a toast if the refresh fails.
      */
     private void fetchOrders() {
-        viewModel.fetchOrdersNonLive().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        viewModel.fetchOrdersLive().addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.i(TAG, "entered activity oncomplete");
-                if (task.isSuccessful()) {
-                    Log.i(TAG, "Success, now notifying.");
-                    recyclerViewAdapter.notifyDataSetChanged(); // allows main thread to start again.
-                    pullToRefresh.setRefreshing(false);
-                } else {
-                    Toast.makeText(VolunteerActivity.this,
-                            "Sorry, order refreshing failed.",
-                            Toast.LENGTH_LONG)
-                    .show();
-                }
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(VolunteerActivity.this,
+                        "Failed to refresh, try again",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

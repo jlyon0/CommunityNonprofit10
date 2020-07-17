@@ -2,6 +2,7 @@ package com.example.nonprofitapp.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Build;
@@ -10,15 +11,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.nonprofitapp.R;
+import com.example.nonprofitapp.viewmodels.ConfirmationViewModel;
+import com.example.nonprofitapp.viewmodels.VolunteerViewModel;
 
 public class ConfirmationActivity extends AppCompatActivity {
-
+    ConfirmationViewModel viewModel;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
         // TODO display all info here
+        viewModel = ViewModelProviders.of(this).get(ConfirmationViewModel.class);
 
         // Get the Intent that started this activity and extract the info
         Intent intent = getIntent();
@@ -31,32 +35,13 @@ public class ConfirmationActivity extends AppCompatActivity {
         String foodBankId = intent.getStringExtra(MainActivity.FOOD_BANK_BUTTON);
 
         TextView foodBank = findViewById(R.id.foodBank);
-        TextView bagType = findViewById(R.id.bagType);
-        TextView pickup = findViewById(R.id.pickupTime);
+        //TextView bagType = findViewById(R.id.bagType);
+        //TextView pickup = findViewById(R.id.pickupTime);
 
-        foodBank.setText("Food Bank " + foodBankId);
-        bagType.setText(bag);
+        foodBank.setText(viewModel.getConfirmationString());//"Food Bank " + foodBankId);
+        //bagType.setText(bag);
+        //pickup.setText(dateTime);
 
-//        if (hour > 12) {
-//            hour -= 12;
-//        }
-
-        String dateTime = String.format("Arriving at %d:%02d on %d/%d/%d",
-                hour,
-                minute,
-                month,
-                day,
-                year);
-        pickup.setText(dateTime);
-
-//        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-//        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
-//        String date = format.format(calendar.getTime());
-//        pickup.setText(date);
-
-//        android.text.format.DateFormat df = new android.text.format.DateFormat();
-//        df.format("yyyy-MM-dd hh:mm:ss a", new java.util.Date(year, month, day, hour, minute));
-//        pickup.setText(df.toString());
 
         // Capture the layout's TextView and set the string as its text
         //TextView textView = findViewById(R.id.textView);
