@@ -1,3 +1,4 @@
+
 package com.example.nonprofitapp;
 
 import android.graphics.Color;
@@ -121,10 +122,6 @@ public class DataWrapper implements Serializable {
 
     public void setColor(int color) {
         this.color = color;
-    }
-
-    public boolean isCompleted() {
-        return isCompleted;
     }
 
     public void setCompleted(boolean completed) {
