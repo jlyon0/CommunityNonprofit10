@@ -123,7 +123,7 @@ public class VolunteerActivity extends AppCompatActivity {
     /*
      * Generate some fake orders for testing. Add them to "orders".
      */
-    private void generateFakeOrders(int howMany) {
+    /*private void generateFakeOrders(int howMany) {
         Random random = new Random();
 
         for (int i = 0; i < howMany; i++) {
@@ -139,6 +139,9 @@ public class VolunteerActivity extends AppCompatActivity {
                     1,
                     1,
                     color));
+
         }
-    } /* generateFakeOrders() */
+    }
+     */
+    /* generateFakeOrders() */
 }
