@@ -4,28 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.R;
-import com.example.nonprofitapp.ui.login.LoginActivity;
 import com.example.nonprofitapp.viewmodels.MainViewModel;
-import com.example.nonprofitapp.viewmodels.ViewModelExample;
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.SetOptions;
-import com.google.type.Date;
 
 
 import java.util.Arrays;
@@ -78,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
     public void setUpGUI() {
-        customerSignIn = (Button) findViewById(R.id.customer_sign_in);
+        customerSignIn = findViewById(R.id.customer_sign_in);
         customerSignIn.setOnClickListener(this);
-        volunteerSignIn = (TextView) findViewById(R.id.volunteer_sign_in);
+        volunteerSignIn = findViewById(R.id.volunteer_sign_in);
         volunteerSignIn.setOnClickListener(this);
         signOut = findViewById(R.id.main_sign_out);
 
@@ -96,8 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (viewModel.isLoggedIn()) {
             customerSignIn.setText("Use as Customer");
             volunteerSignIn.setText("Use as Volunteer");
-//            Intent launchFoodBankSel = new Intent(MainActivity.this, Foodbank_Selection_Page.class);
-//            startActivity(launchFoodBankSel);
         } else {
             customerSignIn.setText(R.string.cust_sign_in);
             volunteerSignIn.setText(R.string.vol_sign_in);
@@ -148,19 +138,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setAvailableProviders(providers)
                 .build();
         startActivities(launchTwo);
-    }
-
-
-    public void customerClick() {
-        Intent launch = new Intent(this, LoginActivity.class);
-        launch.putExtra(VOLUNTEER_LOGIN, false);
-        startActivity(launch);
-    }
-
-    public void volunteerClick() {
-        Intent launch = new Intent(this, LoginActivity.class);
-        launch.putExtra(VOLUNTEER_LOGIN, true);
-        startActivity(launch);
     }
 
     /**
