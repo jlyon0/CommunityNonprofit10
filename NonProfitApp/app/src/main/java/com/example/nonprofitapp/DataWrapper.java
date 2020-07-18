@@ -17,6 +17,7 @@ public class DataWrapper implements Serializable {
     private int minute;
     private int color;
     private boolean isCompleted;
+    private int progress;
 
     /**
      * Uses buttonId to remain compatible with firebase data, but it isn't used.
@@ -119,12 +120,22 @@ public class DataWrapper implements Serializable {
     public int getColor() {
         return color;
     }
-
     public void setColor(int color) {
         this.color = color;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setIsCompleted(boolean completed) {
         isCompleted = completed;
+    }
+    public boolean getIsCompleted()    {
+        return isCompleted;
+    }
+
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+    public int getProgress() {
+        return progress;
     }
 }
