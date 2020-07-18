@@ -72,11 +72,12 @@ public class DataRepository {
      * Call when you need to reset user.
      */
     public void initUser() {
+        user = firebaseAuth.getCurrentUser();
         if (user != null) {
             Log.i(TAG, "Refreshed user!");
             firebaseAuth.getCurrentUser().reload();
+            user = firebaseAuth.getCurrentUser();
         }
-        user = firebaseAuth.getCurrentUser();
     }
 
     /**

@@ -8,19 +8,23 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.ui.login.LoginActivity;
 import com.example.nonprofitapp.viewmodels.MainViewModel;
+import com.example.nonprofitapp.viewmodels.ViewModelExample;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.SetOptions;
 import com.google.type.Date;
 
 
@@ -49,26 +53,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int SIGN_IN_VOLUNTEER = 55555;
     public static final int SIGN_IN_CUSTOMER = 333;
 
+    private static final String TAG = MainActivity.class.getName();
+
     MainViewModel viewModel;
-    DataRepository dataRepository;
     TextView welcome;
+    Button customerSignIn;
+    TextView volunteerSignIn;
+    Button signOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        Button customerSignIn = (Button) findViewById(R.id.customer_sign_in);
-        customerSignIn.setOnClickListener(this);
-        TextView volunteerSignIn = (TextView) findViewById(R.id.volunteer_sign_in);
-        volunteerSignIn.setOnClickListener(this);
 
+        setUpGUI();
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.signOut();
+                setUpGUI();
+            }
+        });
+    }
+    public void setUpGUI() {
+        customerSignIn = (Button) findViewById(R.id.customer_sign_in);
+        customerSignIn.setOnClickListener(this);
+        volunteerSignIn = (TextView) findViewById(R.id.volunteer_sign_in);
+        volunteerSignIn.setOnClickListener(this);
+        signOut = findViewById(R.id.main_sign_out);
+
+        viewModel.getToastText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String string) {
+                Log.i(TAG, "textchanged " + string);
+                Toast.makeText(MainActivity.this, string, Toast.LENGTH_LONG).show();
+            }
+        });
 
         welcome = findViewById(R.id.welcome_text);
         if (viewModel.isLoggedIn()) {
-            Intent launchFoodBankSel = new Intent(MainActivity.this, Foodbank_Selection_Page.class);
-            startActivity(launchFoodBankSel);
+            customerSignIn.setText("Use as Customer");
+            volunteerSignIn.setText("Use as Volunteer");
+//            Intent launchFoodBankSel = new Intent(MainActivity.this, Foodbank_Selection_Page.class);
+//            startActivity(launchFoodBankSel);
+        } else {
+            customerSignIn.setText(R.string.cust_sign_in);
+            volunteerSignIn.setText(R.string.vol_sign_in);
+            // if no one is logged in, don't offer a sign out button.
+            signOut.setVisibility(View.GONE);
         }
+
     }
 
     /*
@@ -79,11 +115,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.customer_sign_in:
                 viewModel.setVolunteer(false);
-                firebaseLogin();
+                if (!viewModel.isLoggedIn()) {
+                    firebaseLogin();
+                } else {
+                    Intent launchFoodBankSel = new Intent(MainActivity.this, Foodbank_Selection_Page.class);
+                    startActivity(launchFoodBankSel);
+                }
                 break;
             case R.id.volunteer_sign_in:
                 viewModel.setVolunteer(true);
-                firebaseLogin();
+                if (!viewModel.isLoggedIn()) {
+                    firebaseLogin();
+                } else {
+                    Intent launchFoodBankSel = new Intent(MainActivity.this, Foodbank_Selection_Page.class);
+                    startActivity(launchFoodBankSel);
+                }
                 break;
         }
     }
@@ -117,7 +163,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(launch);
     }
 
-    /** Called after user logs in as a customer and selects a food bank */
+    /**
+     * Called after user logs in as a customer and selects a food bank
+     */
     public void selectGroceryBag(View view) {
         Intent intent = new Intent(this, GroceryBagSelectionActivity.class);
         startActivity(intent);
@@ -129,11 +177,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     public void sendMessageWindow(View view) {
         //do something
         Intent intent = new Intent(this, Window_Display.class);
         startActivity(intent);
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "OnRESTART: " + viewModel.isLoggedIn());
+        if (!viewModel.isLoggedIn()) {
+            // if the user is not logged in, go back to login page
+            Toast.makeText(getApplicationContext(), "Something went wrong when you logged in. Please try again.", Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -24,7 +24,6 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
     FoodBankViewModel viewModel;
     private static final String TAG = Foodbank_Selection_Page.class.getName();
 
-    private Button signOut;
     private ProgressBar progressBar;
 
     @Override
@@ -33,29 +32,32 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_foodbank__selection__page);
         received = getIntent();
         viewModel = ViewModelProviders.of(this).get(FoodBankViewModel.class);
-        signOut = findViewById(R.id.signout);
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.signOut();
-                finish();
-            }
-        });
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
-
+        viewModel.getToastText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String string) {
+                Log.i(TAG, "textchanged " + string);
+                Toast.makeText(Foodbank_Selection_Page.this, string, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onClick(final View view) {
         //TODO: Set dataRepo.setFoodBank
+        viewModel.setFoodBank(getResources().getResourceEntryName(view.getId()));
         progressBar.setVisibility(View.VISIBLE);
         if (viewModel.isVolunteer()) {
+            Log.i(TAG, "isvolunteer");
             // if it was launched as part of a volunteer login, send to volunteer page with foodbank
-            Intent launchIntent = new Intent(this, VolunteerActivity.class); //Package selection page);
-            launchIntent.putExtra(MainActivity.FOOD_BANK_BUTTON, getResources().getResourceEntryName(view.getId()));
-            startActivity(launchIntent);
+            if(viewModel.checkIfVolValid()) {
+                Intent launchIntent = new Intent(this, VolunteerActivity.class); //Package selection page);
+                launchIntent.putExtra(MainActivity.FOOD_BANK_BUTTON, getResources().getResourceEntryName(view.getId()));
+                startActivity(launchIntent);
+            }
             progressBar.setVisibility(View.INVISIBLE);
+
         } else {
             // set a foodBank first, then:
             try {
@@ -86,15 +88,18 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
 
         }
     }
-
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.i(TAG, "OnRESTART: " + viewModel.isLoggedIn());
         if (!viewModel.isLoggedIn()) {
             // if the user is not logged in, go back to login page
-            Toast.makeText(getApplicationContext(), "Something went wrong when you logged in. Please try again.", Toast.LENGTH_LONG).show();
             finish();
+        } else {
+            if (viewModel.isVolunteer()) {
+                viewModel.checkIfVolValid();
+            }
         }
     }
+
 }

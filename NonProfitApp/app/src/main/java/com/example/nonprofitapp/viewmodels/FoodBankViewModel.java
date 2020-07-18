@@ -1,6 +1,8 @@
 package com.example.nonprofitapp.viewmodels;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,10 +11,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.DataWrapper;
+import com.example.nonprofitapp.activities.Foodbank_Selection_Page;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.ArrayList;
 
 /**
  * An example class of a ViewModel.
@@ -27,6 +34,10 @@ public class FoodBankViewModel extends AndroidViewModel {
     private DataWrapper dataWrapper;
     // some live data e.g.
     private MutableLiveData<Boolean> hasOrder;
+    private MutableLiveData<String> toastText;
+    private boolean hasEmailed = false;
+
+    private static final String TAG = FoodBankViewModel.class.getName();
 
 
     public FoodBankViewModel(@NonNull Application application) {
@@ -36,27 +47,70 @@ public class FoodBankViewModel extends AndroidViewModel {
         }
         dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
         dataWrapper = dataRepository.getDataWrapper();
+        hasOrder = new MutableLiveData<>();
+        toastText = new MutableLiveData<>();
     }
 
-    public void volunteerValidation() {
-        if (dataRepository.isVolunteer()) {
+    /**
+     * Checks if the volunteer is email validated. If they are, add them to the list of volunteers.
+     * @return
+     */
+    public boolean checkIfVolValid() {
+        Log.i(TAG, "checking if valid");
+        dataRepository.initUser();
+        if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
+            Log.i(TAG, "Not email verified");
+            // if they aren't verified, verify em
+            if (!hasEmailed) {
+                dataRepository.getUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        toastText.setValue("Check " + dataRepository.getUser().getEmail()
+                                + " for a verification email to continue.");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        toastText.setValue("Failed to send a verification email to " +
+                                dataRepository.getUser().getEmail());
+                    }
+                });
+                hasEmailed = true;
+            } else {
+                toastText.setValue("Check " + dataRepository.getUser().getEmail()
+                        + " for a verification email, it may take a second.");
+            }
 
+            return false;
+        } else {
+            Log.i(TAG, "is email verified");
+            // update the vol email_list to include this persons email.
+            String uid = dataRepository.getUser().getUid();
+            //dataRepository.getVolList().document(dataRepository.getUser().getUid());
+            return true;
         }
     }
 
-    public void validateEmail() {
-        dataRepository.getFirebaseAuth().getCurrentUser().sendEmailVerification();
-        dataRepository.initUser();
+    public void setFoodBank(String fb) {
+        dataRepository.setFoodBank(fb);
+        dataWrapper.setFoodBank(fb);
     }
+
+//    public checkIfVol() {
+//        dataRepository.getVolList().
+//                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                ArrayList<String> vol_emails = documentSnapshot.getData().get("email_list")
+//            }
+//        })
+//    }
 
     public boolean isLoggedIn() {
         dataRepository.initUser();
         return (dataRepository.getUser() != null);
     }
 
-    public void signOut() {
-        dataRepository.getFirebaseAuth().signOut();
-    }
 
     public boolean isVolunteer() {
         return dataRepository.isVolunteer();
@@ -88,6 +142,10 @@ public class FoodBankViewModel extends AndroidViewModel {
                     }
                 });
         return hasOrder;
+    }
+
+    public MutableLiveData<String> getToastText() {
+        return toastText;
     }
 
 }

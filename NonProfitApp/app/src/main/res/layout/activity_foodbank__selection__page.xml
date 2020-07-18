@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/Gleaners_Food_Bank"
+        android:id="@+id/Gleaners"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -49,8 +49,8 @@
         android:onClick="onClick"
 
         android:text="Billie's Food Pantry"
-        app:layout_constraintStart_toStartOf="@+id/Gleaners_Food_Bank"
-        app:layout_constraintTop_toBottomOf="@+id/Gleaners_Food_Bank" />
+        app:layout_constraintStart_toStartOf="@+id/Gleaners"
+        app:layout_constraintTop_toBottomOf="@+id/Gleaners" />
 
     <TextView
         android:id="@+id/textView2"
@@ -73,8 +73,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
         android:text="3737 Waldemere Ave, Indianapolis, IN 46241"
-        app:layout_constraintBottom_toBottomOf="@+id/Gleaners_Food_Bank"
-        app:layout_constraintStart_toEndOf="@+id/Gleaners_Food_Bank"
+        app:layout_constraintBottom_toBottomOf="@+id/Gleaners"
+        app:layout_constraintStart_toEndOf="@+id/Gleaners"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
@@ -98,16 +98,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/Crooked_Creek_Food_Pantry"
         app:layout_constraintStart_toEndOf="@+id/Crooked_Creek_Food_Pantry"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <Button
-        android:id="@+id/signout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:text="Sign Out"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"

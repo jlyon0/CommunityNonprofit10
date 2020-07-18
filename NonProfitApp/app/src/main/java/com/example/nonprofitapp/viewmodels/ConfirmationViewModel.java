@@ -81,15 +81,20 @@ public class ConfirmationViewModel extends AndroidViewModel {
     public String getTimeString() {
         StringBuilder timeString = new StringBuilder();
         // add an am or pm
-        String amOrPm;
+        String amOrPm = "";
         if (dataWrapper.getHour() > 12) {
             timeString.append(dataWrapper.getHour() - 12);
-            amOrPm = AM;
-        } else {
-            timeString.append(dataWrapper.getHour());
             amOrPm = PM;
+        } else {
+            if (dataWrapper.getHour() == 0) {
+                timeString.append("12");
+            } else {
+                timeString.append(dataWrapper.getHour());
+                amOrPm = AM;
+            }
         }
         timeString.append(":");
+        if (dataWrapper.getMinute() < 10) timeString.append(0);
         timeString.append(dataWrapper.getMinute());
         timeString.append(amOrPm);
         return timeString.toString();

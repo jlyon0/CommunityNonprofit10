@@ -64,14 +64,39 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 progress = "Started.";
                 break;
             case 2:
-                progress = "Completed.";
+                progress = "Made, but not delivered.";
+                break;
+            case 3:
+                progress = "Delivered.";
+                break;
         }
 
-        @SuppressLint("DefaultLocale") final String ordersum = String.format("Order from %s for a %s arriving at %d:%02d on %d/%d/%d. %s",
+        StringBuilder timeString = new StringBuilder();
+        String AM = " a.m.";
+        String PM = " p.m.";
+        // same as confirmation:
+        String amOrPm = "";
+        if (order.getHour() > 12) {
+            timeString.append(order.getHour() - 12);
+            amOrPm = PM;
+        } else {
+            if (order.getHour() == 0) {
+                timeString.append("12");
+            } else {
+                timeString.append(order.getHour());
+                amOrPm = AM;
+            }
+        }
+        timeString.append(":");
+        if (order.getMinute() < 10) timeString.append(0);
+        timeString.append(order.getMinute());
+        timeString.append(amOrPm);
+        // end
+
+        @SuppressLint("DefaultLocale") final String ordersum = String.format("Order from %s for a %s arriving at %s on %d/%d/%d. %s",
                 order.getDisplayName(),
                 order.getBag(),
-                order.getHour(),
-                order.getMinute(),
+                timeString.toString(),
                 order.getMonth(),
                 order.getDay(),
                 order.getYear(),

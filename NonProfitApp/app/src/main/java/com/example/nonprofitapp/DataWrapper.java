@@ -16,7 +16,7 @@ public class DataWrapper implements Serializable {
     private int hour;
     private int minute;
     private int color;
-    private int progress; // int from 0 to 3 describing not started, in progress, and completed.
+    private int progress; // int from 0 to 2 describing not started, in progress, and completed.
     private boolean isCompleted;
     private String uid;
 

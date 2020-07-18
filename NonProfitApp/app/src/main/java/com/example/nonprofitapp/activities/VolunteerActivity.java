@@ -95,7 +95,8 @@ public class VolunteerActivity extends AppCompatActivity {
         });
 
         pullToRefresh.setRefreshing(true);
-        fetchOrders();
+        //TODO: readd below:
+        //fetchOrders();
 
     }
 

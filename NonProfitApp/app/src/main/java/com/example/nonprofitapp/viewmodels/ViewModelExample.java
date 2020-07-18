@@ -27,6 +27,8 @@ public class ViewModelExample extends AndroidViewModel {
     // some live data e.g.
     private LiveData<FirebaseUser> liveUser;
 
+    private static final String TAG = ViewModelExample.class.getName();
+
     public ViewModelExample(@NonNull Application application) {
         super(application);
         if (dataRepository != null) {
