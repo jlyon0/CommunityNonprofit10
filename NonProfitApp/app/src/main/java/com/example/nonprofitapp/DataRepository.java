@@ -31,6 +31,15 @@ public class DataRepository {
 
     private CollectionReference foodBankOrders;
     private DocumentReference foodBank;
+    private String bag;
+    private int year;
+    private int month;
+    private int day;
+    private int hour;
+    private int minute;
+    private boolean isCompleted;
+
+
 
     private static final String TAG = DataRepository.class.getName();
 
@@ -75,9 +84,14 @@ public class DataRepository {
     public FirebaseUser getUser() {
         return user;
     }
+
+
     public void setFoodBank(String foodBankName) {
         foodBank = db.collection("/foodbanks/").document(foodBankName);
         foodBankOrders = foodBank.collection("orders");
+    }
+    public void setBag(String bagName) {
+
     }
 
 
