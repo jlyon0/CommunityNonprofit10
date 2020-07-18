@@ -54,8 +54,11 @@ public class VolunteerViewModel extends AndroidViewModel {
         //orders = new ArrayList<>();
         //TODO: integrate foodbank selection into FoodbankSel page
         dataRepository.setFoodBank("Gleaners");
+        fetchOrdersLive();
 
         listenInRealtime(); // Aaay it works!!
+//        ArrayList<DataWrapper> temp = liveOrders.getValue();
+//        temp.addAll(generateFakeOrders(50));
     }
 
     /**
@@ -135,7 +138,7 @@ public class VolunteerViewModel extends AndroidViewModel {
         for (int i = 0; i < howMany; i++) {
             int color = Color.argb(255, random.nextInt(255 + 1),random.nextInt(255 + 1),random.nextInt(255 + 1));
             int foodBankInt = i % 4 + 1;
-            fakeOrders.add(new DataWrapper("namenumber" + i,
+            DataWrapper temp = new DataWrapper("namenumber" + i,
                     "At food bank " + foodBankInt,
                     "button" + foodBankInt,
                     "bag " + foodBankInt,
@@ -144,7 +147,9 @@ public class VolunteerViewModel extends AndroidViewModel {
                     1,
                     1,
                     1,
-                    color));
+                    color);
+            temp.setUid(""+i);
+            fakeOrders.add(temp);
         }
         return fakeOrders;
     } /* generateFakeOrders() */

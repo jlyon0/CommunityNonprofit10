@@ -2,9 +2,12 @@ package com.example.nonprofitapp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,8 +19,10 @@ import java.util.HashMap;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
     private ArrayList<DataWrapper> orders;
+    private ArrayList<String> checked;
     private Context context;
 
+    private static final String TAG = MyRecyclerViewAdapter.class.getName();
 
     /*
      * Data comes in here.
@@ -28,6 +33,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public MyRecyclerViewAdapter(Context context, ArrayList<DataWrapper> fetchedOrders) {
         this.context = context;
         orders = fetchedOrders;
+        checked = new ArrayList<>();
     }
 
     /*
@@ -46,27 +52,52 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
      */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        DataWrapper order = orders.get(position);
-        StringBuilder orderSummary = new StringBuilder();
-        orderSummary.append("Order from ");
-        orderSummary.append(order.getDisplayName());
-        orderSummary.append(" for a ");
-        @SuppressLint("DefaultLocale")
-        String ordersum = String.format("Order from %s for a %s arriving at %d:%02d on %d/%d/%d",
+        final DataWrapper order = orders.get(position);
+        final String uid = order.getUid();
+        String progress;
+        switch (order.getProgress()) {
+            default:
+            case 0:
+                progress = "Not started.";
+                break;
+            case 1:
+                progress = "Started.";
+                break;
+            case 2:
+                progress = "Completed.";
+        }
+
+        @SuppressLint("DefaultLocale") final String ordersum = String.format("Order from %s for a %s arriving at %d:%02d on %d/%d/%d. %s",
                 order.getDisplayName(),
                 order.getBag(),
                 order.getHour(),
                 order.getMinute(),
                 order.getMonth(),
                 order.getDay(),
-                order.getYear());
+                order.getYear(),
+                progress);
 
         holder.orderDetails.setText(ordersum);
         holder.colorPanel.setBackgroundColor(order.getColor());
+        holder.checkBox.setChecked(checked.contains(uid));
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isChecked = ((CheckBox) view).isChecked();
+                Log.i(TAG, "checked:" + isChecked + " uid: " + uid);
+
+                if (checked.contains(uid) && !isChecked) {
+                    checked.remove(uid);
+                } else if (isChecked && !checked.contains(uid)) {
+                    checked.add(uid);
+                }
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //TODO: add an order viewer
             }
         });
     }
@@ -79,11 +110,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView orderDetails;
         View colorPanel;
+        CheckBox checkBox;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             orderDetails = itemView.findViewById(R.id.order_details);
             colorPanel = itemView.findViewById(R.id.color_panel);
+            checkBox = itemView.findViewById(R.id.checkBox);
         }
 
     }

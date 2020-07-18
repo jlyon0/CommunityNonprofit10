@@ -16,6 +16,7 @@ public class DataWrapper implements Serializable {
     private int hour;
     private int minute;
     private int color;
+    private int progress; // int from 0 to 3 describing not started, in progress, and completed.
     private boolean isCompleted;
     private String uid;
 
@@ -44,6 +45,7 @@ public class DataWrapper implements Serializable {
         this.minute = minute;
         this.color = color;
         isCompleted = false;
+        progress = 0;
     }
 
     /**
@@ -147,5 +149,13 @@ public class DataWrapper implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 }

@@ -73,7 +73,8 @@ public class DataRepository {
      */
     public void initUser() {
         if (user != null) {
-            user.reload();
+            Log.i(TAG, "Refreshed user!");
+            firebaseAuth.getCurrentUser().reload();
         }
         user = firebaseAuth.getCurrentUser();
     }
@@ -132,6 +133,9 @@ public class DataRepository {
         this.dataWrapper = dataWrapper;
     }
 
+    public CollectionReference getVolList() {
+        return db.collection("/users/volunteers/uids");
+    }
     public boolean isVolunteer() {
         return isVolunteer;
     }
