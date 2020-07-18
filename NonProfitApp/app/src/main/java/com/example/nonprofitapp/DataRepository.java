@@ -98,6 +98,9 @@ public class DataRepository {
         foodBank = db.collection("/foodbanks/").document(foodBankName);
         foodBankOrders = foodBank.collection("orders");
     }
+    public void setBag(String bagName) {
+
+    }
 
 
     /**
