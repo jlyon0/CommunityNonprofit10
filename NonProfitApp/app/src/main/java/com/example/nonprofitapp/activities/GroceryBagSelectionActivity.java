@@ -47,10 +47,8 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
         buttonNames = new ArrayList<>();
         buttons = new ArrayList<>();
         // some random test buttons for now
-        buttonNames.add("Kosher");
-        buttonNames.add("Halal");
+        buttonNames.add("Kids");
         buttonNames.add("Vegan");
-        buttonNames.add("Nut Free");
         rg.setWeightSum(Float.parseFloat(buttonNames.size() + ""));
 
         for (int i = 0; i < buttonNames.size(); i++) {

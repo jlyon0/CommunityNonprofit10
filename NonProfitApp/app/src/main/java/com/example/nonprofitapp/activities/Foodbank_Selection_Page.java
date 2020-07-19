@@ -92,7 +92,8 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
     @Override
     public void onClick(final View view) {
         //TODO: Set dataRepo.setFoodBank
-        viewModel.setFoodBank(getResources().getResourceEntryName(view.getId()));
+        //viewModel.setFoodBank(getResources().getResourceEntryName(view.getId()));
+        viewModel.setFoodBank(buttonNames.get(selected));
         progressBar.setVisibility(View.VISIBLE);
         if (viewModel.isVolunteer()) {
             Log.i(TAG, "isvolunteer");
