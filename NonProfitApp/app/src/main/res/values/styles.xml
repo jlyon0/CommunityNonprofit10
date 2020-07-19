@@ -1,24 +1,26 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Material theme default color setting-->
-<!--
-        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryLightColor</item>
+        <item name="colorPrimary">@color/primaryLightColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/primaryTextColor</item>
-        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondary">@color/secondaryDarkColor</item>
         <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
-        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
--->
+        <item name="colorOnError">@color/white</item>
+
+<!--
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <!-- customizing button color -->
+        &lt;!&ndash; customizing button color &ndash;&gt;
         <item name="colorButtonNormal">@color/colorPrimaryLight</item>
+-->
     </style>
 
     <style name="AppTheme.NoActionBar">

@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="primaryColor">#ff1744</color>
+    <color name="primaryLightColor">#ff616f</color>
+    <color name="primaryDarkColor">#c4001d</color>
+    <color name="secondaryColor">#17ffd1</color>
+    <color name="secondaryLightColor">#72ffff</color>
+    <color name="secondaryDarkColor">#00cba0</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <!-- This is for Firebase themeing -->
 <!--
-    <color name="colorPrimary">#B3220A</color>
-    <color name="colorPrimaryDark">#700603</color>
-    <color name="colorAccent">#89B7BD</color>
-    <color name="colorPrimaryLight">#F4DCBF</color>
+    <color name="colorPrimary">#c4001d</color>
+    <color name="colorPrimaryDark">#c4001d</color>
+    <color name="colorAccent">#17ffd1</color>
 -->
+
+
+    <!--
+        <color name="colorPrimary">#B3220A</color>
+        <color name="colorPrimaryDark">#700603</color>
+        <color name="colorAccent">#89B7BD</color>
+        <color name="colorPrimaryLight">#F4DCBF</color>
+    -->
     <!-- from slow rush -->
     <!--<color name="colorPrimary">#B3220A</color>
     <color name="colorPrimaryDark">#700603</color>
@@ -18,10 +37,12 @@
     <color name="colorAccent">#F10909</color>
     <color name="colorPrimaryLight">#D6D7E5</color>-->
     <!-- currents -->
+<!--
     <color name="colorPrimary">#917BA3</color>
     <color name="colorPrimaryDark">#796083</color>
     <color name="colorAccent">#ff453d</color>
     <color name="colorPrimaryLight">#D2B7CC</color>
+-->
     <!-- original  <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color> -->
