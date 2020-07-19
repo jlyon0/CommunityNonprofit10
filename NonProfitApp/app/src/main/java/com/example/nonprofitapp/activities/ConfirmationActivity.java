@@ -73,12 +73,12 @@ public class ConfirmationActivity extends AppCompatActivity {
     public DataWrapper setWrapper(){
 
         DataWrapper wrapper = DataRepository.getInstance().getDataWrapper();
-        wrapper.setFoodBank(foodBankId);
-        wrapper.setBag(bag);
-        wrapper.setYear(year);
-        wrapper.setMonth(month);
-        wrapper.setDay(day);
-        wrapper.setMinute(minute);
+//        wrapper.setFoodBank(foodBankId);
+//        wrapper.setBag(bag);
+//        wrapper.setYear(year);
+//        wrapper.setMonth(month);
+//        wrapper.setDay(day);
+//        wrapper.setMinute(minute);
         wrapper.setCompleted(false);
         wrapper.setProgress(0);
 
