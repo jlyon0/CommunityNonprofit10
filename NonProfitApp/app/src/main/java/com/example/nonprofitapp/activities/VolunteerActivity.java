@@ -2,6 +2,7 @@ package com.example.nonprofitapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,34 +10,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.DataWrapper;
 import com.example.nonprofitapp.MyRecyclerViewAdapter;
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.viewmodels.VolunteerViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class VolunteerActivity extends AppCompatActivity {
     private SwipeRefreshLayout pullToRefresh;
-    private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private MyRecyclerViewAdapter recyclerViewAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private BottomAppBar bottomAppBar;
+    private FloatingActionButton advanceButton;
+
+
     private VolunteerViewModel viewModel;
     //private ArrayList<DataWrapper> orders = new ArrayList<>();
 
@@ -50,14 +48,13 @@ public class VolunteerActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(VolunteerViewModel.class);
         //viewModel.init();
+        pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setRefreshing(true);
 
-        Intent received = getIntent();
+        final Intent received = getIntent();
         String foodBankButton = received.getStringExtra(MainActivity.FOOD_BANK_BUTTON);
         getSupportActionBar().setTitle("Food Bank of " + foodBankButton);
         // add food bank specific things here later, like fetching orders
-
-        //generateFakeOrders(12);
-        pullToRefresh = findViewById(R.id.pullToRefresh);
 
         recyclerView = findViewById(R.id.list);
 
@@ -68,8 +65,6 @@ public class VolunteerActivity extends AppCompatActivity {
         // linear layout manager as opposed to grid
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-
 
         // update data if it changes
         viewModel.getLiveOrders().observe(this, new Observer<ArrayList<DataWrapper>>() {
@@ -82,10 +77,11 @@ public class VolunteerActivity extends AppCompatActivity {
             }
         });
 
-        pullToRefresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
-                getResources().getColor(R.color.colorPrimaryLight),
-                getResources().getColor(R.color.colorPrimary),
-                getResources().getColor(R.color.colorPrimaryDark));
+        pullToRefresh.setColorSchemeColors(getResources().getColor(R.color.secondaryColor),
+//                getResources().getColor(R.color.colorPrimaryLight),
+                getResources().getColor(R.color.secondaryDarkColor),
+                getResources().getColor(R.color.secondaryLightColor));
+
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -94,9 +90,45 @@ public class VolunteerActivity extends AppCompatActivity {
             }
         });
 
+
         pullToRefresh.setRefreshing(true);
         //TODO: readd below:
-        //fetchOrders();
+        fetchOrders();
+
+        viewModel.getToastText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String string) {
+                Log.i(TAG, "textchanged " + string);
+                Toast.makeText(VolunteerActivity.this, string, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        advanceButton = findViewById(R.id.advanceButton);
+        advanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.advanceProgress(recyclerViewAdapter.getChecked());
+            }
+        });
+
+        bottomAppBar = findViewById(R.id.bottomAppBar);
+        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.back :
+                        //TODO: decrement progress of the checked items
+                        viewModel.decrementProgress(recyclerViewAdapter.getChecked());
+                        return true;
+                    case R.id.trash:
+                        viewModel.deleteOrder(recyclerViewAdapter.getChecked());
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
 
     }
 
@@ -104,6 +136,7 @@ public class VolunteerActivity extends AppCompatActivity {
      * Fetch orders. Mostly exists to make a toast if the refresh fails.
      */
     private void fetchOrders() {
+        pullToRefresh.setRefreshing(true);
         viewModel.fetchOrdersLive().addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {

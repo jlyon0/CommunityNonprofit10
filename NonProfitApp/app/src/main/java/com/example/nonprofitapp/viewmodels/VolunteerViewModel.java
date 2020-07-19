@@ -3,23 +3,31 @@ package com.example.nonprofitapp.viewmodels;
 import android.app.Application;
 import android.graphics.Color;
 import android.util.Log;
+import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.DataWrapper;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +43,8 @@ public class VolunteerViewModel extends AndroidViewModel {
     private DataRepository dataRepository;
 
     private MutableLiveData<ArrayList<DataWrapper>> liveOrders;
+    private MutableLiveData<String> toastText;
+
     // for the recyclerview:
     //private ArrayList<DataWrapper> orders;
 
@@ -48,18 +58,25 @@ public class VolunteerViewModel extends AndroidViewModel {
             return;
         }
         dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
+        // init toastText
+        toastText = new MutableLiveData<>();
         // set the live data
         liveOrders = new MutableLiveData<>();
         liveOrders.setValue(new ArrayList<DataWrapper>());
         //orders = new ArrayList<>();
-        //TODO: integrate foodbank selection into FoodbankSel page
-        dataRepository.setFoodBank("Gleaners");
 
 
-        //fetchOrdersLive();
-        //listenInRealtime(); // Aaay it works!!
-        ArrayList<DataWrapper> temp = liveOrders.getValue();
-        temp.addAll(generateFakeOrders(50));
+        // remember that initial get is called through activity so it can show progress
+
+        listenInRealtime(); // Aaay it works!!
+//        ArrayList<DataWrapper> temp = liveOrders.getValue();
+//        temp.addAll(generateFakeOrders(50));
+//        liveOrders.setValue(temp);
+
+//        for (DataWrapper order : generateFakeOrders(10)) {
+//            Log.i(TAG, "Added a fake order, uid: \"" + order.getUid() + "\"");
+//            dataRepository.getFoodBankOrders().document(order.getUid()).set(order);
+//        }
     }
 
     /**
@@ -160,6 +177,118 @@ public class VolunteerViewModel extends AndroidViewModel {
         return liveOrders;
     }
 
+    public void deleteOrder(ArrayList<String> uids) {
+        final MutableLiveData<Boolean> saidNo = new MutableLiveData<>(false);
+        if (uids.size() < 1) {
+            toastText.setValue("No orders selected.");
+            return;
+        }
+        for (String uid : uids) {
+            dataRepository.getFoodBankOrders().document(uid).delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.i(TAG, "successfully deleted");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception error) {
+                            Log.i(TAG, "failed delete", error);
+                            if ((error.getMessage() != null)
+                                    && error.getMessage().contains("PERMISSION_DENIED")
+                                    && !saidNo.getValue()) {
+                                toastText.setValue("Sorry, you don't have permission to delete orders." +
+                                        "Try advancing their progress instead!");
+                                saidNo.setValue(true);
+                            }
+                        }
+                    });
+        }
+    }
+
+    public void advanceProgress(ArrayList<String> uids) {
+        if (uids.size() < 1) {
+            toastText.setValue("No orders selected.");
+            return;
+        }
+        for (final String uid : uids) {
+            dataRepository.getFoodBankOrders().document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    DataWrapper orderToAdvance = documentSnapshot.toObject(DataWrapper.class);
+                    if (orderToAdvance == null) {
+                        Log.i(TAG, String.format("Order to advance uid: \"%s\" is null"));
+                        return;
+                    }
+                    int progress = orderToAdvance.getProgress();
+                    if (progress > 2) {
+                        toastText.setValue("Already completed.");
+                        return;
+                    }
+                    progress++;
+                    orderToAdvance.setProgress(progress);
+                    dataRepository.getFoodBankOrders().document(uid).set(orderToAdvance)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.i(TAG, "Advanced succesfully " + uid);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.i(TAG, "Failed to advance " + uid);
+                                }
+                            }); // set listeners
+                }
+            }); // get listeners
+        } // uid loop
+    } // advanceProgress()
+
+    public void decrementProgress(ArrayList<String> uids) {
+        if (uids.size() < 1) {
+            toastText.setValue("No orders selected.");
+            return;
+        }
+        for (final String uid : uids) {
+            dataRepository.getFoodBankOrders().document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    DataWrapper orderToAdvance = documentSnapshot.toObject(DataWrapper.class);
+                    if (orderToAdvance == null) {
+                        Log.i(TAG, String.format("Order to advance uid: \"%s\" is null"));
+                        return;
+                    }
+                    int progress = orderToAdvance.getProgress();
+                    if (progress < 1) {
+                        toastText.setValue("This order wasn't started.");
+                        return;
+                    }
+                    progress--;
+                    orderToAdvance.setProgress(progress);
+                    dataRepository.getFoodBankOrders().document(uid).set(orderToAdvance)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.i(TAG, "Decremented succesfully " + uid);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.i(TAG, "Failed to decrement " + uid);
+                                }
+                            }); // set listeners
+                }
+            }); // get listeners
+        } // uid loop
+    } // decrementProgress()
+
+
+    public LiveData<String> getToastText() {
+        return toastText;
+    }
 /*
     public ArrayList<DataWrapper> getOrders() {
         return orders;

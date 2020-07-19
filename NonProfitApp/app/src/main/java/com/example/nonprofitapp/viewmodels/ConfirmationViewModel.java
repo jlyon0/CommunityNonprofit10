@@ -99,4 +99,20 @@ public class ConfirmationViewModel extends AndroidViewModel {
         timeString.append(amOrPm);
         return timeString.toString();
     } /* getTimeString() */
+
+    public DataWrapper setWrapper(){
+
+        DataWrapper wrapper = dataRepository.getDataWrapper();
+//        wrapper.setFoodBank(foodBankId);
+//        wrapper.setBag(bag);
+//        wrapper.setYear(year);
+//        wrapper.setMonth(month);
+//        wrapper.setDay(day);
+//        wrapper.setMinute(minute);
+        wrapper.setCompleted(false);
+        wrapper.setProgress(0);
+
+        return wrapper;
+    }
+
 }

@@ -147,5 +147,4 @@ public class FoodBankViewModel extends AndroidViewModel {
     public MutableLiveData<String> getToastText() {
         return toastText;
     }
-
 }
