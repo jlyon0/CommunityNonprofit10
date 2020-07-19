@@ -3,14 +3,22 @@ package com.example.nonprofitapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class GroceryBagSelectionActivity extends AppCompatActivity {
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";
-    private String bag = "custom"; // default to custom bag
+    private int selected = -1; // TODO pick a valid default value later
     private final int DEFAULT_FOOD_BANK = -1;
+    private ArrayList<String> buttonNames; // get these from Firebase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,33 +29,49 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
         String foodBankID = receivedLauncher.getStringExtra(MainActivity.FOOD_BANK_BUTTON);
 
         RadioGroup rg = findViewById(R.id.radioGroup);
+        buttonNames = new ArrayList<>();
+        // some random test buttons for now
+        buttonNames.add("Kosher");
+        buttonNames.add("Halal");
+        buttonNames.add("Vegan");
+        buttonNames.add("Nut Free");
+        rg.setWeightSum(Float.parseFloat(buttonNames.size() + ""));
 
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        for (int i = 0; i < buttonNames.size(); i++) {
+            // create the radio button; add constraints
+            RadioButton radioButton = new RadioButton(this);
+            radioButton.setId(i);
+            //RadioGroup.LayoutParams childParam1 = new RadioGroup.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+            //childParam1.setMarginEnd(2);
+            //radioButton.setGravity(Gravity.CENTER);
+            //radioButton.setLayoutParams(childParam1);
+            //radioButton.setBackground(null);
+            radioButton.setText(buttonNames.get(i));
+
+            // TODO check out this line
+            radioButton.setButtonDrawable(null);
+
+            radioButton.setVisibility(View.VISIBLE);
+
+            // set the default value
+            if (buttonNames.get(i).equals("Vegan")) {
+                radioButton.setChecked(true);
+                radioButton.setTextColor(Color.BLUE);
+            }
+
+            // TODO check out this line
+            //rg.addView(radioButton, childParam1);
+            rg.addView(radioButton);
+        }
+
+        // redraw the radio group
+        rg.invalidate();
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
-                    case R.id.kidBag:
-                        bag = "Kid Bag";
-                        break;
-                    case R.id.glutenFree:
-                        bag = "Gluten Free Bag";
-                        break;
-                    case R.id.halalBag:
-                        bag = "Halal Bag";
-                        break;
-                    case R.id.kosherBag:
-                        bag = "Kosher Bag";
-                        break;
-                    case R.id.nutFreeBag:
-                        bag = "Nut Free Bag";
-                        break;
-                    case R.id.vegetarianBag:
-                        bag = "Vegetarian Bag";
-                        break;
-                    case R.id.customBag:
-                        bag = "Custom Bag";
-                        break;
-                }
+                // TODO eventually get the bag name somehow
+                selected = checkedId;
             }
         });
     }
@@ -55,7 +79,8 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
     /** Called after user logs in as a customer and selects a food bank and grocery bag */
     public void toSelectPickupTime(View view) {
         Intent intent = new Intent(this, PickupDateSelectionActivity.class);
-        intent.putExtra(SELECTED_BAG, bag);
+        // TODO put the info for the selected bag here
+        //intent.putExtra(SELECTED_BAG, bag);
         intent.putExtra(MainActivity.FOOD_BANK_BUTTON, getIntent().getStringExtra(MainActivity.FOOD_BANK_BUTTON));
         startActivity(intent);
     }

@@ -22,11 +22,12 @@
         android:id="@+id/radioGroup"
         android:layout_width="409dp"
         android:layout_height="0dp"
+        android:layout_marginStart="25dp"
         app:layout_constraintBottom_toTopOf="@+id/continueToPickup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
+        <!-- Hard coded radio buttons
         <RadioButton
             android:id="@+id/customBag"
             android:layout_width="wrap_content"
@@ -90,7 +91,7 @@
             android:layout_marginTop="40dp"
             android:text="Vegetarian Bag"
             app:layout_constraintTop_toBottomOf="@+id/glutenFree"
-            tools:layout_editor_absoluteX="140dp" />
+            tools:layout_editor_absoluteX="140dp" /> -->
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
