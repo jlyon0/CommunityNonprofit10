@@ -16,81 +16,102 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        android:layout_marginBottom="@dimen/margin_medium" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="409dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/continueToPickup"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/customBag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:text="Custom Bag"
-            app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
-            tools:layout_editor_absoluteX="151dp" />
-
-        <RadioButton
-            android:id="@+id/kidBag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="46dp"
-            android:text="Kid Friendly Bag"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clipToPadding="false"
+        android:paddingBottom="200dp">
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            app:layout_constraintBottom_toTopOf="@+id/continueToPickup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vegetarianBag" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/glutenFree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Gluten Free Bag"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <RadioButton
+                android:id="@+id/customBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
 
-        <RadioButton
-            android:id="@+id/halalBag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="47dp"
-            android:text="Halal Bag"
-            app:layout_constraintTop_toBottomOf="@+id/kosherBag"
-            tools:layout_editor_absoluteX="159dp" />
+                android:text="Custom Bag"
+                app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
+                tools:layout_editor_absoluteX="151dp" />
 
-        <RadioButton
-            android:id="@+id/kosherBag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:text="Kosher Bag"
-            app:layout_constraintTop_toBottomOf="@+id/nutFreeBag"
-            tools:layout_editor_absoluteX="153dp" />
+            <RadioButton
+                android:id="@+id/kidBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="Kid Friendly Bag"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vegetarianBag" />
 
-        <RadioButton
-            android:id="@+id/nutFreeBag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="43dp"
-            android:text="Nut Free Bag"
-            app:layout_constraintTop_toBottomOf="@+id/kidBag"
-            tools:layout_editor_absoluteX="149dp" />
+            <RadioButton
+                android:id="@+id/glutenFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
 
-        <RadioButton
-            android:id="@+id/vegetarianBag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Vegetarian Bag"
-            app:layout_constraintTop_toBottomOf="@+id/glutenFree"
-            tools:layout_editor_absoluteX="140dp" />
-    </RadioGroup>
+                android:text="Gluten Free Bag"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/halalBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+
+                android:text="Halal Bag"
+                app:layout_constraintTop_toBottomOf="@+id/kosherBag"
+                tools:layout_editor_absoluteX="159dp" />
+
+            <RadioButton
+                android:id="@+id/kosherBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+
+                android:text="Kosher Bag"
+                app:layout_constraintTop_toBottomOf="@+id/nutFreeBag"
+                tools:layout_editor_absoluteX="153dp" />
+
+            <RadioButton
+                android:id="@+id/nutFreeBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+
+                android:text="Nut Free Bag"
+                app:layout_constraintTop_toBottomOf="@+id/kidBag"
+                tools:layout_editor_absoluteX="149dp" />
+
+            <RadioButton
+                android:id="@+id/vegetarianBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+
+                android:text="Vegetarian Bag"
+                app:layout_constraintTop_toBottomOf="@+id/glutenFree"
+                tools:layout_editor_absoluteX="140dp" />
+        </RadioGroup>
+
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
