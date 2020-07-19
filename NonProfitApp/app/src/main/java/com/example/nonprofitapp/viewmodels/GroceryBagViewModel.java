@@ -68,9 +68,7 @@ public class GroceryBagViewModel extends AndroidViewModel{
             return false;
         } else {
             Log.i(TAG, "is email verified");
-            // update the vol email_list to include this persons email.
             String uid = dataRepository.getUser().getUid();
-            //dataRepository.getVolList().document(dataRepository.getUser().getUid());
             return true;
         }
     }
