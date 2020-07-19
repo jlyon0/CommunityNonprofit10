@@ -30,8 +30,6 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";
     private final int DEFAULT_BAG = 0; // whatever is in the first spot in the array is the default
     private int selected = DEFAULT_BAG;
-    private String bag = "custom"; // default to custom bag
-    private final int DEFAULT_FOOD_BANK = -1;
     BagSelectViewModel viewModel;
     private static final String TAG = GroceryBagSelectionActivity.class.getName();
 
@@ -89,7 +87,7 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
 
     /** Called after user logs in as a customer and selects a food bank and grocery bag */
     public void toSelectPickupTime(View view) {
-        viewModel.setBag(bag);
+        viewModel.setBag(buttonNames.get(selected));
         Intent intent = new Intent(this, PickupDateSelectionActivity.class);
         intent.putExtra(SELECTED_BAG, buttonNames.get(selected));
         intent.putExtra(MainActivity.FOOD_BANK_BUTTON, getIntent().getStringExtra(MainActivity.FOOD_BANK_BUTTON));
