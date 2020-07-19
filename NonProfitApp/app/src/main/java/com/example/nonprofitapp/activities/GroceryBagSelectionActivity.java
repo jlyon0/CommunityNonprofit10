@@ -28,7 +28,6 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";
     private final int DEFAULT_BAG = 0; // whatever is in the first spot in the array is the default
     private int selected = DEFAULT_BAG;
-    private final int DEFAULT_FOOD_BANK = -1;
 
     private ArrayList<String> buttonNames; // get these from Firebase
     private ArrayList<RadioButton> buttons;
@@ -58,16 +57,8 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
             // create the radio button; add constraints
             RadioButton radioButton = new RadioButton(this);
             radioButton.setId(i);
-            //RadioGroup.LayoutParams childParam1 = new RadioGroup.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
-            //childParam1.setMarginEnd(2);
-            //radioButton.setGravity(Gravity.CENTER);
-            //radioButton.setLayoutParams(childParam1);
-            //radioButton.setBackground(null);
             radioButton.setText(buttonNames.get(i));
-
-            // TODO check out this line
             radioButton.setButtonDrawable(null);
-            //radioButton.setVisibility(View.VISIBLE);
 
             // set the default value
             if (buttonNames.get(i).equals(selected)) {
@@ -75,8 +66,6 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
                 radioButton.setTextColor(Color.BLUE);
             }
 
-            // TODO check out this line
-            //rg.addView(radioButton, childParam1);
             rg.addView(radioButton);
             buttons.add(radioButton);
         }
