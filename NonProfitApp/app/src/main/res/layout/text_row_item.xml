@@ -25,12 +25,20 @@
     android:orientation="horizontal"
     android:gravity="end">
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
     <TextView
         android:id="@+id/order_details"
         android:layout_width="255dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:text="@string/element_text" />
+        android:text="@string/element_text"
+        android:layout_marginEnd="@dimen/margin_tiny"/>
 
     <View
         android:id="@+id/color_panel"

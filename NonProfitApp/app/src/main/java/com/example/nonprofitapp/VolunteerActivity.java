@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.annotation.NonNull;
 
+import com.example.nonprofitapp.activities.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,7 +48,8 @@ public class VolunteerActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.list);
 
         // where most of the magic happens
-        recyclerViewAdapter = new MyRecyclerViewAdapter(orders);
+        // second parameter is not used
+        recyclerViewAdapter = new MyRecyclerViewAdapter(this.getApplicationContext(), orders);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         // linear layout manager as opposed to grid

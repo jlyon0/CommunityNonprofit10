@@ -1,11 +1,13 @@
-package com.example.nonprofitapp;
+package com.example.nonprofitapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -13,20 +15,31 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import android.widget.TextView;
+
+import com.example.nonprofitapp.DataRepository;
+import com.example.nonprofitapp.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class GroceryBagSelectionActivity extends AppCompatActivity {
     public static final String SELECTED_BAG = "com.example.nonprofitapp.BAG";
     private int selected = -1; // TODO pick a valid default value later
     private final int DEFAULT_FOOD_BANK = -1;
     private ArrayList<String> buttonNames; // get these from Firebase
+    private static final String TAG = GroceryBagSelectionActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery_bag_selection);
-
+        FirebaseAuth.getInstance().getCurrentUser().reload();
+        Log.i(TAG, "" + FirebaseAuth.getInstance().getCurrentUser().isEmailVerified());
         Intent receivedLauncher = getIntent();
         String foodBankID = receivedLauncher.getStringExtra(MainActivity.FOOD_BANK_BUTTON);
+       // int foodBankID = receivedLauncher.getIntExtra(MainActivity.FOOD_BANK_BUTTON, DEFAULT_FOOD_BANK);
 
         RadioGroup rg = findViewById(R.id.radioGroup);
         buttonNames = new ArrayList<>();

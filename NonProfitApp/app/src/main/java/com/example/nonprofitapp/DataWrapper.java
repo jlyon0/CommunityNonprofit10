@@ -1,3 +1,4 @@
+
 package com.example.nonprofitapp;
 import android.graphics.Color;
 import java.io.Serializable;
@@ -12,13 +13,28 @@ public class DataWrapper implements Serializable {
     private int day;
     private int hour;
     private int minute;
-
     private int color;
+    private int progress; // int from 0 to 2 describing not started, in progress, and completed.
+    private boolean isCompleted;
+    private String uid;
 
-    public DataWrapper(String displayName, String foodBank, String bankButtonID, String bag, int year, int month, int day, int hour, int minute, int color) {
+    /**
+     * Uses buttonId to remain compatible with firebase data, but it isn't used.
+     * @param displayName
+     * @param foodBank
+     * @param buttonId
+     * @param bag
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minute
+     * @param color
+     */
+    public DataWrapper(String displayName, String foodBank, String buttonId, String bag,
+                       int year, int month, int day, int hour, int minute, int color) {
         this.displayName = displayName;
         this.foodBank = foodBank;
-        this.bankButtonID = bankButtonID;
         this.bag = bag;
         this.year = year;
         this.month = month;
@@ -26,6 +42,8 @@ public class DataWrapper implements Serializable {
         this.hour = hour;
         this.minute = minute;
         this.color = color;
+        isCompleted = false;
+        progress = 0;
     }
 
     /**
@@ -33,8 +51,8 @@ public class DataWrapper implements Serializable {
      * an empty object.
      */
     public DataWrapper() {
-        this("","","","",-1,-1,-1,
-                -1,-1, Color.TRANSPARENT);
+        this("", "", "", "", -1, -1, -1,
+                -1, -1, Color.TRANSPARENT);
     }
 
     public String getDisplayName() {
@@ -51,14 +69,6 @@ public class DataWrapper implements Serializable {
 
     public void setFoodBank(String foodBank) {
         this.foodBank = foodBank;
-    }
-
-    public String getBankButtonID() {
-        return bankButtonID;
-    }
-
-    public void setBankButtonID(String bankButtonID) {
-        this.bankButtonID = bankButtonID;
     }
 
     public String getBag() {
@@ -115,4 +125,35 @@ public class DataWrapper implements Serializable {
         this.color = color;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public String getBankButtonID() {
+        return bankButtonID;
+    }
+
+    public void setBankButtonID(String bankButtonID) {
+        this.bankButtonID = bankButtonID;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
 }

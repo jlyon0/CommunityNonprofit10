@@ -10,63 +10,63 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".VolunteerActivity"
-            android:parentActivityName=".Foodbank_Selection_Page">
+            android:name=".activities.VolunteerActivity"
+            android:parentActivityName=".activities.Foodbank_Selection_Page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.nonprofitapp.Foodbank_Selection_Page" />
+                android:value="com.example.nonprofitapp.activities.Foodbank_Selection_Page" />
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.nonprofitapp.MainActivity" />
+                android:value="com.example.nonprofitapp.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".PickupDateSelectionActivity"
-            android:parentActivityName=".GroceryBagSelectionActivity">
+            android:name=".activities.PickupDateSelectionActivity"
+            android:parentActivityName=".activities.GroceryBagSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GroceryBagSelectionActivity" />
+                android:value=".activities.GroceryBagSelectionActivity" />
         </activity>
         <activity
-            android:name=".ConfirmationActivity"
-            android:parentActivityName=".PickupTimeSelectionActivity">
+            android:name=".activities.ConfirmationActivity"
+            android:parentActivityName=".activities.PickupTimeSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PickupTimeSelectionActivity" />
+                android:value=".activities.PickupTimeSelectionActivity" />
         </activity>
         <activity
-            android:name=".PickupTimeSelectionActivity"
-            android:parentActivityName=".PickupDateSelectionActivity">
+            android:name=".activities.PickupTimeSelectionActivity"
+            android:parentActivityName=".activities.PickupDateSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PickupDateSelectionActivity" />
+                android:value=".activities.PickupDateSelectionActivity" />
         </activity>
         <activity
-            android:name=".GroceryBagSelectionActivity"
-            android:parentActivityName=".Foodbank_Selection_Page">
+            android:name=".activities.GroceryBagSelectionActivity"
+            android:parentActivityName=".activities.Foodbank_Selection_Page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Foodbank_Selection_Page" />
+                android:value=".activities.Foodbank_Selection_Page" />
         </activity>
         <activity
-            android:name=".Foodbank_Selection_Page"
-            android:parentActivityName=".MainActivity">
+            android:name=".activities.Foodbank_Selection_Page"
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENTACTIVITY"
                 android:value="com.example.nonprofitapp.MainActivity" />
         </activity>
         <activity
-            android:name=".Window_Display"
-            android:parentActivityName=".ConfirmationActivity">
+            android:name=".activities.Window_Display"
+            android:parentActivityName=".activities.ConfirmationActivity">
             <meta-data
                 android:name="android.support.PARENTACTIVITY"
                 android:value="com.example.nonprofitapp.ConfirmationActivity" />
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

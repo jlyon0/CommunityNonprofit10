@@ -5,7 +5,7 @@
     android:id="@+id/bagGroup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroceryBagSelectionActivity">
+    tools:context=".activities.GroceryBagSelectionActivity">
 
     <Button
         android:id="@+id/continueToPickup"

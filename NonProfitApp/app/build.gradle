@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.0"
     defaultConfig {
         applicationId "com.example.nonprofitapp"
-        minSdkVersion 26
+        minSdkVersion 22
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -33,6 +33,11 @@ dependencies {
     // firebase auth:
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.3.0'
+    // firebase firestore:
+    implementation 'com.google.firebase:firebase-firestore:21.5.0'
+
+    // pull to refresh by google:
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'

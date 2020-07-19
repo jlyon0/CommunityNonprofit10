@@ -1,25 +1,32 @@
-package com.example.nonprofitapp;
+package com.example.nonprofitapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.TimePicker;
+
+import com.example.nonprofitapp.R;
+import com.example.nonprofitapp.viewmodels.PickupDateViewModel;
 
 public class PickupDateSelectionActivity extends AppCompatActivity {
+    PickupDateViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pickup_date_selection);
+        viewModel = ViewModelProviders.of(this).get(PickupDateViewModel.class);
     }
 
     /** Called after user logs in as a customer and selects food bank, bag, and pickup time*/
     public void toPickupTime(View view) {
         Intent intent = new Intent(this, PickupTimeSelectionActivity.class);
         DatePicker datePicker = (DatePicker) findViewById(R.id.date_picker);
+        viewModel.setDate(datePicker);
+
         //TODO send food bank selection
         Intent i = getIntent();
         intent.putExtra(MainActivity.SELECTED_BAG, i.getStringExtra(MainActivity.SELECTED_BAG));
