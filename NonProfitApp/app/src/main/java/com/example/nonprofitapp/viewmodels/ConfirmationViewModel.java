@@ -3,18 +3,24 @@ package com.example.nonprofitapp.viewmodels;
 import android.app.Application;
 import android.graphics.Color;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.DataWrapper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.type.Date;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 /**
  * An example class of a ViewModel.
@@ -29,6 +35,11 @@ public class ConfirmationViewModel extends AndroidViewModel {
     private DataWrapper dataWrapper;
     // some live data e.g.
     private LiveData<FirebaseUser> liveUser;
+
+
+    private MutableLiveData<String> toastText;
+
+
     // am/pm consts
     private final String AM = " a.m.";
     private final String PM = " p.m.";
@@ -41,6 +52,9 @@ public class ConfirmationViewModel extends AndroidViewModel {
         if (dataRepository != null) {
             return;
         }
+
+        toastText = new MutableLiveData<>();
+
         dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
         dataWrapper = dataRepository.getDataWrapper();
         /*new DataWrapper("joe",
@@ -54,6 +68,8 @@ public class ConfirmationViewModel extends AndroidViewModel {
                 12,
                 Color.RED);*/
         dataWrapper.setUid(dataRepository.getUser().getUid());
+        dataWrapper.setDisplayName(dataRepository.getUser().getDisplayName());
+
     }
 
     public String getConfirmationString() {
@@ -116,6 +132,34 @@ public class ConfirmationViewModel extends AndroidViewModel {
         wrapper.setProgress(0);
 
         return wrapper;
+    }
+
+    public void sendDataToFireBase() {
+        HashMap<String, Object> data = new HashMap<>();
+
+
+        Log.i("TAG", "SendData was triggered");
+        dataRepository.getFoodBankOrders().document(dataWrapper.getUid())
+                .set(dataWrapper)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        toastText.setValue("Order Received!");
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        toastText.setValue("Order Failed");
+                    }
+                });
+
+
+
+    }
+    public MutableLiveData<String> getToastText() {
+        return toastText;
     }
 
 }

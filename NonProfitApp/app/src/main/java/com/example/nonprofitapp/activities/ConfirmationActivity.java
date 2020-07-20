@@ -2,6 +2,7 @@ package com.example.nonprofitapp.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.DataWrapper;
@@ -38,6 +40,14 @@ public class ConfirmationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirmation);
         // TODO display all info here
         viewModel = ViewModelProviders.of(this).get(ConfirmationViewModel.class);
+
+        viewModel.getToastText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String somethingOtherThanS) {
+                Toast.makeText(getApplicationContext(), somethingOtherThanS, Toast.LENGTH_LONG).show();
+
+            }
+        });
 
         // Get the Intent that started this activity and extract the info
         Intent intent = getIntent();
@@ -67,6 +77,10 @@ public class ConfirmationActivity extends AppCompatActivity {
     public void confirmOrder(View view) {
         // TODO do something when confirm order button is clicked
         Intent launchWindow = new Intent(this, Window_Display.class);
+
+        //method call to send to firebase with wrapper
+        viewModel.sendDataToFireBase();
+
         startActivity(launchWindow);
     }
 

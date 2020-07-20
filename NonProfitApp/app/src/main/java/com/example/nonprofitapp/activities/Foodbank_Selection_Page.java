@@ -6,11 +6,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.nonprofitapp.R;
@@ -18,11 +21,17 @@ import com.example.nonprofitapp.viewmodels.FoodBankViewModel;
 import com.example.nonprofitapp.viewmodels.VolunteerViewModel;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Foodbank_Selection_Page extends AppCompatActivity implements View.OnClickListener{
     Intent received;
     FoodBankViewModel viewModel;
     private static final String TAG = Foodbank_Selection_Page.class.getName();
+
+    private final int DEFAULT_FOOD_BANK = 0;
+    private int selected = DEFAULT_FOOD_BANK;
+    private ArrayList<String> buttonNames; // get these from Firebase
+    private ArrayList<RadioButton> buttons;
 
     private ProgressBar progressBar;
 
@@ -41,12 +50,50 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
                 Toast.makeText(Foodbank_Selection_Page.this, string, Toast.LENGTH_SHORT).show();
             }
         });
+
+        RadioGroup rg = findViewById(R.id.radioGroup);
+        buttonNames = new ArrayList<>();
+        buttons = new ArrayList<>();
+        // some random test buttons for now
+        buttonNames.add("Gleaners");
+        buttonNames.add("Midwest Food Bank");
+        rg.setWeightSum(Float.parseFloat(buttonNames.size() + ""));
+
+        for (int i = 0; i < buttonNames.size(); i++) {
+            // create the radio button; add constraints
+            RadioButton radioButton = new RadioButton(this);
+            radioButton.setId(i);
+            radioButton.setText(buttonNames.get(i));
+            radioButton.setButtonDrawable(null);
+
+            // set the default value
+            if (buttonNames.get(i).equals(selected)) {
+                radioButton.setChecked(true);
+                radioButton.setTextColor(Color.BLUE);
+            }
+
+            rg.addView(radioButton);
+            buttons.add(radioButton);
+        }
+
+        // redraw the radio group
+        rg.invalidate();
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                buttons.get(selected).setTextColor(Color.BLACK);
+                selected = checkedId;
+                buttons.get(selected).setTextColor(Color.BLUE);
+            }
+        });
     }
 
     @Override
     public void onClick(final View view) {
         //TODO: Set dataRepo.setFoodBank
-        viewModel.setFoodBank(getResources().getResourceEntryName(view.getId()));
+        //viewModel.setFoodBank(getResources().getResourceEntryName(view.getId()));
+        viewModel.setFoodBank(buttonNames.get(selected));
         progressBar.setVisibility(View.VISIBLE);
         if (viewModel.isVolunteer()) {
             Log.i(TAG, "isvolunteer");

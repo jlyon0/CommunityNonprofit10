@@ -2,7 +2,6 @@ package com.example.nonprofitapp.viewmodels;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -11,41 +10,26 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.DataWrapper;
-import com.example.nonprofitapp.activities.Foodbank_Selection_Page;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 
-import java.util.ArrayList;
-
-/**
- * An example class of a ViewModel.
- *
- * There is no constructor here because it should use the ViewModel constructor. ViewModels should be
- * created with ViewModelProviders.of(this).get(ViewModelExample.class); in the activity where it
- * will be used. We shouldn't interact with the constructor.
- */
-
-public class FoodBankViewModel extends AndroidViewModel {
+public class GroceryBagViewModel extends AndroidViewModel{
     private DataRepository dataRepository;
     private DataWrapper dataWrapper;
-    // some live data e.g.
     private MutableLiveData<Boolean> hasOrder;
     private MutableLiveData<String> toastText;
     private boolean hasEmailed = false;
 
-    private static final String TAG = FoodBankViewModel.class.getName();
+    private static final String TAG = com.example.nonprofitapp.viewmodels.FoodBankViewModel.class.getName();
 
-
-    public FoodBankViewModel(@NonNull Application application) {
+    public GroceryBagViewModel(@NonNull Application application) {
         super(application);
         if (dataRepository != null) {
             return;
         }
-        dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
+        dataRepository = DataRepository.getInstance();
         dataWrapper = dataRepository.getDataWrapper();
         hasOrder = new MutableLiveData<>();
         toastText = new MutableLiveData<>();
@@ -84,16 +68,14 @@ public class FoodBankViewModel extends AndroidViewModel {
             return false;
         } else {
             Log.i(TAG, "is email verified");
-            // update the vol email_list to include this persons email.
             String uid = dataRepository.getUser().getUid();
-            //dataRepository.getVolList().document(dataRepository.getUser().getUid());
             return true;
         }
     }
 
-    public void setFoodBank(String fb) {
-        dataRepository.setFoodBank(fb);
-        dataWrapper.setFoodBank(fb);
+    public void setGroceryBag(String bag) {
+        dataRepository.setBag(bag);
+        dataWrapper.setBag(bag);
     }
 
 //    public checkIfVol() {
@@ -127,7 +109,7 @@ public class FoodBankViewModel extends AndroidViewModel {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         DataWrapper fromFirebase = documentSnapshot.toObject(DataWrapper.class);
-                        if ((fromFirebase != null) && (fromFirebase.getProgress() <= 2)) {
+                        if ((fromFirebase != null) && !fromFirebase.isCompleted()) {
                             dataRepository.setDataWrapper(fromFirebase);
                             hasOrder.setValue(true);
                         } else {

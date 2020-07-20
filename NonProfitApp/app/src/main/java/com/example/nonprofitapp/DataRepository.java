@@ -1,25 +1,17 @@
 package com.example.nonprofitapp;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firestore.v1.Document;
+import com.google.firestore.v1.StructuredQuery;
 
 public class DataRepository {
     private static DataRepository sInstance;
@@ -31,6 +23,7 @@ public class DataRepository {
 
     private CollectionReference foodBankOrders;
     private DocumentReference foodBank;
+    private DocumentReference bag;
 
     boolean isVolunteer;
 
@@ -89,7 +82,6 @@ public class DataRepository {
         return user;
     }
 
-
     public boolean isLoggedIn() {
         initUser();
         return (getUser() != null);
@@ -99,8 +91,9 @@ public class DataRepository {
         foodBank = db.collection("/foodbanks/").document(foodBankName);
         foodBankOrders = foodBank.collection("orders");
     }
-    public void setBag(String bagName) {
 
+    public void setBag(String bagName) {
+        bag = db.collection("/foodbanks/").document(bagName);
     }
 
 
@@ -134,6 +127,10 @@ public class DataRepository {
         return foodBank;
     }
 
+    public DocumentReference getBag() {
+        return bag;
+    }
+
     public void setDataWrapper(DataWrapper dataWrapper) {
         this.dataWrapper = dataWrapper;
     }
@@ -141,6 +138,7 @@ public class DataRepository {
     public CollectionReference getVolList() {
         return db.collection("/users/volunteers/uids");
     }
+
     public boolean isVolunteer() {
         return isVolunteer;
     }

@@ -1,8 +1,6 @@
 
 package com.example.nonprofitapp;
-
 import android.graphics.Color;
-
 import java.io.Serializable;
 
 public class DataWrapper implements Serializable {
@@ -60,8 +58,8 @@ public class DataWrapper implements Serializable {
      * an empty object.
      */
     public DataWrapper() {
-        this("","","","",-1,-1,-1,
-                -1,-1, Color.TRANSPARENT);
+        this("", "", "", "", -1, -1, -1,
+                -1, -1, Color.TRANSPARENT);
     }
 
     public String getDisplayName() {

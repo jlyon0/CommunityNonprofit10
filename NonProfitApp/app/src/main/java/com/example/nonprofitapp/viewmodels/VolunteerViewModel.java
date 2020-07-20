@@ -73,10 +73,10 @@ public class VolunteerViewModel extends AndroidViewModel {
 //        temp.addAll(generateFakeOrders(50));
 //        liveOrders.setValue(temp);
 
-        for (DataWrapper order : generateFakeOrders(12)) {
-            Log.i(TAG, "Added a fake order, uid: \"" + order.getUid() + "\"");
-            dataRepository.getFoodBankOrders().document(order.getUid()).set(order);
-        }
+//        for (DataWrapper order : generateFakeOrders(12)) {
+//            Log.i(TAG, "Added a fake order, uid: \"" + order.getUid() + "\"");
+//            dataRepository.getFoodBankOrders().document(order.getUid()).set(order);
+//        }
     }
 
     /**
