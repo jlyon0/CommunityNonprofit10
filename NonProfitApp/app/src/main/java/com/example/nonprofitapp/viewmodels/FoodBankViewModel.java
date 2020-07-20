@@ -127,7 +127,7 @@ public class FoodBankViewModel extends AndroidViewModel {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         DataWrapper fromFirebase = documentSnapshot.toObject(DataWrapper.class);
-                        if ((fromFirebase != null) && !fromFirebase.isCompleted()) {
+                        if ((fromFirebase != null) && (fromFirebase.getProgress() <= 2)) {
                             dataRepository.setDataWrapper(fromFirebase);
                             hasOrder.setValue(true);
                         } else {
