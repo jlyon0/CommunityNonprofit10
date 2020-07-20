@@ -55,9 +55,8 @@ public class VolunteerViewModel extends AndroidViewModel {
         //TODO: integrate foodbank selection into FoodbankSel page
         dataRepository.setFoodBank("Gleaners");
 
-
         //fetchOrdersLive();
-        //listenInRealtime(); // Aaay it works!!
+        //listenInRealtime();
         ArrayList<DataWrapper> temp = liveOrders.getValue();
         temp.addAll(generateFakeOrders(50));
     }

@@ -96,6 +96,10 @@ public class FoodBankViewModel extends AndroidViewModel {
         dataWrapper.setFoodBank(fb);
     }
 
+    public ArrayList<String> getFoodBankNames() {
+
+    }
+
 //    public checkIfVol() {
 //        dataRepository.getVolList().
 //                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
