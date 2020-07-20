@@ -73,10 +73,10 @@ public class VolunteerViewModel extends AndroidViewModel {
 //        temp.addAll(generateFakeOrders(50));
 //        liveOrders.setValue(temp);
 
-//        for (DataWrapper order : generateFakeOrders(10)) {
-//            Log.i(TAG, "Added a fake order, uid: \"" + order.getUid() + "\"");
-//            dataRepository.getFoodBankOrders().document(order.getUid()).set(order);
-//        }
+        for (DataWrapper order : generateFakeOrders(12)) {
+            Log.i(TAG, "Added a fake order, uid: \"" + order.getUid() + "\"");
+            dataRepository.getFoodBankOrders().document(order.getUid()).set(order);
+        }
     }
 
     /**
@@ -141,9 +141,13 @@ public class VolunteerViewModel extends AndroidViewModel {
         ArrayList<DataWrapper> orders = liveOrders.getValue();
         orders.clear();
         for (DocumentSnapshot document : documentSnapshots) {
-            DataWrapper thisOrder = document.toObject(DataWrapper.class);
-            if (thisOrder != null) {
+            try {
+                DataWrapper thisOrder = document.toObject(DataWrapper.class);
                 orders.add(thisOrder);
+            } catch (NullPointerException npe) {
+                Log.i(TAG, "Nullpointer in adding an order: " + document.toString(), npe);
+            } catch (RuntimeException re) {
+                Log.i(TAG, "Runtime Exception (!) in adding an order: " + document.toString(), re);
             }
         }
         liveOrders.setValue(orders);
@@ -218,11 +222,11 @@ public class VolunteerViewModel extends AndroidViewModel {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     DataWrapper orderToAdvance = documentSnapshot.toObject(DataWrapper.class);
                     if (orderToAdvance == null) {
-                        Log.i(TAG, String.format("Order to advance uid: \"%s\" is null"));
+                        Log.i(TAG, String.format("Order to advance uid: \"%s\" is null", uid));
                         return;
                     }
                     int progress = orderToAdvance.getProgress();
-                    if (progress > 2) {
+                    if (progress >= DataWrapper.PROGRESS_DELIVERED) {
                         toastText.setValue("Already completed.");
                         return;
                     }
@@ -257,11 +261,11 @@ public class VolunteerViewModel extends AndroidViewModel {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     DataWrapper orderToAdvance = documentSnapshot.toObject(DataWrapper.class);
                     if (orderToAdvance == null) {
-                        Log.i(TAG, String.format("Order to advance uid: \"%s\" is null"));
+                        Log.i(TAG, String.format("Order to advance uid: \"%s\" is null",uid));
                         return;
                     }
                     int progress = orderToAdvance.getProgress();
-                    if (progress < 1) {
+                    if (progress <= DataWrapper.PROGRESS_NOT_STARTED) {
                         toastText.setValue("This order wasn't started.");
                         return;
                     }

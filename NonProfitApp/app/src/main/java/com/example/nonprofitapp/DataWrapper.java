@@ -6,6 +6,12 @@ import android.graphics.Color;
 import java.io.Serializable;
 
 public class DataWrapper implements Serializable {
+    // progress constants:
+    public static final int PROGRESS_NOT_STARTED = 0;
+    public static final int PROGRESS_STARTED = 1;
+    public static final int PROGRESS_UNDELIVERED = 2;
+    public static final int PROGRESS_DELIVERED = 3;
+
     private String displayName;
     private String foodBank;
     private String bankButtonID;
@@ -19,6 +25,7 @@ public class DataWrapper implements Serializable {
     private int progress; // int from 0 to 2 describing not started, in progress, and completed.
     private boolean isCompleted;
     private String uid;
+
 
     /**
      * Uses buttonId to remain compatible with firebase data, but it isn't used.

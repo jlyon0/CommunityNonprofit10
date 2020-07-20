@@ -33,6 +33,9 @@ public class ConfirmationViewModel extends AndroidViewModel {
     private final String AM = " a.m.";
     private final String PM = " p.m.";
 
+    private static final String TAG = ConfirmationViewModel.class.getName();
+
+
     public ConfirmationViewModel(@NonNull Application application) {
         super(application);
         if (dataRepository != null) {

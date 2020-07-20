@@ -57,16 +57,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         String progress;
         switch (order.getProgress()) {
             default:
-            case 0:
+            case DataWrapper.PROGRESS_NOT_STARTED:
                 progress = "Not started.";
                 break;
-            case 1:
+            case DataWrapper.PROGRESS_STARTED:
                 progress = "Started.";
                 break;
-            case 2:
+            case DataWrapper.PROGRESS_UNDELIVERED:
                 progress = "Made, but not delivered.";
                 break;
-            case 3:
+            case DataWrapper.PROGRESS_DELIVERED:
                 progress = "Delivered.";
                 break;
         }

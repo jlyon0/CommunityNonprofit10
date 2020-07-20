@@ -41,7 +41,6 @@ public class DataRepository {
      */
     private DataRepository() {
         dataWrapper = new DataWrapper();
-        firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
     }
 
@@ -60,10 +59,6 @@ public class DataRepository {
         this.db = db;
     }
 
-    public void setFirebaseAuth(FirebaseAuth firebaseAuth) {
-        this.firebaseAuth = firebaseAuth;
-    }
-
     public DataWrapper getDataWrapper() {
         return dataWrapper;
     }
@@ -72,12 +67,18 @@ public class DataRepository {
      * Call when you need to reset user.
      */
     public void initUser() {
-        user = firebaseAuth.getCurrentUser();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
         if (user != null) {
             Log.i(TAG, "Refreshed user!");
-            firebaseAuth.getCurrentUser().reload();
-            user = firebaseAuth.getCurrentUser();
+            FirebaseAuth.getInstance().getCurrentUser().reload();
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            Log.i(TAG, "User: " + getUser().getDisplayName() +
+                    " from: " + getUser().getProviderId());
+        } else {
+            Log.i(TAG, "NULL USER");
         }
+
     }
 
     /**
@@ -114,7 +115,7 @@ public class DataRepository {
     }
 
     public void validateEmail() {
-        firebaseAuth.getCurrentUser().sendEmailVerification();
+        FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification();
     }
 
     public FirebaseFirestore getDb() {
@@ -122,7 +123,7 @@ public class DataRepository {
     }
 
     public FirebaseAuth getFirebaseAuth() {
-        return firebaseAuth;
+        return FirebaseAuth.getInstance();
     }
 
     public CollectionReference getFoodBankOrders() {
