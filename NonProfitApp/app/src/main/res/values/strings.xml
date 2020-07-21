@@ -16,4 +16,8 @@
     <string name="title_activity_volunteer_view">VolunteerView</string>
     <string name="element_text">Heyoo</string>
     <string name="action_settings">Settings</string>
+    <string name="by_bag">Sort by Bag Type</string>
+    <string name="by_date">Sort by Date</string>
+    <string name="by_name">Sort by Name</string>
+    <string name="by_progress">Sort by Progress</string>
 </resources>

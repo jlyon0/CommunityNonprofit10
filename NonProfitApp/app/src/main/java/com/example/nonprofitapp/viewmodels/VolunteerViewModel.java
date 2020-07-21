@@ -3,7 +3,6 @@ package com.example.nonprofitapp.viewmodels;
 import android.app.Application;
 import android.graphics.Color;
 import android.util.Log;
-import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,23 +10,22 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.nonprofitapp.comparators.BagSorter;
 import com.example.nonprofitapp.DataRepository;
 import com.example.nonprofitapp.DataWrapper;
+import com.example.nonprofitapp.comparators.NameSorter;
+import com.example.nonprofitapp.comparators.ProgressSorter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -40,6 +38,13 @@ import java.util.Random;
  */
 
 public class VolunteerViewModel extends AndroidViewModel {
+    public static final int DATE_SORT = 0;
+    public static final int BAG_SORT = 1;
+    public static final int NAME_SORT = 2;
+    public static final int PROGRESS_SORT = 3;
+
+    // default value;
+    private int sortStyle = DATE_SORT;
     private DataRepository dataRepository;
 
     private MutableLiveData<ArrayList<DataWrapper>> liveOrders;
@@ -73,10 +78,6 @@ public class VolunteerViewModel extends AndroidViewModel {
 //        temp.addAll(generateFakeOrders(50));
 //        liveOrders.setValue(temp);
 
-//        for (DataWrapper order : generateFakeOrders(12)) {
-//            Log.i(TAG, "Added a fake order, uid: \"" + order.getUid() + "\"");
-//            dataRepository.getFoodBankOrders().document(order.getUid()).set(order);
-//        }
     }
 
     /**
@@ -94,7 +95,6 @@ public class VolunteerViewModel extends AndroidViewModel {
                             Log.w(TAG, "Listen failed.", error);
                             return;
                         }
-
                         addDocuments(value.getDocuments()); // change if using whereEqualTo
                     }
                 });
@@ -150,9 +150,43 @@ public class VolunteerViewModel extends AndroidViewModel {
                 Log.i(TAG, "Runtime Exception (!) in adding an order: " + document.toString(), re);
             }
         }
+        sortOrders(orders);
         liveOrders.setValue(orders);
     }
 
+    public void setSortStyle(int sortStyle) {
+        this.sortStyle = sortStyle;
+        ArrayList<DataWrapper> temp = liveOrders.getValue();
+        sortOrders(temp);
+        liveOrders.setValue(temp);
+    }
+
+    public void sortOrders(ArrayList<DataWrapper> orders) {
+        switch (sortStyle) {
+            case BAG_SORT:
+                BagSorter bagSorter = new BagSorter();
+                Collections.sort(orders, bagSorter);
+                return;
+            case NAME_SORT:
+                NameSorter nameSorter = new NameSorter();
+                Collections.sort(orders, nameSorter);
+                return;
+            case PROGRESS_SORT:
+                ProgressSorter progressSorter = new ProgressSorter();
+                Collections.sort(orders, progressSorter);
+                return;
+            default:
+            case DATE_SORT:
+                Collections.sort(orders);
+        }
+    }
+
+    private void sendFakesToFirebase(int howMany) {
+        for (DataWrapper order : generateFakeOrders(howMany)) {
+            Log.i(TAG, "Added a fake order, uid: \"" + order.getUid() + "\"");
+            dataRepository.getFoodBankOrders().document(order.getUid()).set(order);
+        }
+    }
     private ArrayList<DataWrapper> generateFakeOrders(int howMany) {
         Log.i(TAG, "generateFakeOrders: " + howMany);
         Random random = new Random();
@@ -166,7 +200,7 @@ public class VolunteerViewModel extends AndroidViewModel {
                     "button" + foodBankInt,
                     "bag " + foodBankInt,
                     2020,
-                    random.nextInt(13),
+                    random.nextInt(12) + 1,
                     random.nextInt(32),
                     random.nextInt(24),
                     random.nextInt(60),

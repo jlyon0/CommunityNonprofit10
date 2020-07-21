@@ -14,5 +14,6 @@
     <dimen name="margin_huge">64dp</dimen>
     <dimen name="list_item_height">72dp</dimen>
 
-
+    <!-- A good size for slightly larger text in our app -->
+    <dimen name="larger_text">20sp</dimen>
 </resources>

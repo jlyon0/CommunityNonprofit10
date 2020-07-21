@@ -92,7 +92,6 @@ public class VolunteerActivity extends AppCompatActivity {
 
 
         pullToRefresh.setRefreshing(true);
-        //TODO: readd below:
         fetchOrders();
 
         viewModel.getToastText().observe(this, new Observer<String>() {
@@ -117,11 +116,22 @@ public class VolunteerActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.back :
-                        //TODO: decrement progress of the checked items
                         viewModel.decrementProgress(recyclerViewAdapter.getChecked());
                         return true;
                     case R.id.trash:
                         viewModel.deleteOrder(recyclerViewAdapter.getChecked());
+                        return true;
+                    case R.id.by_bag:
+                        viewModel.setSortStyle(VolunteerViewModel.BAG_SORT);
+                        return true;
+                    case R.id.by_date:
+                        viewModel.setSortStyle(VolunteerViewModel.DATE_SORT);
+                        return true;
+                    case R.id.by_name:
+                        viewModel.setSortStyle(VolunteerViewModel.NAME_SORT);
+                        return true;
+                    case R.id.by_progress:
+                        viewModel.setSortStyle(VolunteerViewModel.PROGRESS_SORT);
                         return true;
                     default:
                         return false;

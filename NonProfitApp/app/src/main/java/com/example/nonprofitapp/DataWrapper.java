@@ -2,8 +2,11 @@
 package com.example.nonprofitapp;
 import android.graphics.Color;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
-public class DataWrapper implements Serializable {
+public class DataWrapper implements Serializable, Comparable<DataWrapper> {
     // progress constants:
     public static final int PROGRESS_NOT_STARTED = 0;
     public static final int PROGRESS_STARTED = 1;
@@ -162,5 +165,29 @@ public class DataWrapper implements Serializable {
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    /**
+     * Compares this DataWrapper to another by date. It uses a deprecated method because the
+     * java recommended way to do this would require pushing the api up to 26 and losing more
+     * android users. The only way around that is something called desugaring, which includes
+     * messing with gradle, which is hard.
+     * @param dataWrapper
+     * @return
+     */
+    @Override
+    public int compareTo(DataWrapper dataWrapper) {
+        //TODO: attempt to update to desugaring stuff
+        Date thisDate = new Date(getYear(),
+                getMonth() - 1, // Date expects zero indexed months, we store as 1 indexed
+                getDay(),
+                getHour(),
+                getMinute());
+        Date otherDate = new Date(dataWrapper.getYear(),
+                dataWrapper.getMonth() - 1,
+                dataWrapper.getDay(),
+                dataWrapper.getHour(),
+                dataWrapper.getMinute());
+        return thisDate.compareTo(otherDate) * -1; // normally returns earliest first, reverses
     }
 }
