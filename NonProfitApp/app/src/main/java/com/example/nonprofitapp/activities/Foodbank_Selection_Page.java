@@ -64,7 +64,6 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
             RadioButton radioButton = new RadioButton(this);
             radioButton.setId(i);
             radioButton.setText(buttonNames.get(i));
-            radioButton.setButtonDrawable(null);
 
             // set the default value
             if (buttonNames.get(i).equals(selected)) {

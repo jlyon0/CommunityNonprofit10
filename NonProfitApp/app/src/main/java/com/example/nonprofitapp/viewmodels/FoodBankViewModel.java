@@ -97,7 +97,8 @@ public class FoodBankViewModel extends AndroidViewModel {
     }
 
     public ArrayList<String> getFoodBankNames() {
-
+        // TODO fix this
+        return null;
     }
 
 //    public checkIfVol() {
