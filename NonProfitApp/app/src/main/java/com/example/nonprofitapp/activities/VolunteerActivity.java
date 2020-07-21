@@ -160,7 +160,7 @@ public class VolunteerActivity extends AppCompatActivity {
         });
     }
 
-    /**
+    /*
      * The next 3 methods control the help icon/option in the ActionBar.
      * @param menu
      * @return

@@ -154,7 +154,7 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
         }
     }
 
-    /**
+    /*
      * The next 3 methods control the help icon/option in the ActionBar.
      * @param menu
      * @return

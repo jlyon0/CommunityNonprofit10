@@ -45,7 +45,7 @@ public class PickupTimeSelectionActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
+    /*
      * The next 3 methods control the help icon/option in the ActionBar.
      * @param menu
      * @return

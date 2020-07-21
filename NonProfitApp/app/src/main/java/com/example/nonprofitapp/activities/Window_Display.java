@@ -28,20 +28,18 @@ public class Window_Display extends AppCompatActivity {
 
     public void toCancelOrder(View view)
     {
-        //ToDo: delete order from firebase
         viewModel.deleteOrder();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
     public void toExitOrder(View view)
     {
-        //ToDo: mark order as completed
         viewModel.markOrderCompleted();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    /**
+    /*
      * The next 3 methods control the help icon/option in the ActionBar.
      * @param menu
      * @return

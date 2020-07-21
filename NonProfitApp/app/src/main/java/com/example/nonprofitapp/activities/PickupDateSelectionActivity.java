@@ -45,7 +45,7 @@ public class PickupDateSelectionActivity extends AppCompatActivity {
         intent.putExtra(MainActivity.DAY, datePicker.getDayOfMonth());
         startActivity(intent);
     }
-    /**
+    /*
      * The next 3 methods control the help icon/option in the ActionBar.
      * @param menu
      * @return
