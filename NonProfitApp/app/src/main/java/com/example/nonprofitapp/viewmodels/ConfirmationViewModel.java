@@ -135,10 +135,8 @@ public class ConfirmationViewModel extends AndroidViewModel {
     }
 
     public void sendDataToFireBase() {
-        HashMap<String, Object> data = new HashMap<>();
 
-
-        Log.i("TAG", "SendData was triggered");
+        Log.i("TAG", "SendData was triggered, the Progress number is: " + dataWrapper.getProgress());
         dataRepository.getFoodBankOrders().document(dataWrapper.getUid())
                 .set(dataWrapper)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -35,6 +35,7 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
 
     private ArrayList<String> buttonNames; // get these from Firebase
     private ArrayList<RadioButton> buttons;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setId(i);
             radioButton.setText(buttonNames.get(i));
-            radioButton.setButtonDrawable(null);
+            //radioButton.setButtonDrawable(null);
 
             // set the default value
             if (buttonNames.get(i).equals(selected)) {
@@ -81,6 +82,9 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
                 buttons.get(selected).setTextColor(Color.BLACK);
                 selected = checkedId;
                 buttons.get(selected).setTextColor(Color.BLUE);
+
+                //This is where the bag descriptions might go
+
             }
         });
     }
