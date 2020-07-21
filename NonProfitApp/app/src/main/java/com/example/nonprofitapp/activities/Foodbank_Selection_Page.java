@@ -1,14 +1,19 @@
 package com.example.nonprofitapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -148,5 +153,46 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
             }
         }
     }
+
+    /**
+     * The next 3 methods control the help icon/option in the ActionBar.
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.help_header) {
+            // help's onclicklistener basically
+            showHelpMessage();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void showHelpMessage() {
+        AlertDialog dialog;
+        if (viewModel.isVolunteer()) {
+             dialog = new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.help_title))
+                    .setMessage(getString(R.string.help_vol_foodbank))
+                    // dialogs made with this builder automatically dismisses itself on button click
+                    .setPositiveButton(R.string.ok, null)
+                    .create();
+        } else {
+             dialog = new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.help_title))
+                    .setMessage(getString(R.string.help_foodbank_sel))
+                    .setPositiveButton(R.string.ok, null)
+                    .create();
+        }
+        dialog.show();
+    }
+
 
 }

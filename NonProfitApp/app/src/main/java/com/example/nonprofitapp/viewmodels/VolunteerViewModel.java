@@ -79,6 +79,9 @@ public class VolunteerViewModel extends AndroidViewModel {
 //        liveOrders.setValue(temp);
 
     }
+    public String getFoodBank() {
+        return dataRepository.getDataWrapper().getFoodBank();
+    }
 
     /**
      * Sets up the listeners that allow real time updates. Note that this will eat data, so it
