@@ -27,6 +27,6 @@ public class PickupTimeViewModel extends AndroidViewModel {
     }
     public void setDate(TimePicker timePicker) {
         dataWrapper.setHour(timePicker.getCurrentHour()); // 0 indexed 24hr time
-        dataWrapper.setMinute(timePicker.getCurrentMinute()); // january is 0 for some reason
+        dataWrapper.setMinute(timePicker.getCurrentMinute());
     }
 }

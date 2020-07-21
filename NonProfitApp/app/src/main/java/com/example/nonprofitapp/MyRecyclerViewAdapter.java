@@ -84,8 +84,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 timeString.append("12");
             } else {
                 timeString.append(order.getHour());
-                amOrPm = AM;
             }
+            amOrPm = AM;
         }
         timeString.append(":");
         if (order.getMinute() < 10) timeString.append(0);
