@@ -91,9 +91,19 @@ public class FoodBankViewModel extends AndroidViewModel {
         }
     }
 
-    public void setFoodBank(String fb) {
+    /**
+     * Returns a boolean describing whether or not the food bank could be set.
+     * @param fb
+     * @return
+     */
+    public boolean setFoodBank(String fb) {
+        if ((fb == null ) || (fb.length() == 0)) {
+            toastText.setValue("Choose a food bank or pantry first.");
+            return false;
+        }
         dataRepository.setFoodBank(fb);
         dataWrapper.setFoodBank(fb);
+        return true;
     }
 
 //    public checkIfVol() {

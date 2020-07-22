@@ -2,33 +2,36 @@ package com.example.nonprofitapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.viewmodels.DisplayViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Window_Display extends AppCompatActivity {
 
     DisplayViewModel viewModel;
+    AlertDialog helpDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window__display);
         viewModel = ViewModelProviders.of(this).get(DisplayViewModel.class);
+
+        ConstraintLayout background = findViewById(R.id.display_bg);
+        background.setBackgroundColor(viewModel.getColor());
+        TextView firstName = findViewById(R.id.first_name);
+        firstName.setText(viewModel.getFirstName());
+        showHelpMessage();
      }
 
     public void toCancelOrder(View view)
@@ -66,13 +69,18 @@ public class Window_Display extends AppCompatActivity {
     }
 
     public void showHelpMessage() {
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        helpDialog = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.help_title))
                 .setMessage(getString(R.string.help_window_display_page))
                 // dialogs made with this builder automatically dismisses itself on button click.
                 .setPositiveButton(R.string.ok, null)
                 .create();
-        dialog.show();
+        helpDialog.show();
     }
 
+    @Override
+    protected void onDestroy() {
+        helpDialog.dismiss();
+        super.onDestroy();
+    }
 }

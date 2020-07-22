@@ -81,27 +81,13 @@ public class ConfirmationActivity extends AppCompatActivity {
     /** Called after user logs in as a customer and selects food bank, bag, and pickup time */
     public void confirmOrder(View view) {
         // TODO do something when confirm order button is clicked
-        Intent launchWindow = new Intent(this, Window_Display.class);
 
         //method call to send to firebase with wrapper
-        viewModel.sendDataToFireBase();
-
-        startActivity(launchWindow);
-    }
-
-    public DataWrapper setWrapper(){
-
-        DataWrapper wrapper = DataRepository.getInstance().getDataWrapper();
-//        wrapper.setFoodBank(foodBankId);
-//        wrapper.setBag(bag);
-//        wrapper.setYear(year);
-//        wrapper.setMonth(month);
-//        wrapper.setDay(day);
-//        wrapper.setMinute(minute);
-        wrapper.setCompleted(false);
-        wrapper.setProgress(0);
-
-        return wrapper;
+        viewModel.getAndSetColor().observe(this, (readyToSend) -> {
+            viewModel.sendDataToFireBase();
+            Intent launchWindow = new Intent(this, Window_Display.class);
+            startActivity(launchWindow);
+        });
     }
 
     /*

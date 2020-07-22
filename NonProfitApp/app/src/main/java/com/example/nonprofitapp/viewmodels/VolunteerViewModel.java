@@ -74,10 +74,6 @@ public class VolunteerViewModel extends AndroidViewModel {
         // remember that initial get is called through activity so it can show progress
 
         listenInRealtime(); // Aaay it works!!
-//        ArrayList<DataWrapper> temp = liveOrders.getValue();
-//        temp.addAll(generateFakeOrders(50));
-//        liveOrders.setValue(temp);
-
     }
     public String getFoodBank() {
         return dataRepository.getDataWrapper().getFoodBank();
@@ -145,9 +141,9 @@ public class VolunteerViewModel extends AndroidViewModel {
         orders.clear();
         for (DocumentSnapshot document : documentSnapshots) {
             try {
-                if (document.getId().equals("color")) {
+                if (document.getId().equals(ConfirmationViewModel.COLORS)) {
                     // this is the shared color counter, used to provide colors which are as unique
-                    // as possible.
+                    // as possible. Ignore it.
                     continue;
                 }
                 DataWrapper thisOrder = document.toObject(DataWrapper.class);
@@ -201,7 +197,8 @@ public class VolunteerViewModel extends AndroidViewModel {
         ArrayList<DataWrapper> fakeOrders = new ArrayList<>();
         for (int i = 0; i < howMany; i++) {
             // nextInt bound is exclusive
-            int color = Color.argb(255, random.nextInt(255 + 1),random.nextInt(255 + 1),random.nextInt(255 + 1));
+            int[] rgb = ConfirmationViewModel.RGBS[i % ConfirmationViewModel.RGBS.length];
+            int color = Color.argb(255, rgb[0], rgb[1], rgb[2]);
             int foodBankInt = i % 4 + 1;
             DataWrapper temp = new DataWrapper("namenumber" + i,
                     "At food bank " + foodBankInt,
