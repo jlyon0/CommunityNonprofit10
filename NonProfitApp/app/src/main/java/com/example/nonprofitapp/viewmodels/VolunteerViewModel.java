@@ -145,6 +145,11 @@ public class VolunteerViewModel extends AndroidViewModel {
         orders.clear();
         for (DocumentSnapshot document : documentSnapshots) {
             try {
+                if (document.getId().equals("color")) {
+                    // this is the shared color counter, used to provide colors which are as unique
+                    // as possible.
+                    continue;
+                }
                 DataWrapper thisOrder = document.toObject(DataWrapper.class);
                 orders.add(thisOrder);
             } catch (NullPointerException npe) {

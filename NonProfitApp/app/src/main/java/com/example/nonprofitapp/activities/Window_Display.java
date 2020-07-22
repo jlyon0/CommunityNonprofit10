@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Menu;
@@ -16,6 +18,9 @@ import android.view.View;
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.viewmodels.DisplayViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Window_Display extends AppCompatActivity {
 
     DisplayViewModel viewModel;
@@ -24,7 +29,7 @@ public class Window_Display extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window__display);
         viewModel = ViewModelProviders.of(this).get(DisplayViewModel.class);
-    }
+     }
 
     public void toCancelOrder(View view)
     {

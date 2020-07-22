@@ -17,6 +17,9 @@ import com.example.nonprofitapp.DataWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.type.Date;
 
 import java.time.LocalDateTime;
@@ -33,9 +36,12 @@ import java.util.HashMap;
 public class ConfirmationViewModel extends AndroidViewModel {
     private DataRepository dataRepository;
     private DataWrapper dataWrapper;
-    // some live data e.g.
-    private LiveData<FirebaseUser> liveUser;
 
+    private int[][] rgbs = {{2,63,165},{125,135,185},{190,193,212},{214,188,192},{187,119,132},
+            {142,6,59},{74,111,227},{133,149,225},{181,187,227},{230,175,185},{224,123,145},
+            {211,63,106},{17,198,56},{141,213,147},{198,222,199},{234,211,198},{240,185,141},
+            {239,151,8},{15,207,192},{156,222,214},{213,234,231},{243,225,235},{246,196,225},
+            {247,156,212}};
 
     private MutableLiveData<String> toastText;
 
@@ -67,8 +73,6 @@ public class ConfirmationViewModel extends AndroidViewModel {
                 22,
                 12,
                 Color.RED);*/
-        dataWrapper.setUid(dataRepository.getUser().getUid());
-        dataWrapper.setDisplayName(dataRepository.getUser().getDisplayName());
 
     }
 
@@ -101,16 +105,18 @@ public class ConfirmationViewModel extends AndroidViewModel {
         StringBuilder timeString = new StringBuilder();
         // add an am or pm
         String amOrPm = "";
-        if (dataWrapper.getHour() > 12) {
-            timeString.append(dataWrapper.getHour() - 12);
+        if (dataWrapper.getHour() >= 12) {
+            if (dataWrapper.getHour() != 12) {
+                timeString.append(dataWrapper.getHour() - 12);
+            }
             amOrPm = PM;
         } else {
             if (dataWrapper.getHour() == 0) {
                 timeString.append("12");
             } else {
                 timeString.append(dataWrapper.getHour());
-                amOrPm = AM;
             }
+            amOrPm = AM;
         }
         timeString.append(":");
         if (dataWrapper.getMinute() < 10) timeString.append(0);
@@ -119,33 +125,52 @@ public class ConfirmationViewModel extends AndroidViewModel {
         return timeString.toString();
     } /* getTimeString() */
 
-    public DataWrapper setWrapper(){
+    public void setWrapper(){
+        dataWrapper.setUid(dataRepository.getUser().getUid());
+        dataWrapper.setDisplayName(dataRepository.getUser().getDisplayName());
+        dataWrapper.setCompleted(false);
+        dataWrapper.setProgress(0);
 
-        DataWrapper wrapper = dataRepository.getDataWrapper();
-//        wrapper.setFoodBank(foodBankId);
-//        wrapper.setBag(bag);
-//        wrapper.setYear(year);
-//        wrapper.setMonth(month);
-//        wrapper.setDay(day);
-//        wrapper.setMinute(minute);
-        wrapper.setCompleted(false);
-        wrapper.setProgress(0);
+    }
 
-        return wrapper;
+    public void getColor() {
+        String hour = String.valueOf(dataWrapper.getHour());
+        dataRepository.getFoodBankOrders().document("color")
+                .update(hour, FieldValue.increment(1))
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Failed to update color for " + dataWrapper.getHour(), e);
+                    }
+                });
+//        dataRepository.getFoodBankOrders().document("color")
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                        if (!documentSnapshot.contains(hour)) {
+//                            dataWrapper.setColor();
+//                        }
+//                        int colorIndex = documentSnapshot.get(hour);
+//                        dataWrapper.setColor();
+//                    }
+//                })
+    }
+    public int colorFromIndex(int colorIndex) {
+        colorIndex = colorIndex % rgbs.length;
+        int[] rgb = rgbs[colorIndex];
+//        Color color = Color.valueOf(rgb[0], rgb[1], rgb[2]);
+        return -1;
     }
 
     public void sendDataToFireBase() {
-        HashMap<String, Object> data = new HashMap<>();
-
-
-        Log.i("TAG", "SendData was triggered");
+        Log.i(TAG, "SendData was triggered");
         dataRepository.getFoodBankOrders().document(dataWrapper.getUid())
                 .set(dataWrapper)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         toastText.setValue("Order Received!");
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -154,9 +179,6 @@ public class ConfirmationViewModel extends AndroidViewModel {
                         toastText.setValue("Order Failed");
                     }
                 });
-
-
-
     }
     public MutableLiveData<String> getToastText() {
         return toastText;
