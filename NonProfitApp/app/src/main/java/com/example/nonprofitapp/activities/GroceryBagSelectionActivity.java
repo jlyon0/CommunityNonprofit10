@@ -35,7 +35,8 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
 
     private ArrayList<String> buttonNames; // get these from Firebase
     private ArrayList<RadioButton> buttons;
-    
+    private ArrayList<String> bagDescriptions;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +52,13 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
         RadioGroup rg = findViewById(R.id.radioGroup);
         buttonNames = new ArrayList<>();
         buttons = new ArrayList<>();
+        bagDescriptions = new ArrayList<>();
         // some random test buttons for now
         buttonNames.add("Kids");
+        bagDescriptions.add("A kids basket will contain 2 boxes of craft mac and cheese, 2 cases of apple sauce," +
+                "1 box of caprisun, and 2 cans of spaghettio's. ");
         buttonNames.add("Vegan");
+        bagDescriptions.add("Whatever vegans eat. Probably vegetables and dirt.");
         rg.setWeightSum(Float.parseFloat(buttonNames.size() + ""));
 
         for (int i = 0; i < buttonNames.size(); i++) {
