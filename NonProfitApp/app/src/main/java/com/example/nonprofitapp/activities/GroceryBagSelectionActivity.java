@@ -2,6 +2,7 @@ package com.example.nonprofitapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.AlertDialog;
@@ -114,11 +115,42 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
 
     /** Called after user logs in as a customer and selects a food bank and grocery bag */
     public void toSelectPickupTime(View view) {
+        //advanceWithInventory(); // uncomment and comment the rest to enable inventory.
+        continueWithBag();
+    }
+
+    /**
+     * Normal continuation method that sets bag and advances screen.
+     */
+    public void continueWithBag() {
         viewModel.setBag(buttonNames.get(selected));
         Intent intent = new Intent(this, PickupDateSelectionActivity.class);
         intent.putExtra(SELECTED_BAG, buttonNames.get(selected));
         intent.putExtra(MainActivity.FOOD_BANK_BUTTON, getIntent().getStringExtra(MainActivity.FOOD_BANK_BUTTON));
         startActivity(intent);
+
+    }
+
+    /**
+     * To implement Inventory stuff, add this when continue clicked.
+     */
+    public void advanceWithInventory() {
+        viewModel.tryToSelectBag(buttonNames.get(selected)).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean selectIsPossible) {
+                Log.i(TAG, "onchanged");
+                if (selectIsPossible) {
+                    continueWithBag();
+                } else {
+                    Log.i(TAG, "Failed, toasting");
+
+                    Toast.makeText(GroceryBagSelectionActivity.this,
+                            "This bag is probably no longer in stock. Sorry!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     /*

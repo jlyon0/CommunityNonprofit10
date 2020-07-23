@@ -94,7 +94,7 @@ public class DataRepository {
     }
 
     public void setBag(String bagName) {
-        bag = db.collection("/foodbanks/").document(bagName);
+        bag = getFoodBank().collection("bags").document(bagName);
     }
 
 

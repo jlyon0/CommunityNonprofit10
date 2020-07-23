@@ -130,7 +130,7 @@ public class ConfirmationViewModel extends AndroidViewModel {
      * @return
      */
     public MutableLiveData<Boolean> getAndSetColor() {
-        final MutableLiveData<Boolean> done = new MutableLiveData<>(false);
+        final MutableLiveData<Boolean> done = new MutableLiveData<>();
         Log.i(TAG, "Getting and setting color");
 
         String hour = String.valueOf(dataWrapper.getHour());
@@ -141,6 +141,7 @@ public class ConfirmationViewModel extends AndroidViewModel {
                     public void onFailure(@NonNull Exception e) {
                         Log.e(TAG, "Failed to update color for " + dataWrapper.getHour(), e);
                         setColorOnFail();
+                        done.setValue(true);
                     }
                 })
                 .addOnSuccessListener((aVoid) -> {
@@ -177,27 +178,26 @@ public class ConfirmationViewModel extends AndroidViewModel {
         dataWrapper.setColor(colorFromIndex(new Random().nextInt(RGBS.length)));
     }
 
-    public void sendDataToFireBase() {
-
-
-
+    public MutableLiveData<Boolean> sendDataToFireBase() {
         Log.i(TAG, "SendData was triggered");
-
+        MutableLiveData<Boolean> isDone = new MutableLiveData<>(false); // this is ugly
         dataRepository.getFoodBankOrders().document(dataWrapper.getUid())
                 .set(dataWrapper)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         toastText.setValue("Order Received!");
+                        isDone.setValue(true);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        toastText.setValue("Order Failed");
+                        toastText.setValue("Order Failed.");
+                        isDone.setValue(true);
                     }
                 });
-
+        return isDone;
     }
     public MutableLiveData<String> getToastText() {
         return toastText;

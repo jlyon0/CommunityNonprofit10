@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activities.ConfirmationActivity"
     >
+    <ProgressBar
+        android:id="@+id/confirmProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/secondaryColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible" />
+
 
     <Button
         android:id="@+id/confirm"
@@ -30,27 +42,28 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-<!--
-    <TextView
-        android:id="@+id/pickupTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pickup Time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/foodBank"
-        />
 
-    <TextView
-        android:id="@+id/bagType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Selected Bag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pickupTime" />
--->
+    <!--
+        <TextView
+            android:id="@+id/pickupTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pickup Time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foodBank"
+            />
+
+        <TextView
+            android:id="@+id/bagType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selected Bag"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pickupTime" />
+    -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

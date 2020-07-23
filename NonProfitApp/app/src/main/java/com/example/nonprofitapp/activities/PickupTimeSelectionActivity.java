@@ -53,12 +53,12 @@ public class PickupTimeSelectionActivity extends AppCompatActivity {
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                 if (hourOfDay < startAndEndHour[0]) {
                     // the hour is too early
-                    timePicker.setCurrentHour(startAndEndHour[0]);
+                    //timePicker.setCurrentHour(startAndEndHour[0]);
                     selectTime.setTextColor(getResources().getColor(R.color.design_default_color_error));
                     selectTime.startAnimation(AnimationUtils.loadAnimation(PickupTimeSelectionActivity.this, R.anim.shake));
                 } else if (hourOfDay >= startAndEndHour[1]) {
                     // hour is too late, set it to an hour before the closing hour (closing hour is probably exclusive)
-                    timePicker.setCurrentHour(startAndEndHour[1] - 1);
+                    //timePicker.setCurrentHour(startAndEndHour[1] - 1);
                     selectTime.setTextColor(getResources().getColor(R.color.design_default_color_error));
                     selectTime.startAnimation(AnimationUtils.loadAnimation(PickupTimeSelectionActivity.this, R.anim.shake));
                 }

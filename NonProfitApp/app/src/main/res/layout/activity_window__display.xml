@@ -2,12 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/display_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F44336"
-    tools:context=".activities.Window_Display">
-
+    tools:context=".activities.Window_Display"
+    android:id="@+id/display_bg"
+    >
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -40,9 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="252dp"
         android:layout_marginBottom="143dp"
-        android:text="FirstName"
-        android:gravity="center"
         android:background="@color/white"
+        android:gravity="center"
+        android:text="FirstName"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"

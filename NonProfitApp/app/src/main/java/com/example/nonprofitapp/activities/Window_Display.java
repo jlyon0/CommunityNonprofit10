@@ -18,7 +18,7 @@ import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.viewmodels.DisplayViewModel;
 
 public class Window_Display extends AppCompatActivity {
-
+    ConstraintLayout background;
     DisplayViewModel viewModel;
     AlertDialog helpDialog;
     @Override
@@ -27,8 +27,9 @@ public class Window_Display extends AppCompatActivity {
         setContentView(R.layout.activity_window__display);
         viewModel = ViewModelProviders.of(this).get(DisplayViewModel.class);
 
-        ConstraintLayout background = findViewById(R.id.display_bg);
+        background = findViewById(R.id.display_bg);
         background.setBackgroundColor(viewModel.getColor());
+        background.invalidate();
         TextView firstName = findViewById(R.id.first_name);
         firstName.setText(viewModel.getFirstName());
         showHelpMessage();

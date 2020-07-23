@@ -39,7 +39,7 @@ public class DisplayViewModel extends AndroidViewModel {
 
     public String getFirstName() {
         // regex for replacing everything after the first space
-        return dataWrapper.getDisplayName().substring(0, dataWrapper.getDisplayName().indexOf(" ") + 2) + ".";
+        return dataWrapper.getDisplayName().substring(0, dataWrapper.getDisplayName().lastIndexOf(" ") + 2) + ".";
     }
 
     public void deleteOrder() {

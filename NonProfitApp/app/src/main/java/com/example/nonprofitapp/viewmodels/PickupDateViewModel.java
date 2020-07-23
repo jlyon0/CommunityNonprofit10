@@ -32,4 +32,5 @@ public class PickupDateViewModel extends AndroidViewModel {
         dataWrapper.setMonth(datePicker.getMonth() + 1); // january is 0 for some reason
         dataWrapper.setYear(datePicker.getYear());
     }
+
 }

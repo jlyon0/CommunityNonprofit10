@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.example.nonprofitapp.viewmodels.VolunteerViewModel;
 public class ConfirmationActivity extends AppCompatActivity {
 
     ConfirmationViewModel viewModel;
+    private ProgressBar progressBar;
 
     private String bag;
     private int year;
@@ -37,6 +39,9 @@ public class ConfirmationActivity extends AppCompatActivity {
     private int minute;
     private String foodBankId;
 
+    private static final String TAG = ConfirmationActivity.class.getName();
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -45,6 +50,8 @@ public class ConfirmationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirmation);
         // TODO display all info here
         viewModel = ViewModelProviders.of(this).get(ConfirmationViewModel.class);
+        progressBar = findViewById(R.id.confirmProgressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         viewModel.getToastText().observe(this, new Observer<String>() {
             @Override
@@ -80,13 +87,21 @@ public class ConfirmationActivity extends AppCompatActivity {
 
     /** Called after user logs in as a customer and selects food bank, bag, and pickup time */
     public void confirmOrder(View view) {
-        // TODO do something when confirm order button is clicked
-
-        //method call to send to firebase with wrapper
+        // method call to send to firebase with wrapper
+        progressBar.setVisibility(View.VISIBLE);
+        // these observers are quite ugly, they're here because there are async things happening.
         viewModel.getAndSetColor().observe(this, (readyToSend) -> {
-            viewModel.sendDataToFireBase();
-            Intent launchWindow = new Intent(this, Window_Display.class);
-            startActivity(launchWindow);
+            Log.i(TAG, "observer");
+            viewModel.sendDataToFireBase().observe(ConfirmationActivity.this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean isDone) {
+                    if (isDone) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Intent launchWindow = new Intent(ConfirmationActivity.this, Window_Display.class);
+                        startActivity(launchWindow);
+                    }
+                }
+            });
         });
     }
 
