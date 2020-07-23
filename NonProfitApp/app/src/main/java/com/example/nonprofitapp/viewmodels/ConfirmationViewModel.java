@@ -178,7 +178,11 @@ public class ConfirmationViewModel extends AndroidViewModel {
     }
 
     public void sendDataToFireBase() {
+
+
+
         Log.i(TAG, "SendData was triggered");
+
         dataRepository.getFoodBankOrders().document(dataWrapper.getUid())
                 .set(dataWrapper)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

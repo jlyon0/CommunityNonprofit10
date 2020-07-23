@@ -39,6 +39,9 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
 
     private ArrayList<String> buttonNames; // get these from Firebase
     private ArrayList<RadioButton> buttons;
+    private ArrayList<String> bagDescriptions;
+
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +57,21 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
         RadioGroup rg = findViewById(R.id.radioGroup);
         buttonNames = new ArrayList<>();
         buttons = new ArrayList<>();
+        bagDescriptions = new ArrayList<>();
+
         // some random test buttons for now
         buttonNames.add("Kids");
+        bagDescriptions.add("2 boxes of Craft Mac and Cheese, 2 cases of caprisun, 1 box of apple sauce, and 2 cans of Spaghettio's.");
+        buttonNames.add("Adult");
+        bagDescriptions.add("2 cans of black beans, 2 boxes of spaghetti, 1 can of tomato sauce, 1 can of corn.");
         buttonNames.add("Vegan");
+        bagDescriptions.add("Probably some vegetables and dirt.");
+        buttonNames.add("Nut Free");
+        bagDescriptions.add("2 boxes of spaghetti, 2 cans of tomato sauce, 2 cans of black beans, 1 can of corn.");
+        buttonNames.add("Dairy Free");
+        bagDescriptions.add("2 cans of black beans, 2 boxes of spaghetti, 1 can of tomato sauce, 1 can of corn.");
+
+
         rg.setWeightSum(Float.parseFloat(buttonNames.size() + ""));
 
         for (int i = 0; i < buttonNames.size(); i++) {
@@ -64,7 +79,7 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
             RadioButton radioButton = new RadioButton(this);
             radioButton.setId(i);
             radioButton.setText(buttonNames.get(i));
-            radioButton.setButtonDrawable(null);
+            //radioButton.setButtonDrawable(null);
 
             // set the default value
             if (buttonNames.get(i).equals(selected)) {
@@ -73,6 +88,7 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
             }
 
             rg.addView(radioButton);
+
             buttons.add(radioButton);
         }
 
@@ -85,6 +101,13 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
                 buttons.get(selected).setTextColor(Color.BLACK);
                 selected = checkedId;
                 buttons.get(selected).setTextColor(Color.BLUE);
+
+                //This is where the bag descriptions might go
+                   TextView description = (TextView) findViewById(R.id.description);
+                   description.setText(bagDescriptions.get(selected));
+
+                   TextView heading = (TextView) findViewById(R.id.heading);
+                   heading.setVisibility(View.VISIBLE);
             }
         });
     }
