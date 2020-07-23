@@ -17,33 +17,36 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/margin_medium"
     android:layout_marginRight="@dimen/margin_medium"
     android:layout_marginTop="@dimen/margin_tiny"
     android:layout_marginBottom="@dimen/margin_tiny"
     android:orientation="horizontal"
-    android:gravity="end">
+    android:gravity="end|center_vertical">
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         />
 
     <TextView
         android:id="@+id/order_details"
-        android:layout_width="255dp"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_tiny"
+        android:layout_marginVertical="@dimen/margin_tiny"
+        android:layout_weight="1"
         android:gravity="center_vertical"
+        android:minHeight="@dimen/list_item_height"
         android:text="@string/element_text"
-        android:layout_marginEnd="@dimen/margin_tiny"/>
+         />
 
     <View
         android:id="@+id/color_panel"
         android:layout_width="@dimen/margin_huge"
         android:layout_height="match_parent"
-        android:background="@android:color/white"/>
+        android:background="@android:color/black"/>
 
 </LinearLayout>

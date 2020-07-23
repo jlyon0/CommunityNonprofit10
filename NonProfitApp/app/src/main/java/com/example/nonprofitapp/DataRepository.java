@@ -79,6 +79,7 @@ public class DataRepository {
      * @return
      */
     public FirebaseUser getUser() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
         return user;
     }
 

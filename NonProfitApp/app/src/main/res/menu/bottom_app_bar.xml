@@ -4,15 +4,14 @@
     <item
         android:id="@+id/back"
         android:icon="@drawable/ic_baseline_undo_24"
-        android:title="undo"
-        android:contentDescription="undo"
+        android:title="Undo Progress"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/trash"
         android:icon="@drawable/ic_baseline_delete_24"
         app:showAsAction="always"
-        android:title="redo"/>
+        android:title="Delete Order"/>
     <item
         android:id="@+id/sort"
         android:icon="@drawable/ic_baseline_sort_list_24"

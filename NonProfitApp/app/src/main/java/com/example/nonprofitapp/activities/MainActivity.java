@@ -1,16 +1,19 @@
 package com.example.nonprofitapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.animation.LayoutTransition;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,12 +56,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView volunteerSignIn;
     Button signOut;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
         setUpGUI();
 
         signOut.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
     public void setUpGUI() {
         customerSignIn = findViewById(R.id.customer_sign_in);
         customerSignIn.setOnClickListener(this);
@@ -94,8 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // if no one is logged in, don't offer a sign out button.
             signOut.setVisibility(View.GONE);
         }
-
     }
+
 
     /*
      * Handles both the customer sign in and volunteer sign in buttons.
@@ -171,4 +175,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(getApplicationContext(), "Something went wrong when you logged in. Please try again.", Toast.LENGTH_LONG).show();
         }
     }
+
+    /*
+     * The next 3 methods control the help icon/option in the ActionBar.
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.help_header) {
+            // help's onclicklistener basically
+            showHelpMessage();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void showHelpMessage() {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.help_title))
+                .setMessage(getString(R.string.help_login_customer))
+                // dialogs made with this builder automatically dismisses itself on button click.
+                .setPositiveButton(R.string.ok, null)
+                .create();
+        dialog.show();
+    }
+
 }

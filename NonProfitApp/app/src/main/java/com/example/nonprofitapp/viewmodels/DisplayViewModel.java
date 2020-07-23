@@ -37,6 +37,11 @@ public class DisplayViewModel extends AndroidViewModel {
         return dataWrapper.getColor();
     }
 
+    public String getFirstName() {
+        // regex for replacing everything after the first space
+        return dataWrapper.getDisplayName().replaceAll("\\s.*","");
+    }
+
     public void deleteOrder() {
         String uid = dataRepository.getUser().getUid();
         dataRepository.getFoodBankOrders().document(uid).delete()

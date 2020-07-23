@@ -76,8 +76,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         String PM = " p.m.";
         // same as confirmation:
         String amOrPm = "";
-        if (order.getHour() > 12) {
-            timeString.append(order.getHour() - 12);
+        if (order.getHour() >= 12) {
+            if (order.getHour() != 12) {
+                timeString.append(order.getHour() - 12);
+            }
             amOrPm = PM;
         } else {
             if (order.getHour() == 0) {
