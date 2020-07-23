@@ -25,7 +25,7 @@ public class PickupTimeViewModel extends AndroidViewModel {
         dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
         dataWrapper = dataRepository.getDataWrapper();
     }
-    public void setDate(TimePicker timePicker) {
+    public void setTime(TimePicker timePicker) {
         dataWrapper.setHour(timePicker.getCurrentHour()); // 0 indexed 24hr time
         dataWrapper.setMinute(timePicker.getCurrentMinute());
     }

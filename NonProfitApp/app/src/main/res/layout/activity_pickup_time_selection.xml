@@ -27,14 +27,17 @@
         android:layout_marginTop="80dp"/>
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:id="@+id/please_choose_time"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please choose a pickup time below:"
+        android:maxHeight="80dp"
+        android:gravity="center"
+        android:text="@string/please_choose_a_pickup_time"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/time_picker"/>
+        app:layout_constraintBottom_toTopOf="@id/time_picker"
+        android:layout_marginHorizontal="@dimen/margin_medium"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

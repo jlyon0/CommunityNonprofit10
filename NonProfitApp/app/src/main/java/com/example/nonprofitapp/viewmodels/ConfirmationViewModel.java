@@ -174,7 +174,7 @@ public class ConfirmationViewModel extends AndroidViewModel {
     }
     public void setColorOnFail() {
         Log.i(TAG, "Setting random color");
-        dataWrapper.setColor(new Random().nextInt(RGBS.length));
+        dataWrapper.setColor(colorFromIndex(new Random().nextInt(RGBS.length)));
     }
 
     public void sendDataToFireBase() {

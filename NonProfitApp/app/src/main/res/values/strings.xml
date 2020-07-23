@@ -25,6 +25,8 @@
     <string name="by_date">Sort by Date</string>
     <string name="by_name">Sort by Name</string>
     <string name="by_progress">Sort by Progress</string>
+    <string name="please_choose_date">"Please choose a pickup date from the available days: "</string>
+    <string name="please_choose_a_pickup_time">"Please choose a pickup time between "</string>
 
     <!-- For help dialog boxes.  -->
     <string name="ok">Ok</string>
@@ -32,8 +34,7 @@
     <!-- Customer side -->
     <string name="help_login_customer">Log in or sign up to use this service. If you have
         previously created an account, please log in using the same username and password that you
-        used to sign up. If you do not have an account, please contact your local food bank or food
-        pantry to set up an account.</string>
+        used to sign up. If you do not have an account, please sign up for an account here.</string>
     <string name="help_foodbank_sel">Select a food bank or pantry for a drive-by pickup, then press
         the button at the bottom of the screen to continue.</string>
     <string name="help_bag_sel">Select the food bag type that you would like to pick up, then press
@@ -59,4 +60,5 @@
         bank. From this page, you can view existing orders, sort and filter them, and mark them
         completed. If you have an email address from your food bank or pantry (myemail\@myfoodbank.org for
         example) you can delete orders.</string>
+
 </resources>
