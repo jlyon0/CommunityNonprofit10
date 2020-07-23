@@ -79,9 +79,12 @@ public class PickupDateSelectionActivity extends AppCompatActivity {
         datePicker = findViewById(R.id.date_picker);
         datePicker.setMinDate(Calendar.getInstance().getTimeInMillis());
         minimalDateRestrictor();
-        //ignorantDatePicker();
     }
 
+    /**
+     * Initialize the date picker with a valid date, and set a listener to correct the user if they
+     * enter a date which isn't offered by the food bank.
+     */
     public void minimalDateRestrictor() {
         Calendar pickerCurrentDate = Calendar.getInstance();
         pickerCurrentDate.setTimeInMillis(System.currentTimeMillis());
@@ -120,36 +123,6 @@ public class PickupDateSelectionActivity extends AppCompatActivity {
                         } // not in selectable days
                     } // onDateChanged
                 });
-    }
-    public void ignorantDatePicker() {
-
-        MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTitleText("Choose a date");
-        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
-        constraintsBuilder.setValidator(new CalendarConstraints.DateValidator() {
-            private Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-
-            @Override
-            public boolean isValid(long date) {
-                utc.setTimeInMillis(date);
-                int dayOfWeek = utc.get(Calendar.DAY_OF_WEEK);
-                return selectableDays.contains(dayOfWeek);
-            }
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {
-            }
-        });
-        builder.setCalendarConstraints(constraintsBuilder.build());
-        builder.setTheme(R.style.ThemeOverlay_MaterialComponents_MaterialCalendar_Fullscreen);
-        MaterialDatePicker<Long> picker = builder.build();
-        picker.show(getSupportFragmentManager(), picker.toString());
-
     }
 
     /** Called after user logs in as a customer and selects food bank, bag, and pickup time*/

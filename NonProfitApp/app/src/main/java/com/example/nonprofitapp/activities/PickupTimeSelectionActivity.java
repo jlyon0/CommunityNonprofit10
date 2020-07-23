@@ -40,6 +40,13 @@ public class PickupTimeSelectionActivity extends AppCompatActivity {
         selectTime.setText(timeMessage.toString());
 
         timePicker = (TimePicker) findViewById(R.id.time_picker);
+        minimalTimeRestrictor();
+    }
+
+    /**
+     * Set the time picker to something valid and restrict it's hour range to valid values.
+     */
+    public void minimalTimeRestrictor() {
         timePicker.setCurrentHour(startAndEndHour[0]);
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
@@ -57,6 +64,7 @@ public class PickupTimeSelectionActivity extends AppCompatActivity {
                 }
             } // onTimeChanged
         });
+
     }
 
     public String getHumanReadableHour(int hour) {
