@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.viewmodels.BagSelectViewModel;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class GroceryBagSelectionActivity extends AppCompatActivity {
@@ -38,6 +40,8 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
     private ArrayList<String> bagDescriptions;
     private ProgressBar progressBar;
 
+    private Button nextButton;
+
     
 
     @Override
@@ -51,6 +55,7 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.bagProgressBar);
         progressBar.setVisibility(View.VISIBLE);
         RadioGroup rg = findViewById(R.id.radioGroup);
+        nextButton = findViewById(R.id.continueToPickup);
         buttonNames = new ArrayList<>();
         buttons = new ArrayList<>();
         bagDescriptions = new ArrayList<>();
@@ -84,21 +89,15 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
                 // redraw the radio group
                 rg.invalidate();
                 progressBar.setVisibility(View.INVISIBLE);
-
+                nextButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //advanceWithInventory(); // uncomment and comment the rest to enable inventory.
+                        continueWithBag();
+                    }
+                });
             }
         });
-        // some random test buttons for now
-//        buttonNames.add("Kids");
-//        bagDescriptions.add("2 boxes of Craft Mac and Cheese, 2 cases of caprisun, 1 box of apple sauce, and 2 cans of Spaghettio's.");
-//        buttonNames.add("Adult");
-//        bagDescriptions.add("2 cans of black beans, 2 boxes of spaghetti, 1 can of tomato sauce, 1 can of corn.");
-//        buttonNames.add("Vegan");
-//        bagDescriptions.add("Probably some vegetables and dirt.");
-//        buttonNames.add("Nut Free");
-//        bagDescriptions.add("2 boxes of spaghetti, 2 cans of tomato sauce, 2 cans of black beans, 1 can of corn.");
-//        buttonNames.add("Dairy Free");
-//        bagDescriptions.add("2 cans of black beans, 2 boxes of spaghetti, 1 can of tomato sauce, 1 can of corn.");
-
 
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -118,14 +117,9 @@ public class GroceryBagSelectionActivity extends AppCompatActivity {
         });
     }
 
-    /** Called after user logs in as a customer and selects a food bank and grocery bag */
-    public void toSelectPickupTime(View view) {
-        //advanceWithInventory(); // uncomment and comment the rest to enable inventory.
-        continueWithBag();
-    }
-
     /**
-     * Normal continuation method that sets bag and advances screen.
+     * Called after user logs in as a customer and selects a food bank and grocery bag. Normal
+     * continuation method that sets the bag and advances screen.
      */
     public void continueWithBag() {
         viewModel.setBag(buttonNames.get(selected));

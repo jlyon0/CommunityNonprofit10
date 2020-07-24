@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,7 +26,7 @@ import com.example.nonprofitapp.viewmodels.FoodBankViewModel;
 
 import java.util.ArrayList;
 
-public class Foodbank_Selection_Page extends AppCompatActivity implements View.OnClickListener{
+public class Foodbank_Selection_Page extends AppCompatActivity {
     Intent received;
     FoodBankViewModel viewModel;
     private static final String TAG = Foodbank_Selection_Page.class.getName();
@@ -37,6 +38,7 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
     private ArrayList<String> bankAddresses;
 
     private ProgressBar progressBar;
+    private Button nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
         viewModel = ViewModelProviders.of(this).get(FoodBankViewModel.class);
         progressBar = findViewById(R.id.pantryProgressBar);
         progressBar.setVisibility(View.VISIBLE);
+        nextButton = findViewById(R.id.continueToPickup);
+
         viewModel.getToastText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String string) {
@@ -85,6 +89,13 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
                 // redraw the radio group
                 rg.invalidate();
                 progressBar.setVisibility(View.INVISIBLE);
+
+                nextButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setNextButton();
+                    }
+                });
             }
         });
 
@@ -106,8 +117,7 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
         });
     }
 
-    @Override
-    public void onClick(final View view) {
+    public void setNextButton() {
         if (!viewModel.setFoodBank(buttonNames.get(selected))) {
             return;
         }
@@ -117,7 +127,6 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
             // if it was launched as part of a volunteer login, send to volunteer page with foodbank
             if(viewModel.checkIfVolValid()) {
                 Intent launchIntent = new Intent(this, VolunteerActivity.class); //Package selection page);
-                launchIntent.putExtra(MainActivity.FOOD_BANK_BUTTON, getResources().getResourceEntryName(view.getId()));
                 startActivity(launchIntent);
             }
             progressBar.setVisibility(View.INVISIBLE);
@@ -138,7 +147,6 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
                         } else {
                             // go create an order for this food bank
                             Intent launchIntent = new Intent(Foodbank_Selection_Page.this, GroceryBagSelectionActivity.class); //Package selection page);
-                            launchIntent.putExtra(MainActivity.FOOD_BANK_BUTTON, getResources().getResourceEntryName(view.getId()));
                             startActivity(launchIntent);
                             progressBar.setVisibility(View.INVISIBLE);
 
@@ -152,6 +160,7 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
 
         }
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();

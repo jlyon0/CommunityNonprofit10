@@ -169,6 +169,10 @@ public class FoodBankViewModel extends AndroidViewModel {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.getDocuments().size() == 0) {
+                            data.setValue(getBanksOnFailure());
+                            return;
+                        }
                         ArrayList<String> foodbanks = new ArrayList<>();
                         ArrayList<String> descriptions = new ArrayList<>();
                         for (DocumentSnapshot foodBank : queryDocumentSnapshots) {
@@ -187,30 +191,36 @@ public class FoodBankViewModel extends AndroidViewModel {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        ArrayList<String> buttonNames;
-                        ArrayList<String> bankAddresses;
-                        buttonNames = new ArrayList<>();
-                        bankAddresses = new ArrayList<>();
-                        // some random test buttons for now
-                        buttonNames.add("Gleaners");
-                        bankAddresses.add("3737 Waldemere Ave, Indianapolis, IN 46241");
-                        //buttonNames.add("Midwest Food Bank");
-                        //bankAddresses.add("6450 S Belmont Ave, Indianapolis, IN 46217");
-                        buttonNames.add("Marion County: CARE Mobile Pantries");
-                        bankAddresses.add("Mondays – Marion County Election Board 3737 E. Washington St. Indianapolis 2-6P\n" +
-                                "Fridays – Ivy Tech Community College 2535 N. Capitol St. Indianapolis  2-6P\n" +
-                                "Saturdays – John Marshall High School 10101 E. 38th St. Indianapolis 10A-2P\n" +
-                                "7/27 – Moorhead Elementary School  8400 E. 10th Street, Indianapolis 4-6P\n" +
-                                "7/30 – Lawrence Community Park  5301 N Franklin Rd Indianapolis  4-6P\n" +
-                                "8/11 – Franklin Cove Apartments  8505 Faywood Dr. Indianapolis  9A (drop and go)");
-                        ArrayList<ArrayList<String>> thisData = new ArrayList<>();
-                        thisData.add(buttonNames);
-                        thisData.add(bankAddresses);
-                        data.setValue(thisData);
+                        data.setValue(getBanksOnFailure());
                     }
                 });
         return data;
     }
+
+    private ArrayList<ArrayList<String>> getBanksOnFailure() {
+        ArrayList<String> buttonNames;
+        ArrayList<String> bankAddresses;
+        buttonNames = new ArrayList<>();
+        bankAddresses = new ArrayList<>();
+        // some random test buttons for now
+        buttonNames.add("Gleaners");
+        bankAddresses.add("3737 Waldemere Ave, Indianapolis, IN 46241");
+        //buttonNames.add("Midwest Food Bank");
+        //bankAddresses.add("6450 S Belmont Ave, Indianapolis, IN 46217");
+        buttonNames.add("Marion County: CARE Mobile Pantries");
+        bankAddresses.add("Mondays – Marion County Election Board 3737 E. Washington St. Indianapolis 2-6P\n" +
+                "Fridays – Ivy Tech Community College 2535 N. Capitol St. Indianapolis  2-6P\n" +
+                "Saturdays – John Marshall High School 10101 E. 38th St. Indianapolis 10A-2P\n" +
+                "7/27 – Moorhead Elementary School  8400 E. 10th Street, Indianapolis 4-6P\n" +
+                "7/30 – Lawrence Community Park  5301 N Franklin Rd Indianapolis  4-6P\n" +
+                "8/11 – Franklin Cove Apartments  8505 Faywood Dr. Indianapolis  9A (drop and go)");
+        ArrayList<ArrayList<String>> thisData = new ArrayList<>();
+        thisData.add(buttonNames);
+        thisData.add(bankAddresses);
+
+        return thisData;
+    }
+
 
     private List<Integer> daysOnFail() {
         return Arrays.asList(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY);
