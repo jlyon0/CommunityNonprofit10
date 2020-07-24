@@ -18,6 +18,7 @@
         </activity>
         <activity
             android:name=".activities.PickupDateSelectionActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.GroceryBagSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -25,6 +26,7 @@
         </activity>
         <activity
             android:name=".activities.ConfirmationActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.PickupTimeSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -32,6 +34,7 @@
         </activity>
         <activity
             android:name=".activities.PickupTimeSelectionActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.PickupDateSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -39,6 +42,7 @@
         </activity>
         <activity
             android:name=".activities.GroceryBagSelectionActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.Foodbank_Selection_Page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -46,6 +50,7 @@
         </activity>
         <activity
             android:name=".activities.Foodbank_Selection_Page"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENTACTIVITY"
@@ -58,7 +63,8 @@
                 android:name="android.support.PARENTACTIVITY"
                 android:value="com.example.nonprofitapp.ConfirmationActivity" />
         </activity>
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
