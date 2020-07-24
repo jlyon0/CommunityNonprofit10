@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginTop="40dp"/>
 
     <TextView
         android:id="@+id/please_choose_time"
@@ -45,7 +45,6 @@
         android:maxHeight="80dp"
         android:gravity="center"
         android:text="@string/please_choose_a_pickup_time"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
