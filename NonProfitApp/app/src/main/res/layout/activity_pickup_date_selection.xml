@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".activities.PickupDateSelectionActivity">
 
+    <ProgressBar
+        android:gravity="top"
+        android:id="@+id/calendarProgressBar"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/secondaryColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="invisible" />
+
     <DatePicker
         android:id="@+id/date_picker"
         android:layout_width="wrap_content"

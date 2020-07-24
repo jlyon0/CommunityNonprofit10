@@ -1,7 +1,6 @@
 package com.example.nonprofitapp.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,9 +22,7 @@ import android.widget.Toast;
 
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.viewmodels.FoodBankViewModel;
-import com.example.nonprofitapp.viewmodels.VolunteerViewModel;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Foodbank_Selection_Page extends AppCompatActivity implements View.OnClickListener{
@@ -48,8 +44,8 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_foodbank__selection__page);
         received = getIntent();
         viewModel = ViewModelProviders.of(this).get(FoodBankViewModel.class);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+        progressBar = findViewById(R.id.pantryProgressBar);
+        progressBar.setVisibility(View.VISIBLE);
         viewModel.getToastText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String string) {
@@ -61,40 +57,37 @@ public class Foodbank_Selection_Page extends AppCompatActivity implements View.O
         RadioGroup rg = findViewById(R.id.radioGroup);
         buttonNames = new ArrayList<>();
         buttons = new ArrayList<>();
-        bankAddresses = new ArrayList<>();
-        // some random test buttons for now
-        buttonNames.add("Gleaners");
-        bankAddresses.add("3737 Waldemere Ave, Indianapolis, IN 46241");
-        buttonNames.add("Midwest Food Bank");
-        bankAddresses.add("6450 S Belmont Ave, Indianapolis, IN 46217");
-        buttonNames.add("Marion County: CARE Mobile Pantries");
-        bankAddresses.add("Mondays – Marion County Election Board 3737 E. Washington St. Indianapolis 2-6P\n" +
-                "Fridays – Ivy Tech Community College 2535 N. Capitol St. Indianapolis  2-6P\n" +
-                "Saturdays – John Marshall High School 10101 E. 38th St. Indianapolis 10A-2P\n" +
-                "7/27 – Moorhead Elementary School  8400 E. 10th Street, Indianapolis 4-6P\n" +
-                "7/30 – Lawrence Community Park  5301 N Franklin Rd Indianapolis  4-6P\n" +
-                "8/11 – Franklin Cove Apartments  8505 Faywood Dr. Indianapolis  9A (drop and go)");
-        rg.setWeightSum(Float.parseFloat(buttonNames.size() + ""));
 
-        for (int i = 0; i < buttonNames.size(); i++) {
-            // create the radio button; add constraints
-            RadioButton radioButton = new RadioButton(this);
-            radioButton.setId(i);
-            radioButton.setText(buttonNames.get(i));
+        viewModel.getFoodBanks().observe(this, new Observer<ArrayList<ArrayList<String>>>() {
+            @Override
+            public void onChanged(ArrayList<ArrayList<String>> arrayLists) {
+                buttonNames = arrayLists.get(FoodBankViewModel.FOODBANKS);
+                bankAddresses = arrayLists.get(FoodBankViewModel.DESCRIPTIONS);
+                rg.setWeightSum(Float.parseFloat(buttonNames.size() + ""));
+
+                for (int i = 0; i < buttonNames.size(); i++) {
+                    // create the radio button; add constraints
+                    RadioButton radioButton = new RadioButton(Foodbank_Selection_Page.this);
+                    radioButton.setId(i);
+                    radioButton.setText(buttonNames.get(i));
 
 
-            // set the default value
-            if (buttonNames.get(i).equals(selected)) {
-                radioButton.setChecked(true);
-                radioButton.setTextColor(Color.BLUE);
+                    // set the default value
+                    if (buttonNames.get(i).equals(selected)) {
+                        radioButton.setChecked(true);
+                        radioButton.setTextColor(Color.BLUE);
+                    }
+
+                    rg.addView(radioButton);
+                    buttons.add(radioButton);
+                }
+
+                // redraw the radio group
+                rg.invalidate();
+                progressBar.setVisibility(View.INVISIBLE);
             }
+        });
 
-            rg.addView(radioButton);
-            buttons.add(radioButton);
-        }
-
-        // redraw the radio group
-        rg.invalidate();
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

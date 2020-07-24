@@ -2,6 +2,7 @@ package com.example.nonprofitapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -22,9 +24,10 @@ public class PickupTimeSelectionActivity extends AppCompatActivity {
     PickupTimeViewModel viewModel;
     private TimePicker timePicker;
     private TextView selectTime;
+    private ProgressBar progressBar;
 
     // TODO: set this var with something retrieved from firebase.
-    int[] startAndEndHour = {10,15}; // in 0-23 hour time
+    int[] startAndEndHour = {8,17}; // in 0-23 hour time
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +35,27 @@ public class PickupTimeSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pickup_time_selection);
         viewModel = ViewModelProviders.of(this).get(PickupTimeViewModel.class);
 
-        selectTime = findViewById(R.id.please_choose_time);
-        StringBuilder timeMessage = new StringBuilder(getString(R.string.please_choose_a_pickup_time));
-        timeMessage.append(getHumanReadableHour(startAndEndHour[0]));
-        timeMessage.append(" and ");
-        timeMessage.append(getHumanReadableHour(startAndEndHour[1]));
-        selectTime.setText(timeMessage.toString());
+        progressBar = findViewById(R.id.timeProgressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+        viewModel.getValidHours().observe(this, new Observer<Integer[]>() {
+            @Override
+            public void onChanged(Integer[] integers) {
+                startAndEndHour[0] = integers[0];
+                startAndEndHour[1] = integers[1];
 
-        timePicker = (TimePicker) findViewById(R.id.time_picker);
-        minimalTimeRestrictor();
+                selectTime = findViewById(R.id.please_choose_time);
+                StringBuilder timeMessage = new StringBuilder(getString(R.string.please_choose_a_pickup_time));
+                timeMessage.append(getHumanReadableHour(startAndEndHour[0]));
+                timeMessage.append(" and ");
+                timeMessage.append(getHumanReadableHour(startAndEndHour[1]));
+                selectTime.setText(timeMessage.toString());
+
+                timePicker = (TimePicker) findViewById(R.id.time_picker);
+                minimalTimeRestrictor();
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
     /**
@@ -54,17 +69,18 @@ public class PickupTimeSelectionActivity extends AppCompatActivity {
                 if (hourOfDay < startAndEndHour[0]) {
                     // the hour is too early
                     //timePicker.setCurrentHour(startAndEndHour[0]);
-                    selectTime.setTextColor(getResources().getColor(R.color.design_default_color_error));
-                    selectTime.startAnimation(AnimationUtils.loadAnimation(PickupTimeSelectionActivity.this, R.anim.shake));
+                    shakeError();
                 } else if (hourOfDay >= startAndEndHour[1]) {
                     // hour is too late, set it to an hour before the closing hour (closing hour is probably exclusive)
                     //timePicker.setCurrentHour(startAndEndHour[1] - 1);
-                    selectTime.setTextColor(getResources().getColor(R.color.design_default_color_error));
-                    selectTime.startAnimation(AnimationUtils.loadAnimation(PickupTimeSelectionActivity.this, R.anim.shake));
+                    shakeError();
                 }
             } // onTimeChanged
         });
-
+    }
+    public void shakeError() {
+        selectTime.setTextColor(getResources().getColor(R.color.design_default_color_error));
+        selectTime.startAnimation(AnimationUtils.loadAnimation(PickupTimeSelectionActivity.this, R.anim.shake));
     }
 
     public String getHumanReadableHour(int hour) {
@@ -91,7 +107,12 @@ public class PickupTimeSelectionActivity extends AppCompatActivity {
     /** Called after user logs in as a customer and selects food bank, bag, and pickup date/time */
     public void toOrderConfirmation(View view) {
         Intent intent = new Intent(this, ConfirmationActivity.class);
-
+        if (!((timePicker.getCurrentHour() >= startAndEndHour[0]) &&
+                (timePicker.getCurrentHour() < startAndEndHour[1]))) {
+            // if the time is not valid
+            shakeError();
+            return;
+        }
         viewModel.setTime(timePicker);
 
         Intent i = getIntent();

@@ -15,6 +15,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 /**
  */
@@ -22,6 +25,9 @@ import com.google.firebase.firestore.FieldValue;
 public class BagSelectViewModel extends AndroidViewModel {
     private DataRepository dataRepository;
     private DataWrapper dataWrapper;
+
+    public static final int BAGS = 0;
+    public static final int DESCRIPTIONS = 1;
 
     private static final String TAG = BagSelectViewModel.class.getName();
 
@@ -77,4 +83,63 @@ public class BagSelectViewModel extends AndroidViewModel {
         });
         return selectIsPossible;
     }
+
+    public LiveData<ArrayList<ArrayList<String>>> getBags() {
+        MutableLiveData<ArrayList<ArrayList<String>>> data = new MutableLiveData<>();
+        dataRepository.getBags().get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.i(TAG, "Success");
+                        if (queryDocumentSnapshots.getDocuments().size() == 0) {
+                            data.setValue(getBagsOnFailure());
+                            return;
+                        }
+                        ArrayList<String> bags = new ArrayList<>();
+                        ArrayList<String> descriptions = new ArrayList<>();
+                        for (DocumentSnapshot bag : queryDocumentSnapshots) {
+                            bags.add(bag.getId());
+                            if (bag.get("description") != null) {
+                                descriptions.add((String)bag.get("description"));
+                            } else {
+                                descriptions.add("No description for this place, sorry.");
+                            }
+                        }
+                        ArrayList<ArrayList<String>> thisData = new ArrayList<>();
+                        thisData.add(bags);
+                        thisData.add(descriptions);
+                        data.setValue(thisData);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i(TAG, "Failure");
+                        data.setValue(getBagsOnFailure());
+                    }
+                });
+        return data;
+    }
+
+    private ArrayList<ArrayList<String>> getBagsOnFailure() {
+        ArrayList<String> buttonNames;
+        ArrayList<String> bagDescriptions;
+        buttonNames = new ArrayList<>();
+        bagDescriptions = new ArrayList<>();
+
+        // some random test buttons for now
+        buttonNames.add("Kids");
+        bagDescriptions.add("2 boxes of Craft Mac and Cheese, 2 cases of caprisun, 1 box of apple sauce, and 2 cans of Spaghettio's.");
+        buttonNames.add("Vegan");
+        bagDescriptions.add("Probably some vegetables and dirt.");
+        buttonNames.add("Nut Free");
+        bagDescriptions.add("2 boxes of spaghetti, 2 cans of tomato sauce, 2 cans of black beans, 1 can of corn.");
+        buttonNames.add("Dairy Free");
+        bagDescriptions.add("2 cans of black beans, 2 boxes of spaghetti, 1 can of tomato sauce, 1 can of corn.");
+        ArrayList<ArrayList<String>> thisData = new ArrayList<>();
+        thisData.add(buttonNames);
+        thisData.add(bagDescriptions);
+
+        return thisData;
+    }
+
 }

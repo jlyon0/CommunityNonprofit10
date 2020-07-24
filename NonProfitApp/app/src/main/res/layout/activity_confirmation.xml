@@ -7,6 +7,7 @@
     tools:context=".activities.ConfirmationActivity"
     >
     <ProgressBar
+        android:gravity="top"
         android:id="@+id/confirmProgressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="true"

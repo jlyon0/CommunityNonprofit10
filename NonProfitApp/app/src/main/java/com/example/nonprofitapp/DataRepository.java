@@ -92,6 +92,13 @@ public class DataRepository {
         foodBank = db.collection("/foodbanks/").document(foodBankName);
         foodBankOrders = foodBank.collection("orders");
     }
+    public CollectionReference getFoodBanks() {
+        return db.collection("/foodbanks/");
+    }
+
+    public CollectionReference getBags() {
+        return getFoodBank().collection("bags");
+    }
 
     public void setBag(String bagName) {
         bag = getFoodBank().collection("bags").document(bagName);

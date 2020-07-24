@@ -2,13 +2,12 @@ package com.example.nonprofitapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,28 +16,25 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.nonprofitapp.R;
 import com.example.nonprofitapp.viewmodels.PickupDateViewModel;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.MaterialDatePicker;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 public class PickupDateSelectionActivity extends AppCompatActivity {
     PickupDateViewModel viewModel;
     DatePicker datePicker;
     TextView selectADay;
     Button next;
+    ProgressBar progressBar;
 
     // TODO: set this var with something retrieved from firebase.
-    List<Integer> selectableDays = Arrays.asList(Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY);
+    ArrayList<Integer> selectableDays;
 
     private static final String TAG = PickupDateSelectionActivity.class.getName();
 
@@ -47,38 +43,50 @@ public class PickupDateSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pickup_date_selection);
         viewModel = ViewModelProviders.of(this).get(PickupDateViewModel.class);
+        selectableDays = new ArrayList<>();
+        progressBar = findViewById(R.id.calendarProgressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+
 
         selectADay = findViewById(R.id.pickupDate);
-        StringBuilder selectADayMessage = new StringBuilder(getString(R.string.please_choose_date));
-        for (int i = 0; i < selectableDays.size(); i++) {
-            int dayOfWeek = selectableDays.get(i);
-            String weekDay = "";
-            if (Calendar.MONDAY == dayOfWeek) {
-                weekDay = "Monday";
-            } else if (Calendar.TUESDAY == dayOfWeek) {
-                weekDay = "Tuesday";
-            } else if (Calendar.WEDNESDAY == dayOfWeek) {
-                weekDay = "Wednesday";
-            } else if (Calendar.THURSDAY == dayOfWeek) {
-                weekDay = "Thursday";
-            } else if (Calendar.FRIDAY == dayOfWeek) {
-                weekDay = "Friday";
-            } else if (Calendar.SATURDAY == dayOfWeek) {
-                weekDay = "Saturday";
-            } else if (Calendar.SUNDAY == dayOfWeek) {
-                weekDay = "Sunday";
-            }
-            selectADayMessage.append(weekDay) ;
-            if (i != selectableDays.size() - 1) {
-                selectADayMessage.append(", ");
-            }
-        }
-        selectADay.setText(selectADayMessage.toString());
-        next = findViewById(R.id.selectTime);
+        viewModel.getValidDays().observe(this, new Observer<List<Integer>>() {
+            @Override
+            public void onChanged(List<Integer> integers) {
+                selectableDays.addAll(integers);
+                StringBuilder selectADayMessage = new StringBuilder(getString(R.string.please_choose_date));
+                for (int i = 0; i < selectableDays.size(); i++) {
+                    int dayOfWeek = selectableDays.get(i);
+                    String weekDay = "";
+                    if (Calendar.MONDAY == dayOfWeek) {
+                        weekDay = "Monday";
+                    } else if (Calendar.TUESDAY == dayOfWeek) {
+                        weekDay = "Tuesday";
+                    } else if (Calendar.WEDNESDAY == dayOfWeek) {
+                        weekDay = "Wednesday";
+                    } else if (Calendar.THURSDAY == dayOfWeek) {
+                        weekDay = "Thursday";
+                    } else if (Calendar.FRIDAY == dayOfWeek) {
+                        weekDay = "Friday";
+                    } else if (Calendar.SATURDAY == dayOfWeek) {
+                        weekDay = "Saturday";
+                    } else if (Calendar.SUNDAY == dayOfWeek) {
+                        weekDay = "Sunday";
+                    }
+                    selectADayMessage.append(weekDay) ;
+                    if (i != selectableDays.size() - 1) {
+                        selectADayMessage.append(", ");
+                    }
+                }
+                selectADay.setText(selectADayMessage.toString());
+                next = findViewById(R.id.selectTime);
 
-        datePicker = findViewById(R.id.date_picker);
-        datePicker.setMinDate(Calendar.getInstance().getTimeInMillis());
-        minimalDateRestrictor();
+                datePicker = findViewById(R.id.date_picker);
+                datePicker.setMinDate(Calendar.getInstance().getTimeInMillis());
+                minimalDateRestrictor();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     /**
