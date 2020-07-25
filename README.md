@@ -23,6 +23,8 @@ This project follows the Model-View-ViewModel (MVVM) architecture to separate th
 
 ## Prequisites and Running
 Red Riding Hood requires at least Android 9 and runs best on the Pixel 4. To run with an Android phone, follow this link:
+
 (To be added)
+
 Or find it in the Google Play store. Without an Android phone, this appetize link will run the app in the browser, but can accomodate only 1 person at a time.
 https://appetize.io/app/7vmvnqrh8h936ba0bm5n4ehj8g?device=pixel4&scale=75&orientation=portrait&osVersion=10.0
