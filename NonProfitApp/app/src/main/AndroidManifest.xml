@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nonprofitapp">
+    package="com.rrhteam.nonprofitapp">
 
     <application
         android:allowBackup="true"
@@ -10,60 +10,60 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.VolunteerActivity"
-            android:parentActivityName=".activities.Foodbank_Selection_Page">
+            android:name="com.rrhteam.nonprofitapp.activities.VolunteerActivity"
+            android:parentActivityName="com.rrhteam.nonprofitapp.activities.Foodbank_Selection_Page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.nonprofitapp.activities.Foodbank_Selection_Page" />
+                android:value="com.rrhteam.nonprofitapp.activities.Foodbank_Selection_Page" />
         </activity>
         <activity
-            android:name=".activities.PickupDateSelectionActivity"
+            android:name="com.rrhteam.nonprofitapp.activities.PickupDateSelectionActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activities.GroceryBagSelectionActivity">
+            android:parentActivityName="com.rrhteam.nonprofitapp.activities.GroceryBagSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.GroceryBagSelectionActivity" />
+                android:value="com.rrhteam.nonprofitapp.activities.GroceryBagSelectionActivity" />
         </activity>
         <activity
-            android:name=".activities.ConfirmationActivity"
+            android:name="com.rrhteam.nonprofitapp.activities.ConfirmationActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activities.PickupTimeSelectionActivity">
+            android:parentActivityName="com.rrhteam.nonprofitapp.activities.PickupTimeSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.PickupTimeSelectionActivity" />
+                android:value="com.rrhteam.nonprofitapp.activities.PickupTimeSelectionActivity" />
         </activity>
         <activity
-            android:name=".activities.PickupTimeSelectionActivity"
+            android:name="com.rrhteam.nonprofitapp.activities.PickupTimeSelectionActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activities.PickupDateSelectionActivity">
+            android:parentActivityName="com.rrhteam.nonprofitapp.activities.PickupDateSelectionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.PickupDateSelectionActivity" />
+                android:value="com.rrhteam.nonprofitapp.activities.PickupDateSelectionActivity" />
         </activity>
         <activity
-            android:name=".activities.GroceryBagSelectionActivity"
+            android:name="com.rrhteam.nonprofitapp.activities.GroceryBagSelectionActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activities.Foodbank_Selection_Page">
+            android:parentActivityName="com.rrhteam.nonprofitapp.activities.Foodbank_Selection_Page">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.Foodbank_Selection_Page" />
+                android:value="com.rrhteam.nonprofitapp.activities.Foodbank_Selection_Page" />
         </activity>
         <activity
-            android:name=".activities.Foodbank_Selection_Page"
+            android:name="com.rrhteam.nonprofitapp.activities.Foodbank_Selection_Page"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activities.MainActivity">
+            android:parentActivityName="com.rrhteam.nonprofitapp.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENTACTIVITY"
-                android:value="com.example.nonprofitapp.MainActivity" />
+                android:value="com.rrhteam.nonprofitapp.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.Window_Display"
-            android:parentActivityName=".activities.ConfirmationActivity">
+            android:name="com.rrhteam.nonprofitapp.activities.Window_Display"
+            android:parentActivityName="com.rrhteam.nonprofitapp.activities.ConfirmationActivity">
             <meta-data
                 android:name="android.support.PARENTACTIVITY"
-                android:value="com.example.nonprofitapp.ConfirmationActivity" />
+                android:value="com.rrhteam.nonprofitapp.ConfirmationActivity" />
         </activity>
-        <activity android:name=".activities.MainActivity"
+        <activity android:name="com.rrhteam.nonprofitapp.activities.MainActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
