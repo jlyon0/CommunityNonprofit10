@@ -63,6 +63,8 @@ public class VolunteerViewModel extends AndroidViewModel {
             return;
         }
         dataRepository = DataRepository.getInstance(); // gets singleton DataRepo object
+       Log.i(TAG, "Is email verified: " + dataRepository.getUser().isEmailVerified());
+        dataRepository.setFoodBank(dataRepository.getFoodBank().getId());
         // init toastText
         toastText = new MutableLiveData<>();
         // set the live data

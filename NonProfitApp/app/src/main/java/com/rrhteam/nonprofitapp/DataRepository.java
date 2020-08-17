@@ -2,9 +2,11 @@ package com.rrhteam.nonprofitapp;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 
@@ -55,17 +57,36 @@ public class DataRepository {
     }
 
     /**
-     * Call when you need to reset user.
+     * Call when you need to reset user. The reason it's so complicated is that we're checking for
+     * email verification, which is difficult:
+     *
+     * Firebase expects you to sign in again when you email verify. Instead, we're refreshing the
+     * token which is what we send to the database and needs to have a verified email for the perms.
+     * Then, after the token is refreshed we need to refresh the local user so we know that we're
+     * email verified. The token refresh is done in an async task, and the local refresh must follow
+     * the token refresh chronologically, so we're doing it in an OnSuccesssListener.
      */
     public void initUser() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         if (user != null) {
             Log.i(TAG, "Refreshed user!");
-            FirebaseAuth.getInstance().getCurrentUser().reload();
-            user = FirebaseAuth.getInstance().getCurrentUser();
-            Log.i(TAG, "User: " + getUser().getDisplayName() +
-                    " from: " + getUser().getProviderId());
+            boolean forceRefresh = true;
+            user.getIdToken(forceRefresh).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+                // we've refreshed the token, now reload the local user.
+                @Override
+                public void onSuccess(GetTokenResult getTokenResult) {
+                    Log.i(TAG, "Refreshed token.");
+                    FirebaseAuth.getInstance().getCurrentUser().reload().addOnSuccessListener((aVoid) -> {
+                        user = FirebaseAuth.getInstance().getCurrentUser();
+                        Log.i(TAG, "User: " + getUser().getDisplayName() +
+                                " from: " + getUser().getProviderId() + " verified: " +
+                                getUser().isEmailVerified());
+                    }).addOnFailureListener((error) -> {
+                        Log.e(TAG, "Local reload went wrong", error);
+                    });
+                }
+            });
         } else {
             Log.i(TAG, "NULL USER");
         }
